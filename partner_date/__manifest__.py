@@ -24,7 +24,7 @@
     'version': '12.0.1.0.0',
     'category': 'hr',
     'description': """Educational module to demonstrate new module creation.""",
-    'images': ['static/description/img.png'],
+    'images': [],
     'author': 'Vertel AB',
     'license': 'AGPL-3',
     'website': 'http://www.vertel.se',
