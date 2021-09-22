@@ -29,7 +29,7 @@
     'license': 'AGPL-3',
     'website': 'http://www.vertel.se',
     'depends': [],
-    'data': ['contact_views.xml', 'partner_views.xml'],
+    'data': ['views/contact_views.xml', 'views/partner_views.xml'],
     'installable': True,
     'qweb': [],
 }
