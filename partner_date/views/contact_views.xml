@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="action_contacts" model="ir.actions.act_window">
-        <field name="inherit_id" ref="contact.action_contacts"/>
-        <field name="view_mode" position="replace">
-            <field name="view_mode" position="replace">kanban, tree, calendar, form, activity</field>
-        </field>
+<!--    <record id="contacts.action_contacts" model="ir.actions.act_window">
+      <field name="view_mode">kanban, tree, calendar, form, activity</field>
     </record>
+-->
 
     <record id="contacts_calendar_view" model="ir.ui.view">
         <field name="name">contacts.calendar</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <calendar string="Partner Date" create="0" mode="month"
+            <calendar string="Partner Date" mode="month"
                       date_start="date"
                       color="user_id">
                 <field name="name"/>

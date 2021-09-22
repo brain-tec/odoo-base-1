@@ -28,8 +28,10 @@
     'author': 'Vertel AB',
     'license': 'AGPL-3',
     'website': 'http://www.vertel.se',
-    'depends': [],
-    'data': ['views/contact_views.xml', 'views/partner_views.xml'],
+    'depends': ['base'],
+    'data': [#'views/contact_views.xml',
+             'views/partner_views.xml',
+    ],
     'installable': True,
     'qweb': [],
 }
