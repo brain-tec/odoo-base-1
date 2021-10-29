@@ -15,23 +15,23 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ################################################################################
 
 {
-    'name': 'Base Module depends Chart',
-        'summary': '...',
+    'name': 'Base: Module depends Chart',
+    'summary': 'Adds a graphical description of the Odoo database dependencies.',
     'author': 'Vertel AB',
-	'contributor': 'Vertel AB, N-Development',
+    'contributor': 'Vertel AB, N-Development',
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-event.git',
     'category': 'Tools',
     'version': '14.0.1.0.0',
     # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
     'license': 'AGPL-3',
-    'website': 'https://vertel.se/',
-    'description': """This module adds a graphical description of the Odoo database dependencys.\n
+    'website': 'https://vertel.se/apps/base',
+    'description': """This module adds a graphical description of the Odoo database dependencies.\n
 	Install it and go to Apps -> Module Graph to see a dynamic map of the installed modules.\n-development\n
 	This module is maintained from: https://github.com/vertelab/odoo-base/ \n
 	""",
