@@ -1,6 +1,6 @@
 from urllib import request
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 import requests
 import logging
 import json
@@ -14,57 +14,49 @@ class ElkSms(models.Model):
     _inherit = "sms.sms"
 
     url = fields.Char('https://api.46elks.com/a1/sms')
+    elk_sms_id = fields.Text(string="ELK SMS ID")
+    elk_sms_status = fields.Selection([
+        ('created', 'Created'),
+        ('sent', 'Sent'),
+        ('failed', 'Failed'),
+        ('delivered', 'Delivered')
+    ])
+    rec_model = fields.Char(string="Model Rec", readonly=True)
+    rec_id = fields.Char(string="Rec ID", readonly=True)
 
     def send(self, delete_all=False, auto_commit=False, raise_exception=False):
-        if not self.body:
-           _logger.warning(f"Unable to send sms: Missing Message {self=}")
-           self.state  = "error"
-           self.error_code = "sms_number_missing"
-           return False
-        if not self.number:
-           _logger.warning(f"Unable to send sms: Missing Number {self=}")
-           self.state  = "error"
-           self.error_code = "sms_server" 
-           return False
         try:
-            auth_info = (self.env['ir.config_parameter'].get_param('elk_sms_auth')).split(',')
-        except:
+            username, password = (self.env['ir.config_parameter'].get_param('elk_sms_auth')).split(',')
+        except Exception as e:
             raise UserError(
                 _('Error. Create a system parameter called "elk_sms_auth" containing the auth info like this: '
                   'username,password'))
 
         try:
             dryrun_toggle = (self.env['ir.config_parameter'].get_param('elk_sms_dryrun')).split(',')
-        except:
+        except Exception as e:
             raise UserError(
                 _('Error. Create a system parameter called "elk_sms_dryrun" containing a yes or no depending on if '
                   'you want to send actual text messages or not. '))
 
-        if auth_info:
-            response = requests.post('https://api.46elks.com/a1/sms', auth=(auth_info[0], auth_info[1]),
-                                     data={'dryrun': dryrun_toggle, 'from': 'Reboot', 'to': self.convert_number(self.number),'message': self.body,'whendelivered': f"{self.env['ir.config_parameter'].get_param('web.base.url')}/sms"})
-            if 'Unexpected 0' in response.content.decode('utf-8'):
-                #raise UserError(_('Error. Input a +46.... number instead of 0...'))
-                _logger.warning(_('Error. Input a +46.... number instead of 0...'))
-                self.state  = "error"
-                return False
-            if 'requires Basic' in response.content.decode('utf-8'):
-                #raise UserError(_('Error. Check if the auth info in the system parameter "elk_sms_auth" is valid.'))
-                _logger.warning(_('Error. Check if the auth info in the system parameter "elk_sms_auth" is valid.'))
-                self.state  = "error"
-                return False
-            if 'Not enough credits' in response.content.decode('utf-8'):
-                #raise UserError(_('Error. Not enough money to send message, add funds.'))
-                _logger.warning(_('Error. Not enough money to send message, add funds.'))
-                self.state  = "error"
-                return False
-            if 'Missing key to' in response.content.decode('utf-8'):
-                #raise UserError(_('Error. Missing key to (i have no idea to what, probably weird phone number.)'))
-                _logger.warning(_('Error. Missing key to (i have no idea to what, probably weird phone number.)'))
-                self.state  = "error"
-                return False
-            self.state  = "sent"
-            return response
+        if username and password:
+            response = requests.post(
+                'https://api.46elks.com/a1/sms',
+                auth=(username, password),
+                data={'dryrun': dryrun_toggle, 'from': 'Reboot',
+                      'to': self.convert_number(self.number), 'message': self.body,
+                      'whendelivered': f"{self.env['ir.config_parameter'].get_param('web.base.url')}/sms"})
+            _logger.warning(response.text)
+            if response.status_code == 200:
+                response = json.loads(response.content.decode("utf-8"))
+                self.write({
+                    'elk_sms_id': response.get('id', False),
+                    'elk_sms_status': response.get('status', False),
+                })
+                self.state = "outgoing"
+            else:
+                response = response.content.decode("utf-8")
+                raise ValidationError(_(response))
 
     def convert_number(self, number):
         if number and number[0] == '0':
