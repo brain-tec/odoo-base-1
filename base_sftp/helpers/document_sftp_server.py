@@ -5,6 +5,7 @@ try:
     from paramiko.common import AUTH_SUCCESSFUL, AUTH_FAILED, \
         OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED, OPEN_SUCCEEDED
     from paramiko import RSAKey, ServerInterface, SSHClient
+    from paramiko.server import InteractiveQuery
     from paramiko.py3compat import decodebytes
 except ImportError:
     pass
@@ -18,6 +19,7 @@ _logger = logging.getLogger(__name__)
 
 class DocumentSFTPServer(ServerInterface):
     def __init__(self, env):
+
         self.env = env
         self.dbname = env.cr.dbname
         super(DocumentSFTPServer, self).__init__()
@@ -46,4 +48,3 @@ class DocumentSFTPServer(ServerInterface):
         if kind in ('session',):
             return OPEN_SUCCEEDED
         return OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
-

@@ -4,10 +4,10 @@
 try:
     from paramiko import Transport
     from paramiko.transport import DEFAULT_WINDOW_SIZE, DEFAULT_MAX_PACKET_SIZE
+    from paramiko.common import DEBUG
 except ImportError:
     pass
 from odoo import api, SUPERUSER_ID
-from odoo.modules.registry import Registry
 
 
 class DocumentSFTPTransport(Transport):
