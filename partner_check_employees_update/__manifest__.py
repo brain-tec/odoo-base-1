@@ -20,10 +20,10 @@
 ##############################################################################
 
 {
-    'name': 'Partner: Employee Status',
+    'name': 'Partner: Check Employees Update',
     'version': '14.0',
     # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
-    'summary': 'Sets contact as an employee when pressing "Create Employee" inside the "User Form". Added employee field inside the "Contact Form"',
+    'summary': 'Checks connection between all employees and contacts and updates the employee field.',
     'category': 'Technical',
     #'sequence': '1'
     'author': 'Vertel AB',
@@ -34,10 +34,11 @@
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-base',
     'description': """
-      Sets contact as an employee when pressing "Create Employee" inside the "User Form". Added employee field inside the "Contact Form"
+      Checks connection between all employees and contacts and updates the employee field.
     """,
-    'depends': ['base','hr'],
+    'depends': ['base','hr','contacts'],
     'data': [
+        'data/data.xml',
         'views/res_partner_view.xml',
         ],
     'demo': [],
