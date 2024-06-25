@@ -1,1 +1,1 @@
-from . import elk_sms
+from . import 46elks_sms

@@ -7,11 +7,11 @@
             <field name="inherit_id" ref="sms.sms_tsms_view_form"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
-                    <field name="elk_sms_id"/>
+                    <field name="46elks_sms_id"/>
                     <field name="rec_model"/>
                 </field>
                 <field name="number" position="after">
-                    <field name="elk_sms_status"/>
+                    <field name="46elks_sms_status"/>
                     <field name="rec_id"/>
                 </field>
             </field>
