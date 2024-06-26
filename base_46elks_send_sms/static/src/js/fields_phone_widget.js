@@ -1,4 +1,4 @@
-odoo.define('elk46_send_sms.elk_phone_field', function (require) {
+odoo.define('base_46elks_send_sms.46elks_phone_field', function (require) {
     "use strict";
 
     var basic_fields = require('web.basic_fields');
@@ -31,7 +31,7 @@ odoo.define('elk46_send_sms.elk_phone_field', function (require) {
             return this.do_action({
                 title: _t('Send SMS Text Message'),
                 type: 'ir.actions.act_window',
-                res_model: this.model=='sale.order' ? 'elk.sms' : 'sms.composer',
+                res_model: this.model=='sale.order' ? '46elks.sms' : 'sms.composer',
                 target: 'new',
                 views: [[false, 'form']],
                 context: context,

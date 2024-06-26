@@ -14,8 +14,8 @@ class ElkSms(models.Model):
     _inherit = "sms.sms"
 
     url = fields.Char('https://api.46elks.com/a1/sms')
-    elk_sms_id = fields.Text(string="ELK SMS ID")
-    elk_sms_status = fields.Selection([
+    46elks_sms_id = fields.Text(string="46ELKS SMS ID")
+    46elks_sms_status = fields.Selection([
         ('created', 'Created'),
         ('sent', 'Sent'),
         ('failed', 'Failed'),
@@ -26,17 +26,17 @@ class ElkSms(models.Model):
 
     def send(self, delete_all=False, auto_commit=False, raise_exception=False):
         try:
-            username, password = (self.env['ir.config_parameter'].get_param('elk_sms_auth')).split(',')
+            username, password = (self.env['ir.config_parameter'].get_param('46elks_sms_auth')).split(',')
         except Exception as e:
             raise UserError(
-                _('Error. Create a system parameter called "elk_sms_auth" containing the auth info like this: '
+                _('Error. Create a system parameter called "46elks_sms_auth" containing the auth info like this: '
                   'username,password'))
 
         try:
-            dryrun_toggle = (self.env['ir.config_parameter'].get_param('elk_sms_dryrun')).split(',')
+            dryrun_toggle = (self.env['ir.config_parameter'].get_param('46elks_sms_dryrun')).split(',')
         except Exception as e:
             raise UserError(
-                _('Error. Create a system parameter called "elk_sms_dryrun" containing a yes or no depending on if '
+                _('Error. Create a system parameter called "46elks_sms_dryrun" containing a yes or no depending on if '
                   'you want to send actual text messages or not. '))
 
         if username and password:
@@ -50,8 +50,8 @@ class ElkSms(models.Model):
             if response.status_code == 200:
                 response = json.loads(response.content.decode("utf-8"))
                 self.write({
-                    'elk_sms_id': response.get('id', False),
-                    'elk_sms_status': response.get('status', False),
+                    '46elks_sms_id': response.get('id', False),
+                    '46elks_sms_status': response.get('status', False),
                 })
                 self.state = "outgoing"
             else:
