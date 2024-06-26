@@ -1,4 +1,4 @@
-odoo.define('elk46_send_sms.elk_phone_field', function (require) {
+odoo.define('base_46elks_send_sms.elk_phone_field', function (require) {
     "use strict";
 
     var basic_fields = require('web.basic_fields');
