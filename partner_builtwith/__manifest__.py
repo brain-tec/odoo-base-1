@@ -41,7 +41,7 @@
     'repository': 'https://github.com/vertelab/odoo-base',
     'depends': ['base',],
     'data': [
-        # ~ 'views/res_partner_view.xml',
+        'views/res_partner_view.xml',
     ],
     'application': False,
     'installable': True,

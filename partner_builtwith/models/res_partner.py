@@ -11,29 +11,29 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
     
     # ~ data['categories']
-    bw_analytics = fields.Char(string='CMS')
-    bw_blogs = fields.Char(string='CMS')
-    bw_cache_tools = fields.Char(string='CMS')
-    bw_cdn = fields.Char(string='CMS')
+    bw_analytics = fields.Char(string='Analytics')
+    bw_blogs = fields.Char(string='Blogs')
+    bw_cache_tools = fields.Char(string='Cache Tools')
+    bw_cdn = fields.Char(string='CDN')
     bw_cms = fields.Char(string='CMS')
-    bw_database_managers = fields.Char(string='CMS')
+    bw_database_managers = fields.Char(string='Database Managers')
     bw_databases = fields.Char(string='Databases')
-    bw_documentation_tools = fields.Char(string='CMS')
-    bw_ecommerce = fields.Char(string='CMS')
-    bw_font_scripts = fields.Char(string='CMS')
-    bw_issue_trackers = fields.Char(string='CMS')
-    bw_javascript_frameworks = fields.Char(string='CMS')
-    bw_lms = fields.Char(string='CMS')
+    bw_documentation_tools = fields.Char(string='Documentation Tools')
+    bw_ecommerce = fields.Char(string='Ecommerce')
+    bw_font_scripts = fields.Char(string='Font Scripts')
+    bw_issue_trackers = fields.Char(string='Issue Trackers')
+    bw_javascript_frameworks = fields.Char(string='Javascript Frameworks')
+    bw_lms = fields.Char(string='LMS')
     bw_marketing_automation = fields.Char(string='Marketing Automation')
     bw_miscellaneous = fields.Char(string='Miscellaneous')
-    bw_mobile_frameworks = fields.Char(string='CMS')
-    bw_operating_systems = fields.Char(string='CMS')
-    bw_programming_languages = fields.Char(string='CMS')
-    bw_search_engines = fields.Char(string='CMS')
-    bw_web_frameworks = fields.Char(string='CMS')
-    bw_web_mail = fields.Char(string='CMS')
-    bw_web_servers = fields.Char(string='CMS')
-    bw_wikis = fields.Char(string='CMS')
+    bw_mobile_frameworks = fields.Char(string='Mobile Frameworks')
+    bw_operating_systems = fields.Char(string='Operating Systems')
+    bw_programming_languages = fields.Char(string='Programming Languages')
+    bw_search_engines = fields.Char(string='Search Engines')
+    bw_web_frameworks = fields.Char(string='Web Frameworks')
+    bw_web_mail = fields.Char(string='Web Mail')
+    bw_web_servers = fields.Char(string='Web Servers')
+    bw_wikis = fields.Char(string='Wikis')
         
     @api.model
     def name2website(self,name):
@@ -64,6 +64,8 @@ class ResPartner(models.Model):
 
             for k in bw.keys():
                 key = f'bw_{k}'.replace('-','_')
+                if not key in f.keys():
+                    continue
                 # ~ _logger.warning(f"{key=} {bk=} {bw[bk]=}")
                 if f[key]['type'] == 'char':
                     if type(bw[k]) == list:
@@ -78,7 +80,9 @@ class ResPartner(models.Model):
             _logger.warning(f"{rec=}")
             # key in bw are same as field with underscrores 
             # eg marketing-automation -> bw_marketing_automation
-            p.write(rec)  
+            p.write(rec)
+            # ~ if bw['image_1920']:
+                # ~ p.image_1920 = bw['image_1920']
             
         # ~ p.fields_get()={
             # ~ 'name': {'type': 'char', 'change_default': False, 'company_dependent': False, 'depends': (), 'manual': False, 'readonly': False, 'required': False, 'searchable': True, 'sortable': True, 'store': True, 'string': 'Name', 'translate': False, 'trim': True}, 

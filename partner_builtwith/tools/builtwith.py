@@ -1,4 +1,6 @@
 from builtwith import builtwith as bw, data
+from odoo.addons.partner_builtwith.tools.logoscrape import LogoScrape
+
 
 # ~ from dns import resolver
 
@@ -21,6 +23,7 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     
     res = bw(url,headers,html,user_agent)
     
+    # ~ res['image_1920'] = LogoScrape(url)
     
     return res
 
