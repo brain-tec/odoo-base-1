@@ -2,3 +2,4 @@ tesseract-ocr
 builtwith
 allabolag
 dns
+pytesseract

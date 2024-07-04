@@ -50,7 +50,7 @@ AFC-156
 """,
     #'sequence': '1',
     'author': 'Vertel AB',
-    'website': 'https://vertel.se/apps/odoo-base/res_sni',
+    'website': 'https://vertel.se/apps/odoo-base/partner_sni',
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',
     'contributor': '',
@@ -58,10 +58,10 @@ AFC-156
     'repository': 'https://github.com/vertelab/odoo-base.git',
     'depends': ['contacts',],
     'data': [
-        'views/res_partner_view.xml',
+        'data/res.sni.csv',
         'security/ir.model.access.csv',
+        'views/res_partner_view.xml',
         'views/res_sni_view.xml',
-		'data/res.sni.csv',
     ],
     'application': False,
     'installable': True,
