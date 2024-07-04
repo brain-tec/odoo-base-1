@@ -1,1 +1,1 @@
-from . import partner_allabolag
+from . import res_partner

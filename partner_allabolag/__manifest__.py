@@ -26,7 +26,7 @@
     'summary': 'Change order to Zip, State, City.',
     'category': 'Website',
     'description': """
-      Enrich with information from allabolag
+    Enrich with information from allabolag
 
       
     """,
@@ -38,9 +38,9 @@
     'contributor': '',
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-base',
-    'depends': ['base',],
+    'depends': ['contacts', 'partner_company_registry'],
     'data': [
-        'views/res_partner_view.xml',
+        'views/partner_views.xml',
     ],
     'application': False,
     'installable': True,
