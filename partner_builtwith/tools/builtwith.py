@@ -1,5 +1,7 @@
 from builtwith import builtwith as bw, data
 from odoo.addons.partner_builtwith.tools.logoscrape import LogoScrape
+from googlesearch import search
+from whois
 
 
 # ~ from dns import resolver
@@ -25,8 +27,23 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     
     # ~ res['image_1920'] = LogoScrape(url)
     
+    # Whois - registrar + ns
+    # w = whois.whois('vertel.se')
+    #{'domain_name': 'vertel.se', 'registrant_name': 'andkre4798-00001', 'creation_date': datetime.datetime(2004, 7, 14, 0, 0), 'updated_date': datetime.datetime(2024, 6, 3, 0, 0), 'expiration_date': datetime.datetime(2025, 7, 14, 0, 0), 'transfer_date': datetime.datetime(2019, 2, 14, 0, 0), 'name_servers': ['ns1.kreawit.se 79.99.1.214', 'ns2.kreawit.se 81.216.50.110'], 'dnssec': 'unsigned delegation', 'status': 'ok', 'registrar': 'Loopia AB'}
+
+    
+    
+    # MX
+    
     return res
 
+
+
+
+def name2url(name):
+    return [a for a in search(name)][0]
+
+    
 
 def get_mailserver():
     answers = dns.resolver.resolve('vertel.se', 'MX')

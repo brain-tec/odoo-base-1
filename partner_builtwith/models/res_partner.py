@@ -2,7 +2,7 @@ from odoo import models, fields, api, _
 from datetime import date
 import logging
 from odoo.exceptions import ValidationError
-from odoo.addons.partner_builtwith.tools.builtwith import builtwith, data
+from odoo.addons.partner_builtwith.tools.builtwith import builtwith, data, name2url
 
 _logger = logging.getLogger(__name__)
 
@@ -34,11 +34,18 @@ class ResPartner(models.Model):
     bw_web_mail = fields.Char(string='Web Mail')
     bw_web_servers = fields.Char(string='Web Servers')
     bw_wikis = fields.Char(string='Wikis')
-        
-    @api.model
-    def name2website(self,name):
-        return 'https://vertel.se'
-    
+    # whois
+    #{'domain_name': 'vertel.se', 
+    bw_registrant_name = fields.Char(string='Registrant Name')
+    bw_creation_date = fields.DateTime(string="Creation Date")
+    bw_updated_date = fields.DateTime(string="Creation Date")
+    bw_expiration_date = fields.DateTime(string="Expiration Date")
+    bw_transfer_date = fields.DateTime(string="Transfer Date")
+    bw_name_servers = fields.Char(string="Name Servers")
+    bw_dnssec = fields.DateTime(string="Dnssec")
+    bw_status = fields.Char(string="Status")
+    bw_registrar = fields.DateTime(string="Registrar")
+            
     def bw_enrich(self):
         for p in self:
             # ~ _logger.warning(f"{p.fields_get()=}")
@@ -54,8 +61,11 @@ class ResPartner(models.Model):
 # ~ 'type': 'monetary'
 # ~ 'type': 'one2many'
 # ~ 'type': 'selection'
+
+            if not p.website:
+                p.website = name2url(p.name)
             
-            bw = builtwith(p.website or self.name2website(p.name))
+            bw = builtwith(p.website)
             _logger.warning(f"{bw=}")
 
             rec = {}
@@ -81,8 +91,8 @@ class ResPartner(models.Model):
             # key in bw are same as field with underscrores 
             # eg marketing-automation -> bw_marketing_automation
             p.write(rec)
-            # ~ if bw['image_1920']:
-                # ~ p.image_1920 = bw['image_1920']
+            if bw['image_1920']:
+                p.image_1920 = bw['image_1920']
             
         # ~ p.fields_get()={
             # ~ 'name': {'type': 'char', 'change_default': False, 'company_dependent': False, 'depends': (), 'manual': False, 'readonly': False, 'required': False, 'searchable': True, 'sortable': True, 'store': True, 'string': 'Name', 'translate': False, 'trim': True}, 
