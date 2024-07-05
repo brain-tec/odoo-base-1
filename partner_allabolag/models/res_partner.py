@@ -4,8 +4,11 @@ import logging
 from odoo.exceptions import ValidationError
 import re
 
-from allabolag import Company
+from allabolag import Company, iter_liquidated_companies
 from allabolag.list import iter_list
+from copy import deepcopy
+from datetime import datetime
+
 
 _logger = logging.getLogger(__name__)
 
@@ -39,8 +42,6 @@ class ResPartner(models.Model):
                 break 
         _logger.warning(f'{item=}')
         return item['orgnr']
-        
-        
         
         
         
@@ -104,25 +105,48 @@ class ResPartner(models.Model):
     
     @api.model
     def check_bankruptcy(self):
-        until = '2024-07-01' ## fetch this date from system parameter
+        until = datetime.strptime('2024-07-01','%Y-%m-%d') ## fetch this date from system parameter
         orgnummer=[]
+        
+        
+        def _parse_liquidated_company_item(item_dict):
+            
+            item = deepcopy(item_dict)
+
+            # store for backward compability
+            item["link"] = item_dict["linkTo"]
+            item["Org.nummer"] = item_dict["orgnr"]
+
+            for remark in item_dict["remarks"]:
+                key = remark["remarkDescription"]  # ie. Konkurs inledd
+                if remark["remarkDate"] is not None:
+                    item[key] = datetime.strptime(remark["remarkDate"], "%Y-%m-%d")
+                # TODO: Handle other remarks such as:
+                # 'remarkCode': 'SHV',
+                # 'remarkDescription': 'Svensk Handel Varningslistan med produktnamn: registersök.',
+                # 'remarkDate': None,
+
+            return item
         
         i = 1
         for item in iter_list(
                 "/lista/konkurs-inledd/6",
+                # ~ lambda x: _parse_liquidated_company_item(until=until),
                 lambda x: _parse_liquidated_company_item(x)["Konkurs inledd"] < until,
             ):
             orgnummer.append(item['orgnr'])
             i += 1
             if i > 1000:
                 break 
+        _logger.warning(f'{orgnummer}')
         
-        for partner in self.env['res.partner'].search([('company_registry', 'in', orgnummer)]):
+        for partner in self.env['res.partner'].search([('company_registry', 'in', orgnummer )]):
             partner.message_post(body=_(f'Company filed for bankrupcy'), message_type='notification')
         
         
         ## save todays date to system parameter
-        
+
+    
 a ="""Översikt - Namn
 Översikt - VD
 Översikt - Bolagsform
