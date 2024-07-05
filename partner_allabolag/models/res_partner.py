@@ -13,8 +13,8 @@ from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 
-class ResPartner(models.Model):
-    _inherit = "res.partner"
+class ResPartnerMixin(models.AbstractModel):
+    _name = "res.partner.allabolag.mixin"
 
     summary_revenue = fields.Float(string='Revenue')
     summary_profit_ebit = fields.Float(string='Profit EBIT')
@@ -25,9 +25,6 @@ class ResPartner(models.Model):
     summary_profit_margin = fields.Float(string='Profit Margin')
     summary_solvency = fields.Float(string='Solvency')
     summary_cash_flow = fields.Float(string='Cash Flow')
-    
-    
-    
     
     def name2orgno(self):
         
@@ -42,9 +39,6 @@ class ResPartner(models.Model):
                 break 
         _logger.warning(f'{item=}')
         return item['orgnr']
-        
-        
-        
         
     def enrich_allabolag(self):
         if not self.company_type == "company":
@@ -101,7 +95,11 @@ class ResPartner(models.Model):
     
     
         # ~ self.env['res.partner'].write({'summary_revenue': 1000000663, 'summary_profit_ebit': 999999999, 'summary_purpose': 'Bolaget har till föremål för sin verksamhet att bedriva finansieringsrörelse och därmed sammanhängande verksamhet huvudsakligen genom att lämna och förmedla kredit avseende fastigheter och bostads- rätter, att lämna kredit till samfällighetsföreningar, att lämna kredit till stat, landsting, kommuner, kommunalförbund eller andra kommunala samfälligheter, samt - mot borgen av sådan samfällighet - till andra juridiska personer, att genom lämnande av betalningsgaranti underlätta kreditgivning av det slag bolaget får bedriva, samt att för annans räkning förvalta sådana lån jämte säkerheter som avses i denna paragraf samt ombesörja inteckningsåtgärder, Med "fastighet" avses i denna bolagsordning också tomträtt och byggnad på mark upplåten med nyttjanderätt samt ägarlägenheter. Med "bostadsrätt" avses även andel i bostadsförening eller aktie i bostadsaktiebolag, där en utan begränsning i tiden upplåten nyttjanderätt till en lägenhet är oskiljaktigt förenad med andelen eller aktien. Med "kredit" avses också byggnadskreditiv. Ord och uttryck som används i denna bolagsordning för att beteckna visst slag av egendom eller rättigheter innefattar egendom eller rättighet i samtliga länder där bolaget bedriver verksamhet, om kreditsäkerhetsegenskaperna för egendomen eller säkerheten i fråga väsentligen motsvarar vad som avses med den svenska benämningen. Med stat, kommun, landsting och samfällighetsföreningar avses förutom sådana organ i Sverige, motsvarande organ i samtliga länder där Stadshypotek bedriver verksamhet. För anskaffande av medel för sin rörelse får bolaget bl.a. 1. ge ut säkerställda obligationer 2. ge ut andra obligationer och certifikat och ta upp reverslån, 3. ge ut förlagsbevis eller andra förskrivningar som medför rätt till betalning efter bolagets övriga förbindelser, samt 4. utnyttja kredit i räkning.', 'kpi_no_employees': 49, 'summary_net_sales_change': 34, 'summary_profit_margin': 1, 'summary_solvency': 1, 'summary_cash_flow': 1})
-    
+
+
+class ResPartner(models.Model):
+    _name = 'res.partner'
+    _inherit = ["res.partner",'res.partner.allabolag.mixin']
     
     @api.model
     def check_bankruptcy(self):

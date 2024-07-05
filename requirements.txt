@@ -1,2 +1,8 @@
-tesseract-ocr
+allabolag
+beatifulsoap4
+builtwith
+dnspython
+sudogooglesearch
 pytesseract
+tesseract-ocr
+python-whois
