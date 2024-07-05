@@ -1,1 +1,8 @@
+allabolag
+beatifulsoap4
+builtwith
+dns
+sudogooglesearch
+pytesseract
 tesseract-ocr
+python-whois

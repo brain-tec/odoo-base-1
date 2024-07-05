@@ -20,27 +20,28 @@
 ##############################################################################
 
 {
-    'name': 'Base: Enrich partner information from Allabolag',
+    'name': 'Base: Partner Builtwith',
     'version': '14.0.1.1.0',
     # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
-    'summary': 'Change order to Zip, State, City.',
+    'summary': 'Enrich partner with technical information.',
     'category': 'Website',
     'description': """
-    Enrich with information from allabolag
+      Enrich with technical information using builtwith-library and other tools
+      
 
       
     """,
     #'sequence': '1',
     'author': 'Vertel AB',
-    'website': 'https://vertel.se/apps/odoo-base/partner_allabolag',
+    'website': 'https://vertel.se/apps/odoo-base/partner_builtwith',
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',
     'contributor': '',
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-base',
-    'depends': ['contacts', 'partner_company_registry'],
+    'depends': ['base',],
     'data': [
-        'views/partner_views.xml',
+        'views/res_partner_view.xml',
     ],
     'application': False,
     'installable': True,
