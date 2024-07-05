@@ -35,7 +35,7 @@ class ResPartner(models.Model):
     bw_web_servers = fields.Char(string='Web Servers')
     bw_wikis = fields.Char(string='Wikis')
     # whois
-    #{'domain_name': 'vertel.se', 
+    bw_domain_name = fields.Char(string='Domain Name')
     bw_registrant_name = fields.Char(string='Registrant Name')
     bw_creation_date = fields.DateTime(string="Creation Date")
     bw_updated_date = fields.DateTime(string="Creation Date")
