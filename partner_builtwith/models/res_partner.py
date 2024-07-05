@@ -37,14 +37,14 @@ class ResPartner(models.Model):
     # whois
     bw_domain_name = fields.Char(string='Domain Name')
     bw_registrant_name = fields.Char(string='Registrant Name')
-    bw_creation_date = fields.DateTime(string="Creation Date")
-    bw_updated_date = fields.DateTime(string="Creation Date")
-    bw_expiration_date = fields.DateTime(string="Expiration Date")
-    bw_transfer_date = fields.DateTime(string="Transfer Date")
+    bw_creation_date = fields.Datetime(string="Creation Date")
+    bw_updated_date = fields.Datetime(string="Creation Date")
+    bw_expiration_date = fields.Datetime(string="Expiration Date")
+    bw_transfer_date = fields.Datetime(string="Transfer Date")
     bw_name_servers = fields.Char(string="Name Servers")
-    bw_dnssec = fields.DateTime(string="Dnssec")
+    bw_dnssec = fields.Datetime(string="Dnssec")
     bw_status = fields.Char(string="Status")
-    bw_registrar = fields.DateTime(string="Registrar")
+    bw_registrar = fields.Datetime(string="Registrar")
             
     def bw_enrich(self):
         for p in self:
@@ -52,7 +52,7 @@ class ResPartner(models.Model):
             
 # ~ 'type': 'char'
 # ~ 'type': 'date'
-# ~ 'type': 'datetime'
+# ~ 'type': 'Datetime'
 # ~ 'type': 'float'
 # ~ 'type': 'html'
 # ~ 'type': 'integer'
@@ -82,7 +82,7 @@ class ResPartner(models.Model):
                         rec[key] = ', '.join(bw[k])
                     else:
                         rec[key] = bw[k]
-                if f[key]['type'] in ['date','datetime','float','html','monetary','selection']:
+                if f[key]['type'] in ['date','Datetime','float','html','monetary','selection']:
                     rec[key] = bw[k]
                 if f[key]['type'] == 'integer':
                     rec[key] = int(bw[k])

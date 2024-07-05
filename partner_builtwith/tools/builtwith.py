@@ -36,7 +36,7 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     res['dns_mx'] = ', '.join([mx for mx in resolve(domain, 'MX')])
     
     res['dns_primary'] = sorted({mx.preference:mx.exchange 
-        for mx in resolve(domain, 'MX')]}.items(),key=lambda p: int(p[0]))[0]
+        for mx in resolve(domain, 'MX')}.items(),key=lambda p: int(p[0]))[0]
     
     res['dns_soa'] = resolve(domain, 'SOA')
     res['dns_a'] = ', '.join([a for a in resolve(domain, 'A')])
@@ -44,16 +44,10 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     res['dns_txt'] = ', '.join([txt for txt in resolve(domain, 'TXT')])
     res['dns_cname'] = ', '.join([cn for cn in resolve(domain, 'CNAME')])
     
-...     print(x.to_text())
-
     
     # MX
     
     return res
-
-for x in dns.resolver.resolve(domain, 'MX'):
-...     print(x.to_text())
-
 
 def name2url(name):
     return [a for a in search(name)][0]
