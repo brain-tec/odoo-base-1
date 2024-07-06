@@ -38,6 +38,36 @@
                                 <field name="bw_wikis" />
                             </group>
                         </group>
+                        <group name="container_row_3">
+                            <group name="dns" string="DNS" priority="1">
+                                <field name="bw_domain_name" />
+                                <field name="bw_registrant_name" />
+                                <field name="bw_creation_date" />
+                                <field name="bw_updated_date" />
+                                <field name="bw_expiration_date" />
+                                <field name="bw_transfer_date" />
+                                <field name="bw_database_managers" />
+                                <field name="bw_databases" />
+                                <field name="bw_name_servers" />
+                                <field name="bw_dnssec" />
+                                <field name="bw_status" />
+                                <field name="bw_registrar" />
+                            </group>
+                            <group name="mail" string="Mail" priority="2">
+                                <field name="bw_lms" />
+                                <field name="bw_marketing_automation" />
+                                <field name="bw_miscellaneous" />
+                                <field name="bw_mobile_frameworks" />
+                                <field name="bw_operating_systems" />
+                                <field name="bw_programming_languages" />
+                                <field name="bw_search_engines" />
+                                <field name="bw_web_frameworks" />
+                                <field name="bw_web_mail" />
+                                <field name="bw_web_frameworks" />
+                                <field name="bw_web_servers" />
+                                <field name="bw_wikis" />
+                            </group>
+                        </group>
                     </page>
                 </notebook>
             </field>

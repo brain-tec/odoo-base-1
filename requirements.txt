@@ -1,7 +1,7 @@
 allabolag
 beatifulsoap4
 builtwith
-dns
+dnspython
 sudogooglesearch
 pytesseract
 tesseract-ocr
