@@ -46,8 +46,6 @@
                 <field name="bw_updated_date" />
                 <field name="bw_expiration_date" />
                 <field name="bw_transfer_date" />
-                <field name="bw_database_managers" />
-                <field name="bw_databases" />
                 <field name="bw_name_servers" />
                 <field name="bw_dnssec" />
                 <field name="bw_status" />

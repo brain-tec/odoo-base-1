@@ -28,11 +28,16 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     
     _logger.warning(f'{url=}')    
     res = bw(url,headers,html,user_agent)
-    _logger.warning(f'{bw=}')
-    # ~ res['image_1920'] = LogoScrape(url)
+    _logger.warning(f'{res=}')
+    # ~ res = {}
+    res['image_1920'] = LogoScrape(url)
     domain = '.'.join(urlparse(url).netloc.split('.')[-2:])
     _logger.warning(f'{domain=}')
+    w = whois(domain)
+    _logger.warning(f'whois {w}')
     res.update(whois(domain))
+    
+    
     # ~ # Whois - registrar + ns
     # ~ # w = whois.whois('vertel.se')
     # ~ #{'domain_name': 'vertel.se', 'registrant_name': 'andkre4798-00001', 'creation_date': datetime.datetime(2004, 7, 14, 0, 0), 'updated_date': datetime.datetime(2024, 6, 3, 0, 0), 'expiration_date': datetime.datetime(2025, 7, 14, 0, 0), 'transfer_date': datetime.datetime(2019, 2, 14, 0, 0), 'name_servers': ['ns1.kreawit.se 79.99.1.214', 'ns2.kreawit.se 81.216.50.110'], 'dnssec': 'unsigned delegation', 'status': 'ok', 'registrar': 'Loopia AB'}
