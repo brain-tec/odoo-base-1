@@ -45,28 +45,34 @@ class ResPartner(models.Model):
     bw_dnssec = fields.Datetime(string="Dnssec")
     bw_status = fields.Char(string="Status")
     bw_registrar = fields.Datetime(string="Registrar")
-            
+    # DNS/mail
+    bw_mail_server = fields.Char(string="Mail Server")
+    bw_dns_soa = fields.Char(string="SOA")
+    bw_dns_ns = fields.Char(string="NS")
+    bw_dns_a = fields.Char(string="A")
+    bw_dns_a = fields.Char(string="A")
+    bw_dns_cname = fields.Char(string="CNAME")
+    bw_dns_mx = fields.Char(string="MX")
+    bw_dns_txt = fields.Char(string="TXT")
+    #Social media
+    bw_github = fields.Char(string="Github")
+    bw_facebook = fields.Char(string="Facebook")
+    bw_instagram = fields.Char(string="Instagram")
+    bw_linkedin = fields.Char(string="Linkedin")
+    bw_myai = fields.Char(string="AI Sweden")
+    bw_brainville = fields.Char(string="Brainville")
+    bw_odoo_community = fields.Char(string="Odoo Community")
+    bw_linkopingsciencepark = fields.Char(string="Linköping Science Park")
+    bw_x = fields.Char(string="X")
+
     def bw_enrich(self):
         for p in self:
-            # ~ _logger.warning(f"{p.fields_get()=}")
-            
-# ~ 'type': 'char'
-# ~ 'type': 'date'
-# ~ 'type': 'Datetime'
-# ~ 'type': 'float'
-# ~ 'type': 'html'
-# ~ 'type': 'integer'
-# ~ 'type': 'many2many'
-# ~ 'type': 'many2one'
-# ~ 'type': 'monetary'
-# ~ 'type': 'one2many'
-# ~ 'type': 'selection'
-
+            _logger.warning(f"{p.website=}")
             if not p.website:
                 p.website = name2url(p.name)
             
             bw = builtwith(p.website)
-            _logger.warning(f"{bw=}")
+            # ~ _logger.warning(f"{bw=}")
 
             rec = {}
             f = p.fields_get()
@@ -74,6 +80,7 @@ class ResPartner(models.Model):
 
             for k in bw.keys():
                 key = f'bw_{k}'.replace('-','_')
+                key = key.replace('.','')
                 if not key in f.keys():
                     continue
                 # ~ _logger.warning(f"{key=} {bk=} {bw[bk]=}")
@@ -87,13 +94,13 @@ class ResPartner(models.Model):
                 if f[key]['type'] == 'integer':
                     rec[key] = int(bw[k])
                 
-            _logger.warning(f"{rec=}")
             # key in bw are same as field with underscrores 
             # eg marketing-automation -> bw_marketing_automation
             p.write(rec)
-            if bw['image_1920']:
+   
+            if bw.get('image_1920',None):
                 p.image_1920 = bw['image_1920']
-            
+   
         # ~ p.fields_get()={
             # ~ 'name': {'type': 'char', 'change_default': False, 'company_dependent': False, 'depends': (), 'manual': False, 'readonly': False, 'required': False, 'searchable': True, 'sortable': True, 'store': True, 'string': 'Name', 'translate': False, 'trim': True}, 
         # ~ }
