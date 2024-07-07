@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image
+import base64
 
 def LogoScrape(url):
     # Send an HTTP request to the website's URL to retrieve the HTML source code
@@ -35,4 +36,4 @@ def LogoScrape(url):
         return None
     if not 'http' in logo_url:
         logo_url = url+'/'+logo_url
-    return Image.open(requests.get(logo_url, stream=True).raw)
+    return base64.b64encode(Image.open(requests.get(logo_url, stream=True).raw))

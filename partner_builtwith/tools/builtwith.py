@@ -4,7 +4,10 @@ from googlesearch import search
 from whois import whois
 from urllib.parse import urlparse
 from dns.resolver import resolve
-
+import smtplib
+import socket
+import logging
+_logger = logging.getLogger(__name__)
 # ~ from dns import resolver
 
 def builtwith(url, headers=None, html=None, user_agent='builtwith'):
@@ -23,38 +26,101 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     """
     techs = {}
     
-    
+    _logger.warning(f'{url=}')    
     res = bw(url,headers,html,user_agent)
-    
-    # ~ res['image_1920'] = LogoScrape(url)
+    _logger.warning(f'{res=}')
+    # ~ res = {}
+    res['image_1920'] = LogoScrape(url)
     domain = '.'.join(urlparse(url).netloc.split('.')[-2:])
+    _logger.warning(f'{domain=}')
+    w = whois(domain)
+    _logger.warning(f'whois {w}')
     res.update(whois(domain))
-    # Whois - registrar + ns
-    # w = whois.whois('vertel.se')
-    #{'domain_name': 'vertel.se', 'registrant_name': 'andkre4798-00001', 'creation_date': datetime.datetime(2004, 7, 14, 0, 0), 'updated_date': datetime.datetime(2024, 6, 3, 0, 0), 'expiration_date': datetime.datetime(2025, 7, 14, 0, 0), 'transfer_date': datetime.datetime(2019, 2, 14, 0, 0), 'name_servers': ['ns1.kreawit.se 79.99.1.214', 'ns2.kreawit.se 81.216.50.110'], 'dnssec': 'unsigned delegation', 'status': 'ok', 'registrar': 'Loopia AB'}
+    
+    
+    # ~ # Whois - registrar + ns
+    # ~ # w = whois.whois('vertel.se')
+    # ~ #{'domain_name': 'vertel.se', 'registrant_name': 'andkre4798-00001', 'creation_date': datetime.datetime(2004, 7, 14, 0, 0), 'updated_date': datetime.datetime(2024, 6, 3, 0, 0), 'expiration_date': datetime.datetime(2025, 7, 14, 0, 0), 'transfer_date': datetime.datetime(2019, 2, 14, 0, 0), 'name_servers': ['ns1.kreawit.se 79.99.1.214', 'ns2.kreawit.se 81.216.50.110'], 'dnssec': 'unsigned delegation', 'status': 'ok', 'registrar': 'Loopia AB'}
+    #    {'domain_name': ['NORRLAB.COM', 'norrlab.com'], 'registrar': 'One.com A/S', 
+    # 'whois_server': 'whois.one.com', 'referral_url': None, 
+    #      'updated_date': datetime.datetime(2023, 12, 12, 0, 28, 34), 'creation_date': datetime.datetime(2020, 1, 11, 19, 46, 48), 
+    #      'expiration_date': datetime.datetime(2025, 1, 11, 19, 46, 48), 
+    #      'name_servers': ['NS01.ONE.COM', 'NS02.ONE.COM', 'ns02.one.com', 'ns01.one.com'], 
+    #      'status': 'ok https://icann.org/epp#ok', 'emails': ['abuse@one.com', 'hostmaster@one.com'], 
+    #      'dnssec': 'unsigned', 'name': 'REDACTED FOR PRIVACY', 'org': 'REDACTED FOR PRIVACY', 
+    #      'address': 'REDACTED FOR PRIVACY', 'city': 'REDACTED FOR PRIVACY', 
+    #      'state': None, 'registrant_postal_code': 'REDACTED FOR PRIVACY', 'country': 'SE'} 
+    
+    
+          # ~ try:
+         # ~ answers = None
+         # ~ answers = dns.resolver.query(lookuplist[i][1], 'MX')
+      # ~ except dns.exception.DNSException:
+         # ~ #Do nothing here if there is no MX
+         # ~ pass
 
-    res['dns_mx'] = ', '.join([mx for mx in resolve(domain, 'MX')])
+    get_dns_records(domain,['SOA','NS','A','CNAME','MX','TXT'],res)
+    _logger.warning(f"{res=}")
     
-    res['dns_primary'] = sorted({mx.preference:mx.exchange 
-        for mx in resolve(domain, 'MX')}.items(),key=lambda p: int(p[0]))[0]
-    
-    res['dns_soa'] = resolve(domain, 'SOA')
-    res['dns_a'] = ', '.join([a for a in resolve(domain, 'A')])
-    res['dns_ns'] = ', '.join([ns for ns in resolve(domain, 'NS')])
-    res['dns_txt'] = ', '.join([txt for txt in resolve(domain, 'TXT')])
-    res['dns_cname'] = ', '.join([cn for cn in resolve(domain, 'CNAME')])
-    
-    
-    # MX
-    
+    # Mailserver
+    res['mail_server'] = get_mail_server_software(domain)
+
+
+    # ~ #Social media
+    try:
+        sm = [s for a in search(url,num_results=20)]
+        _logger.warning(f"{sm=}")
+
+        for sm_type in ['github','facebook','instagram','linkedin','my.ai','x','brainville','odoo-community','linkopingsciencepark']:
+            if sm_type in sm:
+                res[f'bw_{sm_type}'] = [s for s in sm if 'insta' in l][0]
+                _logger.warning(f"bw_{sm_type}=")
+        if not 'bw_instagram' in res:
+            sm = [s for a in search(url+' instagram',num_results=20)]
+            _logger.warning(f"{sm=} insta")
+
+            if len(sm) > 0:
+                res['bw_instagram'] = [0]
+    except Exception as e:
+        _logger.warning(f"Social Media: An unexpected error occurred: {e}")    
+        
+        
     return res
 
 def name2url(name):
-    return [a for a in search(name)][0]
+    return [a for a in search(name,1)][0]
 
-    
+def get_dns_records(domain,rrec,res):
+    for r in rrec:
+        try:
+            f = f'dns_{r.lower()}'
+            res[f] = ', '.join([dns.to_text() for dns in resolve(domain, r.upper()).rrset.items])
+            _logger.warning(f"{f} {res[f]=}")
+        except Exception as e:
+            _logger.warning(f"DNS: An unexpected error occurred: {e}")
 
-def get_mailserver():
-    answers = dns.resolver.resolve('vertel.se', 'MX')
-    for rdata in answers:
-        print('Host', rdata.exchange, 'has preference', rdata.preference)
+
+
+def get_mail_server_software(domain,smtp_port=25):
+    try:
+        mx_primary = sorted([mx for mx in resolve(domain, 'MX').rrset.items], key=lambda r: r.preference)[0].exchange.to_text()[:-1]    
+        _logger.warning(f"{mx_primary=}")
+
+
+        # Create a connection to the SMTP server
+        server = smtplib.SMTP(mx_primary, smtp_port, timeout=10)
+        
+        # Initiate the connection and retrieve the banner message
+        server.ehlo_or_helo_if_needed()
+        
+        # Close the connection
+        server.quit()
+        
+        # Extract and print the mail server software information from the banner
+        banner = server.sock.recv(1024).decode()
+        return banner.strip()
+    except (smtplib.SMTPConnectError, smtplib.SMTPServerDisconnected, socket.timeout) as e:
+        return f"Error connecting to SMTP server: {e}"
+    except Exception as e:
+        return f"An unexpected error occurred: {e}"
+

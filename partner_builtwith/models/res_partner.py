@@ -41,27 +41,32 @@ class ResPartner(models.Model):
     bw_updated_date = fields.Datetime(string="Creation Date")
     bw_expiration_date = fields.Datetime(string="Expiration Date")
     bw_transfer_date = fields.Datetime(string="Transfer Date")
-    bw_name_servers = fields.Char(string="Name Servers")
-    bw_dnssec = fields.Datetime(string="Dnssec")
+    bw_name_servers = fields.Text(string="Name Servers")
+    bw_dnssec = fields.Char(string="Dnssec")
     bw_status = fields.Char(string="Status")
-    bw_registrar = fields.Datetime(string="Registrar")
-            
+    bw_registrar = fields.Char(string="Registrar")
+    # DNS/mail
+    bw_dns_a = fields.Char(string="A")
+    bw_dns_cname = fields.Char(string="CNAME")
+    bw_dns_mx = fields.Text(string="MX")
+    bw_dns_ns = fields.Text(string="NS")
+    bw_dns_soa = fields.Char(string="SOA")
+    bw_dns_txt = fields.Char(string="TXT")
+    bw_mail_server = fields.Char(string="Mail Server")
+    #Social media
+    bw_brainville = fields.Char(string="Brainville")
+    bw_facebook = fields.Char(string="Facebook")
+    bw_github = fields.Char(string="Github")
+    bw_instagram = fields.Char(string="Instagram")
+    bw_linkedin = fields.Char(string="Linkedin")
+    bw_linkopingsciencepark = fields.Char(string="Linköping Science Park")
+    bw_myai = fields.Char(string="AI Sweden")
+    bw_odoo_community = fields.Char(string="Odoo Community")
+    bw_x = fields.Char(string="X")
+
     def bw_enrich(self):
         for p in self:
-            # ~ _logger.warning(f"{p.fields_get()=}")
-            
-# ~ 'type': 'char'
-# ~ 'type': 'date'
-# ~ 'type': 'Datetime'
-# ~ 'type': 'float'
-# ~ 'type': 'html'
-# ~ 'type': 'integer'
-# ~ 'type': 'many2many'
-# ~ 'type': 'many2one'
-# ~ 'type': 'monetary'
-# ~ 'type': 'one2many'
-# ~ 'type': 'selection'
-
+            _logger.warning(f"{p.website=}")
             if not p.website:
                 p.website = name2url(p.name)
             
@@ -74,7 +79,11 @@ class ResPartner(models.Model):
 
             for k in bw.keys():
                 key = f'bw_{k}'.replace('-','_')
+                key = key.replace('.','')
+                _logger.warning(f"working with field {key=}")
+
                 if not key in f.keys():
+                    _logger.warning(f"missing field {key=}")
                     continue
                 # ~ _logger.warning(f"{key=} {bk=} {bw[bk]=}")
                 if f[key]['type'] == 'char':
@@ -82,18 +91,30 @@ class ResPartner(models.Model):
                         rec[key] = ', '.join(bw[k])
                     else:
                         rec[key] = bw[k]
-                if f[key]['type'] in ['date','Datetime','float','html','monetary','selection']:
+                elif f[key]['type'] in ['date','float','html','monetary','selection']:
                     rec[key] = bw[k]
+                elif f[key]['type'] in ['Datetime','datetime']:
+                    if type(bw[k]) == str:
+                        rec[key] = bw[k]
+                    else:
+                        # ~ rec[key] = bw[k].strftime("%Y-%m-%d %H:%M:%S")
+                        rec[key] = bw[k]
+                else:
+                    _logger.warning(f"{key=} {f[key]['type']=}")
+                    
+                        
                 if f[key]['type'] == 'integer':
                     rec[key] = int(bw[k])
                 
-            _logger.warning(f"{rec=}")
             # key in bw are same as field with underscrores 
             # eg marketing-automation -> bw_marketing_automation
+            _logger.warning(f"{rec=}")
+
             p.write(rec)
-            if bw['image_1920']:
+   
+            if bw.get('image_1920',None):
                 p.image_1920 = bw['image_1920']
-            
+   
         # ~ p.fields_get()={
             # ~ 'name': {'type': 'char', 'change_default': False, 'company_dependent': False, 'depends': (), 'manual': False, 'readonly': False, 'required': False, 'searchable': True, 'sortable': True, 'store': True, 'string': 'Name', 'translate': False, 'trim': True}, 
         # ~ }
