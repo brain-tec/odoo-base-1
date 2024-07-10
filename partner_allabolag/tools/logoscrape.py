@@ -2,8 +2,17 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 import base64
+
+from googlesearch import search
+
 import logging
 _logger = logging.getLogger(__name__)
+
+
+
+def name2url(name):
+    _logger.warning(f"{[a for a in search(name)]=}")
+    return [a for a in search(name)][0]
 
 def LogoScrape(url):
     # Send an HTTP request to the website's URL to retrieve the HTML source code
