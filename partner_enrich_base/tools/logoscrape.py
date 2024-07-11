@@ -2,8 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 import base64
-import logging
-_logger = logging.getLogger(__name__)
 
 def LogoScrape(url):
     # Send an HTTP request to the website's URL to retrieve the HTML source code
@@ -23,7 +21,7 @@ def LogoScrape(url):
     for img_tag in img_tags:
         # ~ print(img_tag)
         if img_tag.get('id') == 'logo':
-            logo_url = img_tag['src']
+            logo_url = img_tag['src']+'id'
             break
             
         if 'logo' in img_tag.get('class', []):
@@ -38,25 +36,4 @@ def LogoScrape(url):
         return None
     if not 'http' in logo_url:
         logo_url = url+'/'+logo_url
-
-    _logger.warning(f'Logo {logo_url=}')
-
-    logo = requests.get(logo_url, stream=True).raw
-    _logger.warning(f'{logo=}')
-
-    return fetch_image_as_base64(logo_url)
     return base64.b64encode(Image.open(requests.get(logo_url, stream=True).raw))
-    
-
-def fetch_image_as_base64(url):
-    # Fetch the image from the URL
-    response = requests.get(url)
-    
-    # Ensure the request was successful
-    if response.status_code == 200:
-        # Encode the image content in base64
-        encoded_image = base64.b64encode(response.content).decode('utf-8')
-        return encoded_image
-    else:
-        raise Exception(f"Failed to fetch image. Status code: {response.status_code}  {url=}")
-

@@ -20,27 +20,27 @@
 ##############################################################################
 
 {
-    'name': 'Base: Enrich partner information from Allabolag',
+    'name': 'Base: Partner Enrich Base',
     'version': '14.0.1.1.0',
-    # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
-    'summary': 'Change order to Zip, State, City.',
-    'category': 'Website',
     'description': """
-    Enrich with information from allabolag
-
+      Base module for Enrich Partner records with updated data. This module 
+      does nothin but are a base fpr other enrichement modules
       
     """,
     #'sequence': '1',
     'author': 'Vertel AB',
-    'website': 'https://vertel.se/apps/odoo-base/partner_allabolag',
+    'category': 'Hidden/Tools',
+    'website': 'https://vertel.se/apps/odoo-base/partner_enrich_base',
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',
     'contributor': '',
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-base',
-    'depends': ['partner_enrich_base','contacts', 'partner_company_registry'],
+    'depends': ['partner_autocomplete','contacts'],
     'data': [
-        'views/partner_views.xml',
+        'data/ir_action.xml',
+        # ~ 'views/res_partner_view.xml',
+        
     ],
     'application': False,
     'installable': True,
