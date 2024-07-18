@@ -80,6 +80,7 @@ class ResPartnerMixin(models.AbstractModel):
         "Nycketal - Kassalikviditet" : "summary_cash_flow" ,
         'Nycketal - Nettoomsättning per anställd (tkr)': 'kpi_revenue_employees',
         "Översikt - Besöksadress" : "street",
+        'Översikt - Utdelningsadress': 'street',
         "Översikt - Ort" : "city",
         "Översikt - Telefon" : "phone",
         'Aktivitet och status - Bolaget registrerat': 'summary_registry_year',
@@ -92,7 +93,7 @@ class ResPartnerMixin(models.AbstractModel):
         #        fields_dict[key] = self[key]
         zipcode = ''
         f = self.fields_get()
-        record = {allabolag[k]:partner.data[k] for k in allabolag.keys() }
+        record = {allabolag[k]:partner.data[k] for k in allabolag.keys() if partner.data.get(k,False) }
         for k in record.keys():
             _logger.warning(f"{k= } {f[k]['type']=} {record[k]=}")
             if k == 'city':
@@ -117,8 +118,10 @@ class ResPartnerMixin(models.AbstractModel):
         
         record['vat'] = self.orgnr2vat(company_registry)
         record['zip'] = zipcode
-        if "\n" in record['street']:
-            record['street'] = record['street'].split('\n')[0]
+        if "\n" in record.get('street',''):
+            record['street'],record['street2'] = [s.strip() for s in record['street'].split('\n')+['.','.'] if s.strip() > ''][0:2]
+            if record['street'] == record['street2']:
+                record['street2'] = ''
         _logger.warning(f"write {partner.data=}")
         if partner.data.get('remarks'):
             self.write(partner.data['remarks'])
@@ -140,9 +143,11 @@ class ResPartnerMixin(models.AbstractModel):
             for (key,data) in item.get('remarks',[{}])[0].items():
                 res['key'] = data
         res['company_registry'] = company_registry
-        res['website'] = name2url(query)
-        res['image_1920'] = LogoScrape(res['website'])
         res['vat'] = self.orgnr2vat(res['company_registry'])
+
+        res['website'] = name2url(query)
+        if res['website']:
+            res['image_1920'] = LogoScrape(res['website'])
         return self._format_data_company(res)
 
     @api.model
@@ -157,10 +162,13 @@ class ResPartnerMixin(models.AbstractModel):
         _logger.warning(f"allabolag enrich_company {company_domain=} {partner_gid=} {vat=} {self=}")
         company_registry, item = partner.name2orgno(query)
         _logger.warning(f"allabolag {company_registry=} {item=}")
-        if item['hasremarks']:
-            # ~ partner.write(item['remarks'][0])
-            partner.message_post(body=_(f'{item["remarks"][0]["remarkCode"]=} {item["remarks"][0]["remarkDescription"]=} {item["remarks"][0]["remarkDate"]=}'), message_type='notification')
-            _logger.warning(f"write record[k]=")
+        try:
+            if item['hasremarks']:
+                # ~ partner.write(item['remarks'][0])
+                partner.message_post(body=_(f'{item["remarks"][0]["remarkCode"]=} {item["remarks"][0]["remarkDescription"]=} {item["remarks"][0]["remarkDate"]=}'), message_type='notification')
+                _logger.warning(f"write record[k]=")
+        except Exception as e:
+            _logger.warning(f"_company hasremarks {item=} error {e}")
         _logger.warning(f'{company_registry=}')
         # ~ if company_registry:
             # ~ record = partner.partner_enrich_allabolag(company_registry)
@@ -186,7 +194,7 @@ class ResPartner(models.Model):
         for partner in self:
             if not partner.website:
                 partner.website = name2url(partner.name)
-            if not partner.image_1920:
+            if not partner.image_1920 and partner.website:
                 _logger.warning(f"allabolag partner_enrich {LogoScrape(partner.website)=}")
                 partner.image_1920 = LogoScrape(partner.website)
             if not partner.company_registry:

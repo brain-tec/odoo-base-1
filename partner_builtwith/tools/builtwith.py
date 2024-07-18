@@ -68,15 +68,15 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
 
     # ~ #Social media
     try:
-        sm = [s for a in search(url,num_results=20)]
-        _logger.warning(f"{sm=}")
+        sm = [s for s in search(url,num_results=20)]
+        _logger.warning(f"Social Media {sm=}")
 
         for sm_type in ['github','facebook','instagram','linkedin','my.ai','x','brainville','odoo-community','linkopingsciencepark']:
             if sm_type in sm:
-                res[f'bw_{sm_type}'] = [s for s in sm if 'insta' in l][0]
+                res[f'bw_{sm_type}'] = [s for s in sm if sm_type in l][0]
                 _logger.warning(f"bw_{sm_type}=")
         if not 'bw_instagram' in res:
-            sm = [s for a in search(url+' instagram',num_results=20)]
+            sm = [s for s in search(url+' instagram',num_results=20)]
             _logger.warning(f"{sm=} insta")
 
             if len(sm) > 0:
@@ -105,6 +105,13 @@ def get_mail_server_software(domain,smtp_port=25):
     try:
         mx_primary = sorted([mx for mx in resolve(domain, 'MX').rrset.items], key=lambda r: r.preference)[0].exchange.to_text()[:-1]    
         _logger.warning(f"{mx_primary=}")
+        
+        if 'outlook' in mx_primary:
+            return "MS365"
+        if 'google' in mx_primary:
+            return 'Google'
+        else:
+            return "Other"
 
 
         # Create a connection to the SMTP server

@@ -64,12 +64,24 @@ class ResPartner(models.Model):
     bw_odoo_community = fields.Char(string="Odoo Community")
     bw_x = fields.Char(string="X")
 
+    def partner_enrich(self):
+        _logger.warning(f"builtwith partner_enrich {self=}")
+         
+        for partner in self:
+            if not partner.website:
+                partner.website = name2url(partner.name)
+            partner.bw_enrich()
+
+    @api.model
+    def enrich_company(self, company_domain, partner_gid, vat):
+        res = {}
+        _logger.warning(f"builtwith enrich_company {company_domain=} {partner_gid=} {vat=} {self=}")
+        if COMPANY_NO_IAP == True:
+            res = super(ResPartner, self).enrich_company(company_domain,partner_gid,vat)
+        return res
+
     def bw_enrich(self):
         for p in self:
-            _logger.warning(f"{p.website=}")
-            if not p.website:
-                p.website = name2url(p.name)
-            
             bw = builtwith(p.website)
             _logger.warning(f"{bw=}")
 
@@ -80,18 +92,20 @@ class ResPartner(models.Model):
             for k in bw.keys():
                 key = f'bw_{k}'.replace('-','_')
                 key = key.replace('.','')
-                _logger.warning(f"working with field {key=}")
+                _logger.warning(f"working with field {key=}  {bw[k]=} {type(bw[k])=}")
 
                 if not key in f.keys():
                     _logger.warning(f"missing field {key=}")
                     continue
                 # ~ _logger.warning(f"{key=} {bk=} {bw[bk]=}")
+                _logger.warning(f"working with field {key=}  {bw[k]=}  {f[key]['type']=}  {type(bw[k])=}")
+
                 if f[key]['type'] == 'char':
                     if type(bw[k]) == list:
                         rec[key] = ', '.join(bw[k])
                     else:
                         rec[key] = bw[k]
-                elif f[key]['type'] in ['date','float','html','monetary','selection']:
+                elif f[key]['type'] in ['date','float','html','monetary','selection','text']:
                     rec[key] = bw[k]
                 elif f[key]['type'] in ['Datetime','datetime']:
                     if type(bw[k]) == str:
@@ -114,8 +128,4 @@ class ResPartner(models.Model):
    
             if bw.get('image_1920',None):
                 p.image_1920 = bw['image_1920']
-   
-        # ~ p.fields_get()={
-            # ~ 'name': {'type': 'char', 'change_default': False, 'company_dependent': False, 'depends': (), 'manual': False, 'readonly': False, 'required': False, 'searchable': True, 'sortable': True, 'store': True, 'string': 'Name', 'translate': False, 'trim': True}, 
-        # ~ }
 

@@ -12,13 +12,23 @@ _logger = logging.getLogger(__name__)
 
 def name2url(name):
     _logger.warning(f"{[a for a in search(name)]=}")
-    return [a for a in search(name)][0]
-
+    try:
+        return [a for a in search(name)][0]
+    except Exception as e:
+        _logger.warning(f"name2url search {name=} error {e}")
+        return None
+        
 def LogoScrape(url):
+    if not url:
+        return None
     # Send an HTTP request to the website's URL to retrieve the HTML source code
-    response = requests.get(url)
-    html = response.text
-
+    try:
+        response = requests.get(url)
+        html = response.text
+    except Exception as e:
+        _logger.warning(f"request.get({url}) error {e}")
+        return None
+    
     # Parse the HTML using Beautiful Soup
     soup = BeautifulSoup(html, 'html.parser')
 

@@ -32,7 +32,10 @@ class ResPartner(models.Model):
         
     @api.model
     def orgnr2vat(self,company_registry):
-        return f"SE{company_registry.replace('-','')}01"
+        if company_registry:
+            return f"SE{company_registry.replace('-','')}01"
+        else:
+            return None
         
     @api.model
     def _rpc_remote_api(self, action, params, timeout=15):
