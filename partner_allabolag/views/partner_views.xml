@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_partner_form" model="ir.ui.view">
+      <field name="name">res.partner.form.allabolag</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml">
+        <notebook position="inside">
+          <page name="financial_information" string="Financial Information">
+            <group name="container_row_2">
+              <group string="Summary" name="summary" priority="1">
+                <field name="summary_revenue" />
+                <field name="summary_profit_ebit" />
+                <field name="summary_state" />
+                <field name="summary_registry_year" />
+                <field name="summary_parent_company" />
+              </group>
+              <group name="kpi" string="KPI" priority="2">
+                <field name="summary_net_sales_change" />
+                <field name="summary_profit_margin" />
+                <field name="summary_solvency" />
+                <field name="kpi_no_employees" />
+                <field name="kpi_revenue_employees" />
+              </group>
+            </group>
+            <group string="Business Summary" name="business_summary" priority="3">
+              <field name="summary_purpose" />
+            </group>
+            <group string="Remarks" name="remarks" priority="4">
+              <group>
+                <field name="remarkCode" />
+              </group>
+              <group>
+                <field name="remarkDescription" />
+              </group>
+              <group>
+                <field name="remarkDate" />
+              </group>
+            </group>
+          </page>
+        </notebook>
+      </field>
+    </record>
+  </data>
+</odoo>

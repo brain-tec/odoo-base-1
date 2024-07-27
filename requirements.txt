@@ -1,1 +1,8 @@
+allabolag
+beautifulsoup4
+builtwith
+dnspython
+python-googlesearch
+pytesseract
 tesseract-ocr
+python-whois
