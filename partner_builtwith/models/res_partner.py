@@ -7,8 +7,10 @@ from odoo.addons.partner_builtwith.tools.builtwith import builtwith, data, name2
 _logger = logging.getLogger(__name__)
 
 
-class ResPartner(models.Model):
-    _inherit = "res.partner"
+
+class ResPartnerMixin(models.AbstractModel):
+    _name = "res.builtwith.mixin"
+
     
     # ~ data['categories']
     bw_analytics = fields.Char(string='Analytics')
@@ -72,14 +74,6 @@ class ResPartner(models.Model):
                 partner.website = name2url(partner.name)
             partner.bw_enrich()
 
-    @api.model
-    def enrich_company(self, company_domain, partner_gid, vat):
-        res = {}
-        _logger.warning(f"builtwith enrich_company {company_domain=} {partner_gid=} {vat=} {self=}")
-        if COMPANY_NO_IAP == True:
-            res = super(ResPartner, self).enrich_company(company_domain,partner_gid,vat)
-        return res
-
     def bw_enrich(self):
         for p in self:
             bw = builtwith(p.website)
@@ -128,4 +122,20 @@ class ResPartner(models.Model):
    
             if bw.get('image_1920',None):
                 p.image_1920 = bw['image_1920']
+
+
+
+
+    
+class ResPartner(models.Model):
+    _name = 'res.partner'
+    _inherit = ["res.partner",'res.builtwith.mixin']
+
+    @api.model
+    def enrich_company(self, company_domain, partner_gid, vat):
+        res = {}
+        _logger.warning(f"builtwith enrich_company {company_domain=} {partner_gid=} {vat=} {self=}")
+        if COMPANY_NO_IAP == True:
+            res = super(ResPartner, self).enrich_company(company_domain,partner_gid,vat)
+        return res
 
