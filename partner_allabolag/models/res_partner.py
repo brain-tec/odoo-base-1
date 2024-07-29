@@ -210,6 +210,8 @@ class ResPartner(models.Model):
                 partner.write(record)
                 return self._format_data_company(record)
     
+        super(ResPartner,self).partner_enrich()
+
     
     # ~ def partner_enrich(self):
         # ~ self.enrich_allabolag()
