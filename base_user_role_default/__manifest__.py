@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Odoo SA, Open Source Management Solution, third party addon
-#    Copyright (C) 2024- Vertel AB (<https://vertel.se>).
+#    Copyright (C) 2022- Vertel AB (<https://vertel.se>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,27 +20,29 @@
 ##############################################################################
 
 {
-    'name': 'Base: Partner Enrich Base',
-    'version': '16.0.1.1.0',
+    'name': 'Base: User Roles Permission',
+    'version': '14.0.0.1.0',
+    # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
+    'summary': 'Extends the User Roles to add portal user to res.users.role.',
+    'category': 'Tools',
     'description': """
-      Base module for Enrich Partner records with updated data. This module 
-      does nothin but are a base fpr other enrichement modules
-      
+    Extends the User Roles to enable assiging several users to a role, at the same time, via the use of a server action.
     """,
-    #'sequence': '1',
+    #'sequence': '1'
     'author': 'Vertel AB',
-    'category': 'Hidden/Tools',
-    'website': 'https://vertel.se/apps/odoo-base/partner_enrich_base',
+    'website': 'https://vertel.se/apps/odoo-base/base_user_role_mass_addition',
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',
     'contributor': '',
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-base',
-    'depends': ['partner_autocomplete','contacts'],
+    'depends': ['base', 'base_user_role', 'portal'],
     'data': [
-        'data/ir_action.xml',
+        'views/res_config_settings_view_form.xml'
     ],
-    'application': False,
     'installable': True,
+    'application': False,
+    'auto_install': False,
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

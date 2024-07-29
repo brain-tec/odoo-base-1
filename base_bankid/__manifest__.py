@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Odoo SA, Open Source Management Solution, third party addon
-#    Copyright (C) 2024- Vertel AB (<https://vertel.se>).
+#    Copyright (C) 2021- Vertel AB (<https://vertel.se>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,27 +20,24 @@
 ##############################################################################
 
 {
-    'name': 'Base: Partner Enrich Base',
-    'version': '16.0.1.1.0',
-    'description': """
-      Base module for Enrich Partner records with updated data. This module 
-      does nothin but are a base fpr other enrichement modules
-      
-    """,
-    #'sequence': '1',
+    'name': 'Base: BankID QR Flow',
+    'version': '14.0.1.0.0',
+    'summary': 'Adds BankID QR Flow',
+    'category': '',
     'author': 'Vertel AB',
-    'category': 'Hidden/Tools',
-    'website': 'https://vertel.se/apps/odoo-base/partner_enrich_base',
-    'images': ['static/description/banner.png'], # 560x280 px.
+    'website': 'https://vertel.se/apps/odoo-base/base_bankid',
+    'images': ['static/description/banner.png'],  # 560x280 px.
     'license': 'AGPL-3',
     'contributor': '',
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-base',
-    'depends': ['partner_autocomplete','contacts'],
-    'data': [
-        'data/ir_action.xml',
+    "description": """
+        This modules adds bankID QR Flow.
+    """,
+    'depends': ['base', 'sale'],
+    "data": [
+        "views/sale_order_view.xml",
     ],
-    'application': False,
-    'installable': True,
+    "application": False,
+    "installable": True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

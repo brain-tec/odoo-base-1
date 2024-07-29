@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.sni</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="sni_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                <field name="sni_id" options="{'no_create_edit': True}"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_res_partner_filter" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit.sni</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="sni_ids" operator="child_of" />
+                <field name="sni_id" operator="child_of" />
+            </field>
+            <filter name="group_country" position="after">
+                <filter name="sni_id" string="SNI" context="{'group_by': 'sni_id'}"/>
+            </filter>
+        </field>
+    </record>
+    
+</odoo>

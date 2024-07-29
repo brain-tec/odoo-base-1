@@ -41,7 +41,7 @@ class res_partner_find_duplicates(models.TransientModel):
 
         return {
             'name' : 'Search Result',
-            'view_mode': 'tree',
+            'view_mode': 'tree,form',
             'res_model': "res.partner",
             #'res_id': self.id,
             'domain':[('id', 'in', duplicates_ids)],

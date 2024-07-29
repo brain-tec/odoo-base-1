@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Odoo SA, Open Source Management Solution, third party addon
-#    Copyright (C) 2024- Vertel AB (<https://vertel.se>).
+#    Copyright (C) 2023- Vertel AB (<https://vertel.se>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,27 +20,32 @@
 ##############################################################################
 
 {
-    'name': 'Base: Partner Enrich Base',
-    'version': '16.0.1.1.0',
+    'name': 'Base: Elk46 Send SMS',
+    'version': '14.0.0.0.0',
+    # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
+    'summary': '',
+    # Categories can be used to filter modules in modules listing
+    # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
+    # for the full list
+    'category': 'Technical',
     'description': """
-      Base module for Enrich Partner records with updated data. This module 
-      does nothin but are a base fpr other enrichement modules
-      
+    
     """,
     #'sequence': '1',
     'author': 'Vertel AB',
-    'category': 'Hidden/Tools',
-    'website': 'https://vertel.se/apps/odoo-base/partner_enrich_base',
+    'website': 'https://vertel.se/apps/odoo-base/elk46_send_sms',
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',
     'contributor': '',
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-base',
-    'depends': ['partner_autocomplete','contacts'],
+    # Any module necessary for this one to work correctly
+
+    'depends': ['sms'],
     'data': [
-        'data/ir_action.xml',
+        "views/assets.xml",
+        "views/sms_view.xml",
+        "data/ir_config_parameter.xml"
     ],
-    'application': False,
-    'installable': True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
