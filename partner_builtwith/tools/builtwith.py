@@ -6,6 +6,10 @@ from urllib.parse import urlparse
 from dns.resolver import resolve
 import smtplib
 import socket
+import time
+from stem import Signal
+from stem.control import Controller
+import requests
 import logging
 _logger = logging.getLogger(__name__)
 # ~ from dns import resolver
@@ -68,7 +72,7 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
 
     # ~ #Social media
     try:
-        sm = [s for s in search(url,num_results=20)]
+        sm = [s for s in google_search_with_tor(url,num_results=20)]
         _logger.warning(f"Social Media {sm=}")
 
         for sm_type in ['github','facebook','instagram','linkedin','my.ai','x','brainville','odoo-community','linkopingsciencepark']:
@@ -82,13 +86,37 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
             if len(sm) > 0:
                 res['bw_instagram'] = [0]
     except Exception as e:
-        _logger.warning(f"Social Media: An unexpected error occurred: {e}")    
-        
-        
+        _logger.warning(f"Social Media: An unexpected error occurred: {e}")  
+        renew_tor_ip()
+  
     return res
 
+def renew_tor_ip():
+    with Controller.from_port(port=9051) as controller:
+        controller.authenticate()
+        controller.signal(Signal.NEWNYM)
+
+def google_search_with_tor(query, num_results=10, lang="sv"):
+    proxies = {
+        'http': 'socks5h://localhost:9050',
+        'https': 'socks5h://localhost:9050'
+    }
+    proxy="socks5h://localhost:9050"
+
+    results = []
+    for url in search(query, num_results=num_results, lang=lang, proxy=proxy):
+        results.append(url)
+        time.sleep(1)  # Add a delay between requests to avoid detection
+
+    return results
+
 def name2url(name):
-    return [a for a in search(name,1)][0]
+    try:
+        return google_search_with_tor(name,num_results=1)
+    except Exception as e:
+        _logger.warning(f"name2url: An error occurred: {e}")
+        renew_tor_ip()
+        raise Exception("Tor IP renewed. Please try again.")
 
 def get_dns_records(domain,rrec,res):
     for r in rrec:
