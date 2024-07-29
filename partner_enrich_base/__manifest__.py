@@ -39,8 +39,6 @@
     'depends': ['partner_autocomplete','contacts'],
     'data': [
         'data/ir_action.xml',
-        # ~ 'views/res_partner_view.xml',
-        
     ],
     'application': False,
     'installable': True,

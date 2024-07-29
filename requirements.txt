@@ -1,8 +1,11 @@
 allabolag
-beatifulsoap4
+beautifulsoup4
 builtwith
 dnspython
-sudogooglesearch
+googlesearch-python
 pytesseract
-tesseract-ocr
+#tesseract-ocr
 python-whois
+requests[socks]
+PySocks
+stem
