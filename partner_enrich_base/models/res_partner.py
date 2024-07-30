@@ -13,6 +13,12 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     def partner_enrich(self):
+        _logger.warning(f"allabolag partner_enrich {self=}")
+        for partner in self:
+            _logger.warning(f'partner_enrich_base {partner.name=}')
+        if hasattr(super(ResPartner, self), 'partner_enrich'):
+            super(ResPartner, self).partner_enrich()
+
         pass
         
         

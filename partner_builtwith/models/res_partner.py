@@ -66,13 +66,6 @@ class ResPartnerMixin(models.AbstractModel):
     bw_odoo_community = fields.Char(string="Odoo Community")
     bw_x = fields.Char(string="X")
     
-    def name2website(self):
-        for partner in self:
-            try:
-                partner.website = name2url(partner.name)
-            except Exception as e:
-                _logger.warning(f"Google: An unexpected error occurred: {e}")
-                partner.message_post(body=_(f'Google name2website: unexpected error {e} {partner.name}\nMaybe you can add website manually?'), message_type='notification')
 
     def partner_enrich(self):
         _logger.warning(f"builtwith partner_enrich {self=}")
@@ -116,6 +109,11 @@ class ResPartnerMixin(models.AbstractModel):
                         rec[key] = ', '.join(bw[k])
                     else:
                         rec[key] = bw[k]
+                elif f[key]['type'] == 'datetime':
+                    if type(bw[k]) == list:
+                        rec[key] = bw[k][0]
+                    else:
+                        rec[key] = bw[k]
                 elif f[key]['type'] in ['date','float','html','monetary','selection','text']:
                     rec[key] = bw[k]
                 elif f[key]['type'] in ['Datetime','datetime']:
@@ -144,6 +142,18 @@ class ResPartnerMixin(models.AbstractModel):
 class ResPartner(models.Model):
     _name = 'res.partner'
     _inherit = ["res.partner",'res.builtwith.mixin']
+
+
+    def name2website(self, name):
+        for partner in self:
+            try:
+                if not name:
+                    name = partner.name
+                partner.website = name2url(name)
+            except Exception as e:
+                _logger.warning(f"Google: An unexpected error occurred: {e}")
+                partner.message_post(body=_(f'Google name2website: unexpected error {e} {partner.name}\nMaybe you can add website manually?'), message_type='notification')
+
 
     @api.model
     def enrich_company(self, company_domain, partner_gid, vat):
