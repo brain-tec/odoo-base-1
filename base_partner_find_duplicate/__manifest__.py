@@ -24,13 +24,11 @@
 {
     'name': 'Find Duplicate Contacts',
     'version': '16.0.0.0.0',
-    'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.odoo.com""",
-    'category': '', # Technical Settings|Localization|Payroll Localization|Account Charts|User types|Invoicing|Sales|Human Resources|Operations|Marketing|Manufacturing|Website|Theme|Administration|Appraisals|Sign|Helpdesk|Administration|Extra Rights|Other Extra Rights|
+    'summary': "New menu under configuration in Contacts for eliminate dubplicates",
+    'category': 'Technical', # Technical Settings|Localization|Payroll Localization|Account Charts|User types|Invoicing|Sales|Human Resources|Operations|Marketing|Manufacturing|Website|Theme|Administration|Appraisals|Sign|Helpdesk|Administration|Extra Rights|Other Extra Rights|
     'description': """
-        Long description of module's purpose
-    """,
+        The module adds a new meny choice under Configuration in Contacts.
+        This meny choice will present the existing contact, sorted by matching names, email, or phone number.""",
     'author': 'Vertel AB',
     'website': 'https://vertel.se/apps/odoo-',
     'license': 'AGPL-3',

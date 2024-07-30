@@ -37,7 +37,7 @@ def LogoScrape(url):
     if logo_url == 'none':
         return None
     if not 'http' in logo_url:
-        logo_url = url+'/'+logo_url
+        logo_url = url+logo_url
 
     _logger.warning(f'Logo {logo_url=}')
 

@@ -6,9 +6,11 @@ from odoo.addons.partner_builtwith.tools.builtwith import builtwith, data, name2
 
 _logger = logging.getLogger(__name__)
 
+COMPANY_NO_IAP=True
 
-class ResPartner(models.Model):
-    _inherit = "res.partner"
+
+class ResPartnerMixin(models.AbstractModel):
+    _name = "res.builtwith.mixin"
     
     # ~ data['categories']
     bw_analytics = fields.Char(string='Analytics')
@@ -63,14 +65,23 @@ class ResPartner(models.Model):
     bw_myai = fields.Char(string="AI Sweden")
     bw_odoo_community = fields.Char(string="Odoo Community")
     bw_x = fields.Char(string="X")
+    
+    def name2website(self):
+        for partner in self:
+            try:
+                partner.website = name2url(partner.name)
+            except Exception as e:
+                _logger.warning(f"Google: An unexpected error occurred: {e}")
+                partner.message_post(body=_(f'Google name2website: unexpected error {e} {partner.name}\nMaybe you can add website manually?'), message_type='notification')
 
     def partner_enrich(self):
         _logger.warning(f"builtwith partner_enrich {self=}")
-         
         for partner in self:
             if not partner.website:
-                partner.website = name2url(partner.name)
-            partner.bw_enrich()
+                partner.website = partner.name2website()
+            if partner.website:
+                partner.bw_enrich()
+        super(ResPartner,self).partner_enrich()
 
     @api.model
     def enrich_company(self, company_domain, partner_gid, vat):
@@ -129,3 +140,15 @@ class ResPartner(models.Model):
             if bw.get('image_1920',None):
                 p.image_1920 = bw['image_1920']
 
+    
+class ResPartner(models.Model):
+    _name = 'res.partner'
+    _inherit = ["res.partner",'res.builtwith.mixin']
+
+    @api.model
+    def enrich_company(self, company_domain, partner_gid, vat):
+        res = {}
+        _logger.warning(f"builtwith enrich_company {company_domain=} {partner_gid=} {vat=} {self=}")
+        if COMPANY_NO_IAP == True:
+            res = super(ResPartner, self).enrich_company(company_domain,partner_gid,vat)
+        return res

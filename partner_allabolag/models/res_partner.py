@@ -19,29 +19,22 @@ COMPANY_NO_IAP=True
 class ResPartnerMixin(models.AbstractModel):
     _name = "res.partner.allabolag.mixin"
 
-    summary_revenue = fields.Float(string='Revenue KSEK')
-    summary_profit_ebit = fields.Float(string='Profit EBIT KSEK')
-    summary_purpose = fields.Text(string='Business and purpose')
-    summary_state = fields.Char(string='Business status')
-    summary_registry_year = fields.Date(string='Registry Year')
-    summary_parent_company = fields.Char(string='Parent Company')
     kpi_no_employees = fields.Integer(string='Number of employees')
     kpi_revenue_employees = fields.Float(string='Revenue per Employee')
-    
-    summary_net_sales_change = fields.Float(string='Net Sales Changes')
-    summary_profit_margin = fields.Float(string='Profit Margin')
-    summary_solvency = fields.Float(string='Solvency')
-    summary_cash_flow = fields.Float(string='Cash Flow')
+    linkTo = fields.Char(string='Link', size=64, trim=True, help="Link to Allabolag")
     remarkCode = fields.Char(string='Remark', size=4)
-    remarkDescription = fields.Char(string='Remark Descr', trim=True, )
     remarkDate = fields.Date(string='Remark Date') # fields.date.add|context_today|end_of|start_of|substract|to_date|to_string|today
-    #item={'orgnr': '559306-8660', 'jurnamn': 'Lindell & Co Varumärkestjänst AB', 'ftgtyp': 'ab', 'bolpres': '', 
-    #'abv_hgrupp': 'Juridik, Ekonomi & Konsulttjänster', 'abv_ugrupp': 'Patentbyråer', 
-    #'ba_postort': 'Solna', 'companyPresentation': {}, 'linkTo': '5593068660/lindell-co-varumarkestjanst-ab', 'score': {'0': '100.000'}, 
-    #'remarks': [{'remarkCode': 'SHV', 'remarkDescription': 'Svensk Handel Varningslistan med produktnamn: LINDELL & CO.', 'remarkDate': None}], 'hasremarks': True, 
-    #'relatedmetadata': [{'key': 'cfarNamn', 'value': 'lindell & co varumärkestjänst ab'}], 'hasrelatedmetadata': True, 'status': ''} 
-    
-
+    remarkDescription = fields.Char(string='Remark Descr', trim=True, )
+    summary_cash_flow = fields.Float(string='Cash Flow')
+    summary_net_sales_change = fields.Float(string='Net Sales Changes')
+    summary_parent_company = fields.Char(string='Parent Company')
+    summary_profit_ebit = fields.Float(string='Profit EBIT KSEK')
+    summary_profit_margin = fields.Float(string='Profit Margin')
+    summary_purpose = fields.Text(string='Business and purpose')
+    summary_registry_year = fields.Date(string='Registry Year')
+    summary_revenue = fields.Float(string='Revenue KSEK')
+    summary_solvency = fields.Float(string='Solvency')
+    summary_state = fields.Char(string='Business status')
     
     @api.model
     def name2orgno(self,name):
@@ -209,13 +202,8 @@ class ResPartner(models.Model):
                 _logger.warning(f'{record=}')
                 partner.write(record)
                 return self._format_data_company(record)
-    
-    
-    # ~ def partner_enrich(self):
-        # ~ self.enrich_allabolag()
-        # ~ super(ResPartner,self).partner_enrich()
+        super(ResPartner,self).partner_enrich()
 
-    
     def enrich_allabolag(self):
         if not self.company_type == "company":
             raise UserError(_('This functio has to be on company.'))
@@ -227,12 +215,10 @@ class ResPartner(models.Model):
         record = self.partner_enrich_allabolag(self.company_registry)
         self.write(record)
 
-    
     @api.model
     def check_bankruptcy(self):
-        until = datetime.strptime('2024-07-01','%Y-%m-%d') ## fetch this date from system parameter
+        until = datetime.strptime('2024-07-01','%Y-%m-%d') #TODO fetch this date from system parameter
         orgnummer=[]
-        
         
         def _parse_liquidated_company_item(item_dict):
             
@@ -268,77 +254,4 @@ class ResPartner(models.Model):
         for partner in self.env['res.partner'].search([('company_registry', 'in', orgnummer )]):
             partner.message_post(body=_(f'Company filed for bankrupcy'), message_type='notification')
         
-        
-        ## save todays date to system parameter
-
-    
-a ="""Översikt - Namn
-Översikt - VD
-Översikt - Bolagsform
-Översikt - F-Skatt
-Översikt - Moms
-Översikt - Registreringsår
-* Översikt - Besöksadress
-* Översikt - Ort
-* Översikt - Län
-Översikt - account_figures_year
-* Översikt - Omsättning
-Översikt - Res. e. fin
-* Översikt - Årets resultat
-Översikt - Summa tillgångar
-Aktivitet och status - 63910
-Aktivitet och status - Status
-Aktivitet och status - Bolaget registrerat
-Aktivitet och status - F-Skatt
-Aktivitet och status - Startdatum för F-Skatt
-Aktivitet och status - Moms
-Aktivitet och status - Startdatum för moms
-Aktivitet och status - Bolagsform
-Aktivitet och status - Ägandeförhållande
-Aktivitet och status - Länsäte
-Aktivitet och status - Kommunsäte
-* Aktivitet och status - Verksamhet & ändamål
-Aktivitet och status - SNI-kod
-Aktivitet och status - SNI-bransch
-Resultaträkning (tkr) - Nettoomsättning
-Resultaträkning (tkr) - Övrig omsättning
-Resultaträkning (tkr) - Rörelseresultat (EBIT)
-Resultaträkning (tkr) - Resultat efter finansnetto
-Resultaträkning (tkr) - Årets resultat
-Balansräkningar (tkr) - Tillgångar
-Balansräkningar (tkr) - Tecknat ej inbetalt kapital
-Balansräkningar (tkr) - Anläggningstillgångar
-Balansräkningar (tkr) - Omsättningstillgångar
-Balansräkningar (tkr) - Skulder, eget kapital och avsättningar
-Balansräkningar (tkr) - Eget kapital
-Balansräkningar (tkr) - Obeskattade reserver
-Balansräkningar (tkr) - Avsättningar (tkr)
-Balansräkningar (tkr) - Långfristiga skulder
-Balansräkningar (tkr) - Kortfristiga skulder
-Balansräkningar (tkr) - Skulder och eget kapital
-Löner & utdelning (tkr) - Löner till styrelse & VD
-Löner & utdelning (tkr) - Varav tantiem till styrelse & VD
-Löner & utdelning (tkr) - Löner till övriga anställda
-Löner & utdelning (tkr) - Varav resultatlön till övriga anställda
-Löner & utdelning (tkr) - Sociala kostnader
-Löner & utdelning (tkr) - Utdelning till aktieägare
-Löner & utdelning (tkr) - Omsättning
-* Nycketal - Antal anställda
-Nycketal - Nettoomsättning per anställd (tkr)
-Nycketal - Personalkostnader per anställd (tkr)
-Nycketal - Rörelseresultat, EBITDA
-* Nycketal - Nettoomsättningförändring
-Nycketal - Du Pont-modellen
-* Nycketal - Vinstmarginal
-Nycketal - Bruttovinstmarginal
-Nycketal - Rörelsekapital/omsättning
-* Nycketal - Soliditet
-* Nycketal - Kassalikviditet"""
-
-
-
-    
-    
-    
-    
-    
+        #TODO save todays date to system parameter

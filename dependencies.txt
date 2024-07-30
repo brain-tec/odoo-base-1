@@ -1,0 +1,4 @@
+git@github.com:OCA/sale-workflow.git
+git@github.com:OCA/reporting-engine.git
+git@github.com:OCA/hr.git
+git@github.com:OCA/manufacture.git
