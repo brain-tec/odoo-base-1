@@ -27,8 +27,8 @@
     'category': 'Website',
     'description': """
       Enrich with technical information using builtwith-library and other tools
-      
-
+      Using TOR for proxy ip-adresses      
+      apt install tor
       
     """,
     #'sequence': '1',
