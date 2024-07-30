@@ -21,9 +21,9 @@
 
 {
     'name': 'Base: Enrich partner information from Allabolag',
-    'version': '14.0.1.1.0',
+    'version': '17.0.1.1.0',
     # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
-    'summary': 'Change order to Zip, State, City.',
+    'summary': 'Enrich partner with data from Allabolag',
     'category': 'Website',
     'description': """
     Enrich with information from allabolag
