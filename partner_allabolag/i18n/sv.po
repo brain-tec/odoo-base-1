@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0-20231205\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-19 10:33+0000\n"
-"PO-Revision-Date: 2024-07-19 12:43+0200\n"
+"POT-Creation-Date: 2024-07-31 08:05+0000\n"
+"PO-Revision-Date: 2024-07-31 08:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"Plural-Forms: \n"
+"Language: sv\n"
+"X-Generator: Poedit 2.3\n"
 
 #. module: partner_allabolag
 #: model_terms:ir.ui.view,arch_db:partner_allabolag.view_partner_form
@@ -34,7 +34,7 @@ msgstr "Verksamhet och syfte"
 #: model:ir.model.fields,field_description:partner_allabolag.field_res_partner_allabolag_mixin__summary_state
 #: model:ir.model.fields,field_description:partner_allabolag.field_res_users__summary_state
 msgid "Business status"
-msgstr "Bolagets status"
+msgstr "Verksamhetsstatus"
 
 #. module: partner_allabolag
 #: model:ir.model.fields,field_description:partner_allabolag.field_res_partner__summary_cash_flow
@@ -77,11 +77,25 @@ msgid "Last Modified on"
 msgstr "Senast ändrad"
 
 #. module: partner_allabolag
+#: model:ir.model.fields,field_description:partner_allabolag.field_res_partner__linkTo
+#: model:ir.model.fields,field_description:partner_allabolag.field_res_partner_allabolag_mixin__linkTo
+#: model:ir.model.fields,field_description:partner_allabolag.field_res_users__linkTo
+msgid "Link"
+msgstr "Länk"
+
+#. module: partner_allabolag
+#: model:ir.model.fields,help:partner_allabolag.field_res_partner__linkTo
+#: model:ir.model.fields,help:partner_allabolag.field_res_partner_allabolag_mixin__linkTo
+#: model:ir.model.fields,help:partner_allabolag.field_res_users__linkTo
+msgid "Link to Allabolag"
+msgstr "Länk till Allabolag"
+
+#. module: partner_allabolag
 #: model:ir.model.fields,field_description:partner_allabolag.field_res_partner__summary_net_sales_change
 #: model:ir.model.fields,field_description:partner_allabolag.field_res_partner_allabolag_mixin__summary_net_sales_change
 #: model:ir.model.fields,field_description:partner_allabolag.field_res_users__summary_net_sales_change
 msgid "Net Sales Changes"
-msgstr "Nettoomsättningförändring"
+msgstr "Ändring nettoförsäljning"
 
 #. module: partner_allabolag
 #: model:ir.model.fields,field_description:partner_allabolag.field_res_partner__kpi_no_employees
@@ -142,7 +156,7 @@ msgstr "Noteringsbeskrivning"
 #. module: partner_allabolag
 #: model_terms:ir.ui.view,arch_db:partner_allabolag.view_partner_form
 msgid "Remarks"
-msgstr "Noteringar"
+msgstr "Notering"
 
 #. module: partner_allabolag
 #: model:ir.model.fields,field_description:partner_allabolag.field_res_partner__summary_revenue
@@ -173,4 +187,4 @@ msgstr "Summering"
 #. module: partner_allabolag
 #: model:ir.model,name:partner_allabolag.model_res_partner_allabolag_mixin
 msgid "res.partner.allabolag.mixin"
-msgstr ""
+msgstr "res.partner.allabolag.mixin"

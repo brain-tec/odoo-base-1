@@ -189,7 +189,11 @@ class ResPartner(models.Model):
                 partner.website = name2url(partner.name)
             if not partner.image_1920 and partner.website:
                 _logger.warning(f"allabolag partner_enrich {LogoScrape(partner.website)=}")
-                partner.image_1920 = LogoScrape(partner.website)
+                try:
+                    partner.image_1920 = LogoScrape(partner.website)
+                except Exception as e:
+                    _logger.warning(f"LogoScrape error {e}")
+                    partner.message_post(body=_(f'Could not get logo for {partner.name}: {e}'), message_type='notification')
             if not partner.company_registry:
                 company_registry, item = partner.name2orgno(partner.name)
                 if item['hasremarks']:

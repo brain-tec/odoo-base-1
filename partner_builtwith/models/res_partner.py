@@ -2,7 +2,7 @@ from odoo import models, fields, api, _
 from datetime import date
 import logging
 from odoo.exceptions import ValidationError
-from odoo.addons.partner_builtwith.tools.builtwith import builtwith, data, name2url
+from odoo.addons.partner_builtwith.tools.builtwith import builtwith, data, name2url, LogoScrape
 
 _logger = logging.getLogger(__name__)
 
@@ -10,7 +10,6 @@ _logger = logging.getLogger(__name__)
 
 class ResPartnerMixin(models.AbstractModel):
     _name = "res.builtwith.mixin"
-
     
     # ~ data['categories']
     bw_analytics = fields.Char(string='Analytics')
@@ -65,14 +64,12 @@ class ResPartnerMixin(models.AbstractModel):
     bw_myai = fields.Char(string="AI Sweden")
     bw_odoo_community = fields.Char(string="Odoo Community")
     bw_x = fields.Char(string="X")
-
-    def partner_enrich(self):
-        _logger.warning(f"builtwith partner_enrich {self=}")
-         
-        for partner in self:
-            if not partner.website:
-                partner.website = name2url(partner.name)
-            partner.bw_enrich()
+    
+    @api.model
+    def name2website(self,name):
+        website = [w for w in name2url(name) if not "allabolag" in w][0] 
+        _logger.warning(f'{website=}')
+        return website
 
     def bw_enrich(self):
         for p in self:
@@ -120,16 +117,31 @@ class ResPartnerMixin(models.AbstractModel):
 
             p.write(rec)
    
-            if bw.get('image_1920',None):
-                p.image_1920 = bw['image_1920']
-
-
 
 
     
 class ResPartner(models.Model):
     _name = 'res.partner'
     _inherit = ["res.partner",'res.builtwith.mixin']
+
+    def partner_enrich(self):
+        _logger.warning(f"builtwith partner_enrich {self=}")
+         
+        for partner in self:
+            if not partner.website:
+                try:
+                    partner.website = self.name2website(partner.name)
+                except Exception as e:
+                    partner.message_post(body=_(f'Could not get website for {partner.name}: {e}'), message_type='notification')
+                    continue
+            partner.bw_enrich()
+            try:
+                partner.image_1920 = LogoScrape(partner.website)
+            except Exception as e:
+                _logger.warning(f"LogoScrape error {e}")
+                partner.message_post(body=_(f'Could not get logo for {partner.name}: {e}'), message_type='notification')
+                
+        super(ResPartner,self).partner_enrich()
 
     @api.model
     def enrich_company(self, company_domain, partner_gid, vat):
