@@ -37,7 +37,7 @@
     'repository': 'https://github.com/vertelab/odoo-base',
     'depends': ['contacts'],
     'data': [
-        'data/ir_action.xml',
+        'data/cron.xml',
         'views/res_config_settings_views.xml',
     ],
     'application': False,

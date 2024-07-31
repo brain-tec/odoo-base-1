@@ -36,22 +36,64 @@ class ResPartner(models.Model):
         gn.set_topic(self.env['ir.config_parameter'].sudo().get_param('partner_google_news.topic4'))
         gn.get_news()
         news = gn.results()
-        _logger.warning(f"{news=}")
+        _logger.warning(f"{news=}  {len(news)=}")
         for partner in self.env['res.partner'].search([]):
             for article in news:
-                if partner.name in article['title'] or partner.name in article['desc']:
-                    _logger.warning(f"{partner.name=} {article=}")
-                    self.env['res.partner.news'].create({
-                        'gn_title': article['title'],
-                        'gn_desc': article['desc'],
-                        'gn_date': article['date'],
-                        'gn_datetime': article['datetime'],
-                        'gn_link': article['link'],
-                        'gn_img': article['img'],
-                        'gn_media': article['media'],
-                        'gn_site': article['site'],
-                        'gn_reporter': article['reporter'],
-                    })
+                if partner.name in f"{article['title']}{article['desc']}":
+                    _logger.warning(f"----------------> {partner.name=} {article=}")
+                    if article['img'] == None:
+                        img = ''
+                    else:
+                        img = f"<img src='{article['img']}'/>"
+                    
+                    partner.message_post(body=f"""<h2>{article['title']}</h2>
+{img}
+<p>{article['desc'] if article['desc'] != None else ''}
+</p>
+<span>{article['datetime']}</span>
+<span>{article['media']}</span><a href="{article['link']}>{article['media']}{article['site'] if article['site'] != None else ''}</a><br/>
+<small>{article['reporter']}</small>"
+""",
+                            message_type="comment")
+                    # ~ self.env['res.partner.news'].create({
+                        # ~ 'gn_title': article['title'],
+                        # ~ 'gn_desc': article['desc'],
+                        # ~ 'gn_date': article['date'],
+                        # ~ 'gn_datetime': article['datetime'],
+                        # ~ 'gn_link': article['link'],
+                        # ~ 'gn_img': article['img'],
+                        # ~ 'gn_media': article['media'],
+                        # ~ 'gn_site': article['site'],
+                        # ~ 'gn_reporter': article['reporter'],
+                    # ~ })
+                    
+# ~ import base64
+# ~ import requests
+
+# ~ def post_message_with_fetched_image(self):
+    # ~ image_url = "https://www.example.com/path/to/your/image.png"
+    # ~ link_url = "https://www.example.com"
+    # ~ link_text = "Click here for more information"
+    
+    # ~ # Fetch the image
+    # ~ response = requests.get(image_url, allow_redirects=True)
+    # ~ if response.status_code == 200:
+        # ~ encoded_image = base64.b64encode(response.content).decode('utf-8')
+        # ~ image_html = f'<img src="data:image/png;base64,{encoded_image}"/>'
+    # ~ else:
+        # ~ image_html = f'<p>Failed to load image from {image_url}</p>'
+    
+    # ~ body_html = f"""
+    # ~ <p>Your message text here.</p>
+    # ~ <p>For additional details, <a href="{link_url}">{link_text}</a>.</p>
+    # ~ {image_html}
+    # ~ """
+    
+    # ~ self.message_post(
+        # ~ body=body_html,
+        # ~ message_type='comment',
+        # ~ subtype='mail.mt_note'
+    # ~ )
 
 
 class ResConfigSettings(models.TransientModel):
