@@ -37,8 +37,8 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     res['image_1920'] = LogoScrape(url)
     domain = '.'.join(urlparse(url).netloc.split('.')[-2:])
     _logger.warning(f'{domain=}')
-    w = whois(domain)
-    _logger.warning(f'whois {w}')
+    # ~ w = whois(domain)
+    # ~ _logger.warning(f'whois {w}')
     res.update(whois(domain))
     
     
@@ -112,7 +112,7 @@ def google_search_with_tor(query, num_results=10, lang="sv"):
 
 def name2url(name):
     try:
-        return google_search_with_tor(name,num_results=1)
+        return [u for u in google_search_with_tor(name,num_results=10) if not 'allabolag' in u][0] 
     except Exception as e:
         _logger.warning(f"name2url: An error occurred: {e}")
         renew_tor_ip()

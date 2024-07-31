@@ -18,6 +18,10 @@ COMPANY_NO_IAP=True
 
 class ResPartnerMixin(models.AbstractModel):
     _name = "res.partner.allabolag.mixin"
+    _description = """
+        Mixin class for Allabolag-information
+    
+    """
 
     kpi_no_employees = fields.Integer(string='Number of employees')
     kpi_revenue_employees = fields.Float(string='Revenue per Employee')
@@ -186,7 +190,13 @@ class ResPartner(models.Model):
          
         for partner in self:
             if not partner.website:
-                partner.website = name2url(partner.name)
+                try:
+                    partner.website = name2url(partner.name)
+                    _logger.warning(f"{partner.website=}")
+                except Exception as e:
+                    _logger.warning(f"Google: An unexpected error occurred: {e}")
+                    partner.message_post(body=_(f'Google name2url: unexpected error {e} {partner.name}\nMaybe you can add website manually?'), message_type='notification')
+                    continue
             if not partner.image_1920 and partner.website:
                 _logger.warning(f"allabolag partner_enrich {LogoScrape(partner.website)=}")
                 partner.image_1920 = LogoScrape(partner.website)

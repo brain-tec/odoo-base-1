@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Odoo SA, Open Source Management Solution, third party addon
-#    Copyright (C) 2024- Vertel AB (<https://vertel.se>).
+#    Copyright (C) 2015 ICTSTUDIO (<http://www.ictstudio.eu>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -15,34 +14,24 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program. If not, see <http://www.gnu.org/licenses/>.
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    'name': 'Base: Enrich partner information from Allabolag',
-    'version': '17.0.1.1.0',
+    'name': 'Base: Partner Company Registry',
+    'version': '17.0.0.0.1',
     # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
-    'summary': 'Enrich partner with data from Allabolag',
-    'category': 'Website',
+    'summary': 'Adds a Partner Registry field to the partner object.',
+    'category': 'CRM',
     'description': """
-    Enrich with information from allabolag
-
-      
+    Partner Company Registry
+    Adds a Partner Registry field to the partner object.
+    Website: https://www.ictstudio.eu
     """,
-    #'sequence': '1',
-    'author': 'Vertel AB',
-    'website': 'https://vertel.se/apps/odoo-base/partner_allabolag',
+    'author': 'ICTSTUDIO, André Schenkels',
+    'website': 'https://vertel.se/apps/odoo-base/partner_company_registry',
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',
-    'contributor': '',
-    'maintainer': 'Vertel AB',
-    'repository': 'https://github.com/vertelab/odoo-base',
-    'depends': ['partner_enrich_base','contacts', 'partner_company_registry'],
-    'data': [
-        'views/partner_views.xml',
-    ],
-    'application': False,
-    'installable': True,
+    'depends': ["base"],
+    'data': ["view/partner_view.xml"],
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

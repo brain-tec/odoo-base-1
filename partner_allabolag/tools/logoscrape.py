@@ -2,6 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 import base64
+import socket
+import time
+from stem import Signal
+from stem.control import Controller
+import requests
+
+
 
 from googlesearch import search
 
@@ -9,14 +16,44 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+def renew_tor_ip():
+    with Controller.from_port(port=9051) as controller:
+        controller.authenticate()
+        controller.signal(Signal.NEWNYM)
+
+def google_search_with_tor(query, num_results=10, lang="sv"):
+    proxies = {
+        'http': 'socks5h://localhost:9050',
+        'https': 'socks5h://localhost:9050'
+    }
+    proxy="socks5h://localhost:9050"
+
+    results = []
+    for url in search(query, num_results=num_results, lang=lang, proxy=proxy):
+        results.append(url)
+        time.sleep(1)  # Add a delay between requests to avoid detection
+
+    return results
 
 def name2url(name):
-    _logger.warning(f"{[a for a in search(name)]=}")
     try:
-        return [a for a in search(name)][0]
+        return [u for u in google_search_with_tor(name,num_results=10) if not 'allabolag' in u][0] 
     except Exception as e:
-        _logger.warning(f"name2url search {name=} error {e}")
-        return None
+        _logger.warning(f"name2url: An error occurred: {e}")
+        renew_tor_ip()
+        ip = requests.get('https://ident.me', proxies={'https':'socks5h://localhost:9050'}).text
+        raise Exception(f"Tor IP renewed. Please try again. ({ip=})")
+
+
+
+
+# ~ def name2url(name):
+    # ~ _logger.warning(f"{[a for a in search(name)]=}")
+    # ~ try:
+        # ~ return [a for a in search(name)][0]
+    # ~ except Exception as e:
+        # ~ _logger.warning(f"name2url search {name=} error {e}")
+        # ~ return None
         
 def LogoScrape(url):
     if not url:
