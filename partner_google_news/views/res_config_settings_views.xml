@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="res_config_settings_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.inherit.crm</field>
+    <field name="model">res.config.settings</field>
+    <field name="priority" eval="5" />
+    <field name="inherit_id" ref="base.res_config_settings_view_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//div[hasclass('settings')]" position="inside">
+        <div class="app_settings_block" data-string="Google News" string="Google News" data-key="google_news" groups="sales_team.group_sale_manager">
+          <h2>Google News - media monitoring</h2>
+          <div class="row mt16 o_settings_container" name="google_news_setting_container">
+            <div class="col-12 col-lg-6 o_setting_box" id="gn_lang">
+              <div class="o_setting_right_pane">
+                <span class="o_form_label">Language</span>
+                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." />
+                <div class="text-muted">Set the language for news articles</div>
+                <div class="content-group">
+                  <div class="mt16 row">
+                    <label for="gn_lang" string="Lang" class="col-3 col-lg-3 o_light_label" />
+                    <field name="gn_lang" class="oe_inline" required="1" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6 o_setting_box" id="gn_period">
+              <div class="o_setting_right_pane">
+                <span class="o_form_label">News Period</span>
+                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." role="img" />
+                <div class="text-muted">Choose the period for news articles</div>
+                <div class="content-group">
+                  <div class="mt16">
+                    <label for="gn_period" string="Period" class="col-3 col-lg-3 o_light_label" />
+                    <field name="gn_period" class="oe_inline" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2>Topics to monitor</h2>
+        <div class="row mt16 o_settings_container" name="topics_setting_container">
+          <div class="col-12 col-lg-6 o_setting_box" id="topics_setting">
+            <div class="o_setting_right_pane">
+              <field name="gn_topic1" />
+            </div>
+            <div class="o_setting_right_pane">
+              <field name="gn_topic2" />
+            </div>
+            <div class="o_setting_right_pane">
+              <field name="gn_topic3" />
+            </div>
+            <div class="o_setting_right_pane">
+              <field name="gn_topic4" />
+            </div>
+            <div class="o_setting_right_pane text-muted">Use Google News topic ID:s for the topics you are interested in. You can inspect the Topic-ID using the share icon</div>
+          </div>
+        </div>
+      </xpath>
+    </field>
+  </record>
+  <record id="config_settings_action" model="ir.actions.act_window">
+    <field name="name">Settings</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">res.config.settings</field>
+    <field name="view_id" ref="res_config_settings_view_form" />
+    <field name="view_mode">form</field>
+    <field name="target">inline</field>
+    <field name="context">{'module' : 'contacts', 'bin_size': False}</field>
+  </record>
+  <menuitem id="menu_partner_settings" action="partner_google_news.config_settings_action" name="Settings" sequence="1" parent="contacts.res_partner_menu_config" />
+  <!--
+       <record id="partner_config_settings_menu" model="ir.ui.menu">
+       <field name="action" ref="contact.contact_config_settings_action"/>
+       </record>
+  -->
+</odoo>
