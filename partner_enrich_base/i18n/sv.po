@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_enrich_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0-20231205\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-31 08:02+0000\n"
+"PO-Revision-Date: 2024-07-31 08:03+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: sv\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: partner_enrich_base
+#: model:ir.model,name:partner_enrich_base.model_res_partner
+msgid "Contact"
+msgstr "Kontrakt"
+
+#. module: partner_enrich_base
+#: model:ir.model.fields,field_description:partner_enrich_base.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Visningsnamn"
+
+#. module: partner_enrich_base
+#: model:ir.actions.server,name:partner_enrich_base.action_enrich_mail
+msgid "Enrich"
+msgstr "Berika"
+
+#. module: partner_enrich_base
+#: model:ir.model.fields,field_description:partner_enrich_base.field_res_partner__id
+msgid "ID"
+msgstr "ID"
+
+#. module: partner_enrich_base
+#: model:ir.model.fields,field_description:partner_enrich_base.field_res_partner____last_update
+msgid "Last Modified on"
+msgstr "Senast ändrad"

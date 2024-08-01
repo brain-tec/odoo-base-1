@@ -1,5 +1,6 @@
 from builtwith import builtwith as bw, data
 from odoo.addons.partner_builtwith.tools.logoscrape import LogoScrape
+from odoo.exceptions import ValidationError, UserError
 from googlesearch import search
 from whois import whois
 from urllib.parse import urlparse
@@ -34,7 +35,7 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     res = bw(url,headers,html,user_agent)
     _logger.warning(f'{res=}')
     # ~ res = {}
-    res['image_1920'] = LogoScrape(url)
+    # ~ res['image_1920'] = LogoScrape(url)
     domain = '.'.join(urlparse(url).netloc.split('.')[-2:])
     _logger.warning(f'{domain=}')
     w = whois(domain)
@@ -80,7 +81,7 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
                 res[f'bw_{sm_type}'] = [s for s in sm if sm_type in l][0]
                 _logger.warning(f"bw_{sm_type}=")
         if not 'bw_instagram' in res:
-            sm = [s for s in search(url+' instagram',num_results=20)]
+            sm = [s for s in google_search_with_tor(url+' instagram',num_results=20)]
             _logger.warning(f"{sm=} insta")
 
             if len(sm) > 0:
@@ -88,14 +89,20 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     except Exception as e:
         _logger.warning(f"Social Media: An unexpected error occurred: {e}")  
         renew_tor_ip()
+        raise Exception("Tor IP renewed. Please try again.")
+
   
     return res
 
 def renew_tor_ip():
-    with Controller.from_port(port=9051) as controller:
-        controller.authenticate()
-        controller.signal(Signal.NEWNYM)
-
+    try:
+        with Controller.from_port(port=9051) as controller:
+            controller.authenticate()
+            controller.signal(Signal.NEWNYM)
+    except Exception as e:
+        _logger.warning(f"renew IP: An error occurred: {e}")
+        raise Exception(f"Could not renew Tor IP {e}. Please contact system administrator.")
+    
 def google_search_with_tor(query, num_results=10, lang="sv"):
     proxies = {
         'http': 'socks5h://localhost:9050',
@@ -110,9 +117,9 @@ def google_search_with_tor(query, num_results=10, lang="sv"):
 
     return results
 
-def name2url(name):
+def name2url(name,num_results=10,lang='sv'):
     try:
-        return google_search_with_tor(name,num_results=1)
+        return google_search_with_tor(name,num_results=num_results,lang=lang)
     except Exception as e:
         _logger.warning(f"name2url: An error occurred: {e}")
         renew_tor_ip()
