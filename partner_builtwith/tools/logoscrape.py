@@ -32,7 +32,7 @@ def LogoScrape(url):
             
         if "logo" in img_tag.get('src',''):
             # ~ print(img_tag)
-            logo_url = img_tag['src']+'src'
+            logo_url = img_tag['src']
             break
     if logo_url == 'none':
         return None
