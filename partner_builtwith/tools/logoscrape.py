@@ -27,7 +27,7 @@ def LogoScrape(url):
             break
             
         if 'logo' in img_tag.get('class', []):
-            logo_url = img_tag['src']+'class'
+            logo_url = img_tag['src']
             break
             
         if "logo" in img_tag.get('src',''):
