@@ -73,8 +73,8 @@ class ResPartnerMixin(models.AbstractModel):
 
     def bw_enrich(self):
         for p in self:
-            # ~ bw = builtwith(p.website)
-            bw = builtwith_sm(p.name)
+            bw = builtwith(p.website)
+            bw,update(builtwith_sm(p.name))
             _logger.warning(f"{bw=}")
 
             rec = {}
