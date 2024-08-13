@@ -13,7 +13,7 @@
             <div class="col-12 col-lg-6 o_setting_box" id="gn_lang">
               <div class="o_setting_right_pane">
                 <span class="o_form_label">Language</span>
-                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." />
+                <span class="fa fa-lg fa-comments-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." />
                 <div class="text-muted">Set the language for news articles</div>
                 <div class="content-group">
                   <div class="mt16 row">
@@ -26,7 +26,7 @@
             <div class="col-12 col-lg-6 o_setting_box" id="gn_period">
               <div class="o_setting_right_pane">
                 <span class="o_form_label">News Period</span>
-                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." role="img" />
+                <span class="fa fa-lg fa-calendar-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." role="img" />
                 <div class="text-muted">Choose the period for news articles</div>
                 <div class="content-group">
                   <div class="mt16">
@@ -36,8 +36,20 @@
                 </div>
               </div>
             </div>
+            <div class="col-12 col-lg-6 o_setting_box" id="gn_region">
+              <div class="o_setting_right_pane">
+                <span class="o_form_label">Region</span>
+                <span class="fa fa-lg fa-compass-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." />
+                <div class="text-muted">Set the region for news articles</div>
+                <div class="content-group">
+                  <div class="mt16 row">
+                    <label for="gn_region" string="Region" class="col-3 col-lg-3 o_light_label" />
+                    <field name="gn_region" class="oe_inline" required="1" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
         <h2>Topics to monitor</h2>
         <div class="row mt16 o_settings_container" name="topics_setting_container">
           <div class="col-12 col-lg-6 o_setting_box" id="topics_setting">
@@ -53,9 +65,12 @@
             <div class="o_setting_right_pane">
               <field name="gn_topic4" />
             </div>
+            <div class="o_setting_right_pane">
+              <field name="gn_topic5" />
+            </div>
             <div class="o_setting_right_pane text-muted">Use Google News topic ID:s for the topics you are interested in. You can inspect the Topic-ID using the share icon</div>
           </div>
-        </div>
+        </div></div>
       </xpath>
     </field>
   </record>

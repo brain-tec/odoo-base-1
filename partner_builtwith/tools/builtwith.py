@@ -11,9 +11,13 @@ import time
 from stem import Signal
 from stem.control import Controller
 import requests
+from duckduckgo_search import DDGS
+
 import logging
 _logger = logging.getLogger(__name__)
 # ~ from dns import resolver
+
+TOR=False
 
 def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     """Detect the technology used to build a website
@@ -69,29 +73,43 @@ def builtwith(url, headers=None, html=None, user_agent='builtwith'):
     
     # Mailserver
     res['mail_server'] = get_mail_server_software(domain)
+    return res
 
-
+def builtwith_sm(name,use_tor=False):
     # ~ #Social media
+    _logger.warning(f"builtwith_sm {name=}{use_tor=}")
+    res = {}
     try:
-        sm = [s for s in google_search_with_tor(url,num_results=20)]
-        _logger.warning(f"Social Media {sm=}")
+        if use_tor:
+            sm = [s for s in google_search_with_tor(url,num_results=20)]
+            _logger.warning(f"Social Media {sm=}")
 
-        for sm_type in ['github','facebook','instagram','linkedin','my.ai','x','brainville','odoo-community','linkopingsciencepark']:
-            if sm_type in sm:
-                res[f'bw_{sm_type}'] = [s for s in sm if sm_type in l][0]
-                _logger.warning(f"bw_{sm_type}=")
-        if not 'bw_instagram' in res:
-            sm = [s for s in google_search_with_tor(url+' instagram',num_results=20)]
-            _logger.warning(f"{sm=} insta")
+            for sm_type in ['github','facebook','instagram','linkedin','my.ai','x','brainville','odoo-community','linkopingsciencepark']:
+                if sm_type in sm:
+                    res[f'{sm_type}'] = [s for s in sm if sm_type in l][0]
+                    _logger.warning(f"bw_{sm_type}=")
+            if not 'bw_instagram' in res:
+                sm = [s for s in google_search_with_tor(url+' instagram',num_results=20)]
+                _logger.warning(f"{sm=} insta")
 
-            if len(sm) > 0:
-                res['bw_instagram'] = [0]
+                if len(sm) > 0:
+                    res['bw_instagram'] = [0]
+        else:
+             _logger.warning(f"before for {name=}")
+             for sm_type in ['github','facebook','instagram','linkedin','my.ai','x','brainville','odoo-community','linkopingsciencepark']:
+                sm = google_search_with_ddg(f"{name} {sm_type}",num_results=1)
+                _logger.warning(f"{name=}{sm_type=} {sm=}")
+                if len(sm)>0 and sm_type in sm[0]['href']:
+                    res[f'{sm_type}'] = sm[0]['href']
+                    _logger.warning(f"bw_{sm_type}=")
     except Exception as e:
         _logger.warning(f"Social Media: An unexpected error occurred: {e}")  
-        renew_tor_ip()
-        raise Exception("Tor IP renewed. Please try again.")
+        if use_tor:
+            renew_tor_ip()
+            raise Exception("Tor IP renewed. Please try again.")
 
-  
+    _logger.warning(f"builtwith_sm {name=}{res=}")
+
     return res
 
 def renew_tor_ip():
@@ -116,6 +134,11 @@ def google_search_with_tor(query, num_results=10, lang="sv"):
         time.sleep(1)  # Add a delay between requests to avoid detection
 
     return results
+    
+def google_search_with_ddg(query, num_results=10, lang="sv", region="se-sv"):
+    results = DDGS().text(query, max_results=num_results,region=region)
+    return results
+   
 
 def name2url(name,num_results=10,lang='sv'):
     try:

@@ -2,7 +2,7 @@ from odoo import models, fields, api, _
 from datetime import date
 import logging
 from odoo.exceptions import ValidationError
-from odoo.addons.partner_builtwith.tools.builtwith import builtwith, data, name2url, LogoScrape
+from odoo.addons.partner_builtwith.tools.builtwith import builtwith, builtwith_sm, data, name2url, LogoScrape
 
 _logger = logging.getLogger(__name__)
 
@@ -73,7 +73,8 @@ class ResPartnerMixin(models.AbstractModel):
 
     def bw_enrich(self):
         for p in self:
-            bw = builtwith(p.website)
+            # ~ bw = builtwith(p.website)
+            bw = builtwith_sm(p.name)
             _logger.warning(f"{bw=}")
 
             rec = {}
@@ -116,6 +117,8 @@ class ResPartnerMixin(models.AbstractModel):
             _logger.warning(f"{rec=}")
 
             p.write(rec)
+            
+            
    
 
 
