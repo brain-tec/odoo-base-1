@@ -1,4 +1,5 @@
 from odoo import models, fields, api, _
+from odoo.addons.partner_autocomplete.models.res_company import COMPANY_AC_TIMEOUT
 from datetime import date
 import logging
 from odoo.exceptions import ValidationError
@@ -77,7 +78,7 @@ class ResPartnerMixin(models.AbstractModel):
         super(ResPartner,self).partner_enrich()
 
     @api.model
-    def enrich_company(self, company_domain, partner_gid, vat):
+    def enrich_company(self, company_domain, partner_gid, vat,timeout=COMPANY_AC_TIMEOUT):
         res = {}
         _logger.warning(f"builtwith enrich_company {company_domain=} {partner_gid=} {vat=} {self=}")
         if COMPANY_NO_IAP == True:

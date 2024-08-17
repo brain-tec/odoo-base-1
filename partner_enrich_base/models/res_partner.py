@@ -1,4 +1,5 @@
 from odoo import models, fields, api, _
+from odoo.addons.partner_autocomplete.models.res_company import COMPANY_AC_TIMEOUT
 from datetime import date
 import logging
 from odoo.exceptions import ValidationError
@@ -28,8 +29,8 @@ class ResPartner(models.Model):
             return f"SE{company_registry.replace('-','')}01"
         else:
             return None
-        
-    def enrich_company(self, company_domain, partner_gid, vat): # Override IAP-version
+   
+    def enrich_company(self, company_domain, partner_gid, vat,timeout=COMPANY_AC_TIMEOUT): # Override IAP-version
         res = {}
         if COMPANY_NO_IAP == True:
             res = super(ResPartner, self).enrich_company(company_domain,partner_gid,vat)
