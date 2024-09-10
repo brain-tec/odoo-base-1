@@ -29,7 +29,7 @@
     """,
     #'sequence': '1',
     'author': 'Vertel AB',
-    'category': 'Hidden/Tools',
+    'category': 'Technical',
     'website': 'https://vertel.se/apps/odoo-base/partner_enrich_base',
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',
