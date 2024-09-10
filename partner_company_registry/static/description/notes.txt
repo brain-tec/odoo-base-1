@@ -1,12 +1,18 @@
 odoo-base / partner_company_registry
-2023-09-25
+2024-09-10
 
 Be aware of these!
 [project]/[module]/static/description/banner.png
 [project]/[module]/static/description/icon.png
 
-Icon: "life-ring"
-Icons may be found at: https://fontawesome.com/v5/cheatsheet
+Icon: "database" (enclosed)
+https://fontawesome.com/v4/icon/database
+
+icon_database.png
+icon_database_50.png
+icon_database_50_neg.png
+
+Website Blog:
 
 Odoo banner: 560 x 280
 Odoo icon: 140 x 140
@@ -14,6 +20,7 @@ Odoo icon: 140 x 140
 HEX
 #930a57
 #8105a7
+
 
 Source: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Colors/Color_picker_tool
 
@@ -49,8 +56,13 @@ ls | wc -l
 grep -sR "'website':" */*__.py | tr "'" " "
 
 Find the latest project:
-grep -r "2023-04-*" odoo-*/*/static/description/notes.txt
-grep -r "2023-04-*" */static/description/notes.txt
+grep -r "2024-09*" odoo-*/*/static/description/notes.txt
+grep -r "2024-09*" */static/description/notes.txt
+
+Unexpected errors sometimes occurs, then set the correct permissions!
+sudo chmod 664 /usr/share/*/*/static/description/banner.png
+sudo chmod 664 /usr/share/*/*/static/description/icon.png
+
 
 
 

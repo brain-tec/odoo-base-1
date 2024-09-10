@@ -1,17 +1,16 @@
-odoo-user-mail / auth_admin
-2023-04-28
+odoo-base / auth_admin
+2024-09-10
 
 Be aware of these!
 [project]/[module]/static/description/banner.png
 [project]/[module]/static/description/icon.png
 
-Icon: "mail-bulk"
-Icons may be found at: https://fontawesome.com/v5/cheatsheet
+Icon: "database" (enclosed)
+https://fontawesome.com/v4/icon/database
 
-
-Source:
-https://www.iconbolt.com/iconsets/font-awesome-solid/mail-bulk
-
+icon_database.png
+icon_database_50.png
+icon_database_50_neg.png
 
 Website Blog:
 
@@ -57,8 +56,13 @@ ls | wc -l
 grep -sR "'website':" */*__.py | tr "'" " "
 
 Find the latest project:
-grep -r "2023-04-*" odoo-*/*/static/description/notes.txt
-grep -r "2023-04-*" */static/description/notes.txt
+grep -r "2024-09*" odoo-*/*/static/description/notes.txt
+grep -r "2024-09*" */static/description/notes.txt
+
+Unexpected errors sometimes occurs, then set the correct permissions!
+sudo chmod 664 /usr/share/*/*/static/description/banner.png
+sudo chmod 664 /usr/share/*/*/static/description/icon.png
+
 
 
 
