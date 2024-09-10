@@ -21,8 +21,8 @@
 
 {
     'name': 'Base: Partner Builtwith',
-    'version': '17.0.1.1.0',
-    # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
+    'version': '1.1.0',
+    # Version ledger: XX.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
     'summary': 'Enrich partner with technical information.',
     'category': 'Website',
     'description': """
