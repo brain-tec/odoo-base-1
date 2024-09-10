@@ -33,7 +33,7 @@
     """,
     #'sequence': '1',
     'author': 'Vertel AB',
-    'website': 'https://vertel.se/apps/odoo-user-mail/discuss_multi_thread',
+    'website': 'https://vertel.se/apps/odoo-base/discuss_multi_thread',
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',
     'contributor': '',
