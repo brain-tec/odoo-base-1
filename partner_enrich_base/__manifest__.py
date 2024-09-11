@@ -21,7 +21,7 @@
 
 {
     'name': 'Base: Partner Enrich Base',
-    'version': '17.0.1.1.0',
+    'version': '1.1.0',
     'description': """
       Base module for Enrich Partner records with updated data. This module 
       does nothin but are a base fpr other enrichement modules
@@ -29,7 +29,7 @@
     """,
     #'sequence': '1',
     'author': 'Vertel AB',
-    'category': 'Hidden/Tools',
+    'category': 'Technical',
     'website': 'https://vertel.se/apps/odoo-base/partner_enrich_base',
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',

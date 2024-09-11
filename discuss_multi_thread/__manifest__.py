@@ -20,9 +20,9 @@
 ##############################################################################
 
 {
-    'name': 'Discuss: Multi Thread',
-    'version': '17.0.1.0.0',
-    # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
+    'name': 'Base: Multi Thread',
+    'version': '1.0.0',
+    # Version ledger: XX.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
     'summary': 'Multi Thread in Odoo Discuss.',
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
@@ -33,7 +33,7 @@
     """,
     #'sequence': '1',
     'author': 'Vertel AB',
-    'website': 'https://vertel.se/apps/odoo-user-mail/discuss_multi_thread',
+    'website': 'https://vertel.se/apps/odoo-base/discuss_multi_thread',
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',
     'contributor': '',
