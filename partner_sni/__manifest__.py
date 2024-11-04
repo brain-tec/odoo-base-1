@@ -58,10 +58,10 @@ AFC-156
     'repository': 'https://github.com/vertelab/odoo-base.git',
     'depends': ['contacts',],
     'data': [
-        'data/res.sni.csv',
         'security/ir.model.access.csv',
         'views/res_partner_view.xml',
         'views/res_sni_view.xml',
+        'data/res.sni.csv',
     ],
     'application': False,
     'installable': True,
