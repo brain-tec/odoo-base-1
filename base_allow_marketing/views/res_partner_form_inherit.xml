@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="email_rights" string="Email Rights">
+                    <div class="form-group">
+                        <label for="allow_email_marketing" class="col-form-label">
+                            Tillåt e-postmarknadsförning
+                        </label>
+                        <field name="allow_email_marketing"/>
+                    </div>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
