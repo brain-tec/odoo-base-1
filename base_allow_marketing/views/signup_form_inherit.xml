@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_signup_fields" inherit_id="auth_signup.fields" name="Custom Signup Fields">
+        <xpath expr="//div[hasclass('field-confirm_password')]" position="after">
+            <div class="form-group field-allow_email_marketing d-flex align-items-center">
+                <!-- Checkbox input with a small margin-right to align with label -->
+                <input type="checkbox" name="allow_email_marketing" t-att-value="allow_email_marketing" 
+                       id="allow_email_marketing" class="mr-2"/>
+                       
+                <!-- Label aligned inline with the checkbox -->
+                <label for="allow_email_marketing" class="mb-0">
+                    Tillåt e-postmarknadsförning
+                </label>
+            </div>
+        </xpath>
+    </template>
+</odoo>
