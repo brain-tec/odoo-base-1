@@ -1,1 +1,12 @@
-tesseract-ocr
+allabolag
+beautifulsoup4
+builtwith
+dnspython
+googlesearch-python
+pytesseract
+#tesseract-ocr
+python-whois
+requests[socks]
+PySocks
+stem
+GoogleNews

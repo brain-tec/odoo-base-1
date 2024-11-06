@@ -1,0 +1,406 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_builtwith
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0-20231205\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-31 08:12+0000\n"
+"PO-Revision-Date: 2024-07-31 08:23+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: sv\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_myai
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_myai
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_myai
+msgid "AI Sweden"
+msgstr "AI Sweden"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_analytics
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_analytics
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_analytics
+msgid "Analytics"
+msgstr "Objekt"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_blogs
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_blogs
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_blogs
+msgid "Blogs"
+msgstr "Bloggar"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_brainville
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_brainville
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_brainville
+msgid "Brainville"
+msgstr "Brainville"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_cdn
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_cdn
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_cdn
+msgid "CDN"
+msgstr "CDN"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_cms
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_cms
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_cms
+msgid "CMS"
+msgstr "CMS"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_dns_cname
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_dns_cname
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_dns_cname
+msgid "CNAME"
+msgstr "CNAME"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_cache_tools
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_cache_tools
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_cache_tools
+msgid "Cache Tools"
+msgstr "Chachning"
+
+#. module: partner_builtwith
+#: model:ir.model,name:partner_builtwith.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_creation_date
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_updated_date
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_creation_date
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_updated_date
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_creation_date
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_updated_date
+msgid "Creation Date"
+msgstr "Datum skapat"
+
+#. module: partner_builtwith
+#: model_terms:ir.ui.view,arch_db:partner_builtwith.view_partner_form
+msgid "DNS and Mail"
+msgstr "DNS och E-post"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_database_managers
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_database_managers
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_database_managers
+msgid "Database Managers"
+msgstr "Databashanterare"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_databases
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_databases
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_databases
+msgid "Databases"
+msgstr "Databas"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__display_name
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Visningsnamn"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_dnssec
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_dnssec
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_dnssec
+msgid "Dnssec"
+msgstr "Dnssec"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_documentation_tools
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_documentation_tools
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_documentation_tools
+msgid "Documentation Tools"
+msgstr "Dokumentationsverktyg"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_domain_name
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_domain_name
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_domain_name
+msgid "Domain Name"
+msgstr "Domännamn"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_ecommerce
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_ecommerce
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_ecommerce
+msgid "Ecommerce"
+msgstr "E-handel"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_expiration_date
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_expiration_date
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_expiration_date
+msgid "Expiration Date"
+msgstr "Utgångsdatum"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_facebook
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_facebook
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_facebook
+msgid "Facebook"
+msgstr "Facebook"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_font_scripts
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_font_scripts
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_font_scripts
+msgid "Font Scripts"
+msgstr "Typsnittskript"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_github
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_github
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_github
+msgid "Github"
+msgstr "Github"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__id
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__id
+msgid "ID"
+msgstr "ID"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_instagram
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_instagram
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_instagram
+msgid "Instagram"
+msgstr "Instagram"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_issue_trackers
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_issue_trackers
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_issue_trackers
+msgid "Issue Trackers"
+msgstr "Supportsystem"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_javascript_frameworks
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_javascript_frameworks
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_javascript_frameworks
+msgid "Javascript Frameworks"
+msgstr "Javaskriptramverk"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_lms
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_lms
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_lms
+msgid "LMS"
+msgstr "LMS"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin____last_update
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner____last_update
+msgid "Last Modified on"
+msgstr "Senast ändrad"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_linkedin
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_linkedin
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_linkedin
+msgid "Linkedin"
+msgstr "Linkedin"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_linkopingsciencepark
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_linkopingsciencepark
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_linkopingsciencepark
+msgid "Linköping Science Park"
+msgstr "Linköping Science Park"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_dns_mx
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_dns_mx
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_dns_mx
+msgid "MX"
+msgstr "MX"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_mail_server
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_mail_server
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_mail_server
+msgid "Mail Server"
+msgstr "E-postserver"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_marketing_automation
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_marketing_automation
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_marketing_automation
+msgid "Marketing Automation"
+msgstr "Marketing Automation"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_miscellaneous
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_miscellaneous
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_miscellaneous
+msgid "Miscellaneous"
+msgstr "Övrigt"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_mobile_frameworks
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_mobile_frameworks
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_mobile_frameworks
+msgid "Mobile Frameworks"
+msgstr "Mobila ramverk"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_dns_ns
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_dns_ns
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_dns_ns
+msgid "NS"
+msgstr "NS"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_name_servers
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_name_servers
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_name_servers
+msgid "Name Servers"
+msgstr "Namnservrar"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_odoo_community
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_odoo_community
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_odoo_community
+msgid "Odoo Community"
+msgstr "Odoo Community"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_operating_systems
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_operating_systems
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_operating_systems
+msgid "Operating Systems"
+msgstr "Operativsystem"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_programming_languages
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_programming_languages
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_programming_languages
+msgid "Programming Languages"
+msgstr "Programmeringsspråk"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_registrant_name
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_registrant_name
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_registrant_name
+msgid "Registrant Name"
+msgstr "Registrerare"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_registrar
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_registrar
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_registrar
+msgid "Registrar"
+msgstr "Registrar"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_dns_soa
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_dns_soa
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_dns_soa
+msgid "SOA"
+msgstr "SOA"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_search_engines
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_search_engines
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_search_engines
+msgid "Search Engines"
+msgstr "Sökmotor"
+
+#. module: partner_builtwith
+#: model_terms:ir.ui.view,arch_db:partner_builtwith.view_partner_form
+msgid "Social Media"
+msgstr "Sociala media"
+
+#. module: partner_builtwith
+#: model_terms:ir.ui.view,arch_db:partner_builtwith.view_partner_form
+msgid "Social Media Tech"
+msgstr "Sociala media teknik"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_status
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_status
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_status
+msgid "Status"
+msgstr "Status"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_dns_txt
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_dns_txt
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_dns_txt
+msgid "TXT"
+msgstr "TXT"
+
+#. module: partner_builtwith
+#: model_terms:ir.ui.view,arch_db:partner_builtwith.view_partner_form
+msgid "Tech 1"
+msgstr "Teknik 1"
+
+#. module: partner_builtwith
+#: model_terms:ir.ui.view,arch_db:partner_builtwith.view_partner_form
+msgid "Tech 2"
+msgstr "Teknik 2"
+
+#. module: partner_builtwith
+#: model_terms:ir.ui.view,arch_db:partner_builtwith.view_partner_form
+msgid "Technical Information"
+msgstr "Teknisk infortmation"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_transfer_date
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_transfer_date
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_transfer_date
+msgid "Transfer Date"
+msgstr "Överföringsdatum"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_web_frameworks
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_web_frameworks
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_web_frameworks
+msgid "Web Frameworks"
+msgstr "Webbramverk"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_web_mail
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_web_mail
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_web_mail
+msgid "Web Mail"
+msgstr "Webbmail"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_web_servers
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_web_servers
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_web_servers
+msgid "Web Servers"
+msgstr "Webbserver"
+
+#. module: partner_builtwith
+#: model_terms:ir.ui.view,arch_db:partner_builtwith.view_partner_form
+msgid "WhoIs"
+msgstr "WhoIs"
+
+#. module: partner_builtwith
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_builtwith_mixin__bw_wikis
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_partner__bw_wikis
+#: model:ir.model.fields,field_description:partner_builtwith.field_res_users__bw_wikis
+msgid "Wikis"
+msgstr "Wikis"
+
+#. module: partner_builtwith
+#: model:ir.model,name:partner_builtwith.model_res_builtwith_mixin
+msgid "res.builtwith.mixin"
+msgstr "res.builtwith.mixin"

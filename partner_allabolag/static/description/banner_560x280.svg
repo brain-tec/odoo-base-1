@@ -9,11 +9,12 @@
    id="SVGRoot"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="banner_560x280.svg"
-   inkscape:export-filename="/usr/share/odoo-base/elk46_send_sms/static/description/banner.png"
+   inkscape:export-filename="/usr/share/odoo-base/partner_allabolag/static/description/banner.png"
    inkscape:export-xdpi="92.61972"
    inkscape:export-ydpi="92.61972"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -55,15 +56,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="481"
+     inkscape:cx="390"
      inkscape:cy="105"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1625"
      inkscape:window-height="773"
-     inkscape:window-x="445"
-     inkscape:window-y="77"
+     inkscape:window-x="675"
+     inkscape:window-y="181"
      inkscape:window-maximized="0"
      inkscape:pagecheckerboard="0">
     <inkscape:grid
@@ -150,39 +151,18 @@
          id="tspan2041" /></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:31.134px;line-height:1.25;font-family:'Futura PT';-inkscape-font-specification:'Futura PT, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:0;stroke:none;stroke-width:1"
-       x="290.98041"
-       y="-104.52473"
-       id="text827"><tspan
-         sodipodi:role="line"
-         id="tspan825"
-         x="290.98041"
-         y="-104.52473"
-         style="fill:#000000;fill-opacity:1;stroke-width:1"></tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:36.441px;line-height:1.25;font-family:'Futura PT';-inkscape-font-specification:'Futura PT, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:0;stroke:none;stroke-width:1"
-       x="351.74457"
-       y="-100.83463"
-       id="text823"><tspan
-         sodipodi:role="line"
-         id="tspan821"
-         x="351.74457"
-         y="-100.83463"
-         style="fill:#000000;fill-opacity:1;stroke-width:1"></tspan></text>
-    <text
-       xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal';text-align:end;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="516.50641"
+       x="520.50641"
        y="73.199997"
        id="text2035"
        inkscape:export-xdpi="92"
-       inkscape:export-ydpi="92"><tspan
+       inkscape:export-ydpi="92"
+       inkscape:export-filename="/usr/share/odoo-base/base_46elks_send_sms/static/description/banner.png"><tspan
          sodipodi:role="line"
-         x="516.50641"
+         x="520.50641"
          y="73.199997"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end;stroke-width:1px"
-         id="tspan847">Elk46 Send SMS</tspan></text>
+         id="tspan847">Partner Allabolag</tspan></text>
     <flowRoot
        xml:space="preserve"
        id="flowRoot844"
@@ -194,38 +174,36 @@
            x="206"
            y="-32" /></flowRegion><flowPara
          id="flowPara850" /></flowRoot>
-    <text
-       id="text845"
-       y="-106.52473"
-       x="113.98041"
-       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:31.134px;line-height:1.25;font-family:'Futura PT';-inkscape-font-specification:'Futura PT, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:0;stroke:none;stroke-width:1"
-       xml:space="preserve"><tspan
-         style="fill:#000000;fill-opacity:1;stroke-width:1"
-         y="-106.52473"
-         x="113.98041"
-         id="tspan843"
-         sodipodi:role="line"></tspan></text>
-    <text
-       id="text845-7"
-       y="-94.324753"
-       x="178.43298"
-       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:31.134px;line-height:1.25;font-family:'Futura PT';-inkscape-font-specification:'Futura PT, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:0;stroke:none;stroke-width:1"
-       xml:space="preserve"><tspan
-         style="fill:#000000;fill-opacity:1;stroke-width:1"
-         y="-94.324753"
-         x="178.43298"
-         id="tspan843-0"
-         sodipodi:role="line"></tspan></text>
-    <text
-       id="text845-2"
-       y="152.50562"
-       x="280.29013"
-       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:30.8483px;line-height:1.25;font-family:'Futura PT';-inkscape-font-specification:'Futura PT, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:0;stroke:none;stroke-width:1"
-       xml:space="preserve"><tspan
-         style="fill:#000000;fill-opacity:1;stroke-width:1"
-         y="152.50562"
-         x="280.29013"
-         id="tspan843-9"
-         sodipodi:role="line"></tspan></text>
+    <image
+       width="29.05658"
+       height="29.05658"
+       preserveAspectRatio="none"
+       style="stroke-width:1.72078;image-rendering:optimizeQuality"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABHNCSVQICAgIfAhkiAAABGVJREFU
+aIHdWs9LOlscPTOjUKERQWNUVFZUZL82bcwUxFq5yaJN2KoiCqp9BlnSoj+hX0RIm0iElraRCIk2
+RWWLiLQiSojoBxWMzuctel/f+760nvpK5x24MNc5V8/xjnPP5zoQBIEmJyeJ53kCIKnG8zzZbDYS
+BIFk09PTmJmZgdFoRH19PaSE4+NjOByO9w7P82Q0GkkURZIaRFEkk8lEPM8TGwqFUF9fD4Zh0vv1
+JgGGYaDRaBAKhcCmW0yq+DUBsjTr+BREBLfbjYODA5hMJuh0urjclGeEiFJ9i7hwOBywWCyw2+0w
+GAxwu91xuTGNOJ1O5ObmQqFQfNmUSmXM12ZnZ1M2srCwED0WRRFLS0txuTEvrcbGRvT19UEUxaRF
+aLXapMf+QkFBAS4vL3/rfwYaHR1N9500Jra3t6MLdW1tLZ2fn3/gjI+PEwDK6B+7TqdDMBjE9fU1
+SktLIZPFl5vRRgAgKysLFRUVX/JYjuMQDod/QNL3IBwOg+M4ME1NTXR/fw+v14uysrK4KzwRRc/9
+/TiRc7H6yX4GAFxcXMBgMCAvLw+Mx+Mhs9mMcDgMpVIpmahCRHh6eoJMJsPm5iYYIqKjoyOsrq7i
+9vY23foSgkqlQl9f33tWJPrGpfkHISMiuFwuLCwsSG5GeJ7HwMAAurq6wCwuLlJ/fz+Ki4tRVVWV
+bm0J4ezsDFdXV1hcXARTUVFBCoUCPp8POTk56daWEF5eXtDa2oqHhwew5+fn0Ov1kjMBADk5OdDr
+9QgEAmCJCCwr3fqKZVkQUeZXiKenp3C73bi5ufmUl9FG1tbWUFdXh87OTtTU1GBvby8uN2Zo9Hg8
+sNvtKVV/Q0NDsFqtSY8nIkxNTUVz4OPjI+bm5rC+vh6TH9MIEUVbKkJSQTJRKWMLK6fTSRzHEQBS
+KpW0u7v7gSOJwqq3txctLS04OjqCVqtFYWFhXG5GGwGA6upqVFdXf8ljGYb51i2d74YoimAYBoxa
+rabc3Fz4fD5kZ2enW1dCeH19hVarxcPDw1+hsaSkBJWVlenWlhB+C42iKNLGxgbm5+clF+NVKhUG
+BgbQ3d39PyqsAMDv90u21LVardBoNGC2trbIbDZDEAQoFIp0a0sIz8/PkMvl75sPzc3NdHd3B6/X
+i/LyckntogSDQRgMBuTn5wMcx9Hw8PAPh4//DiMjI8RxHLGRSOTTPdVMh1wuRyQSyex6BADe3t4Q
+CAQQiUQ+5WW0kZ2dHZSXl0OtVqOhoQHBYDAuN+Y1dXh4iPn5+ZT+6Onp6YHBYEh6PACMjY1Fl4ST
+kxPY7XYsLy/H5MY0sr+/j5WVlZSMFBUVpWwkFAp92v8nMrawmp6ejj6uwbIsuVyuDxxJFFY2mw0a
+jQb7+/tob29HW1tbXG5GG2EYBhaLBRaL5UtuRt+1/g3oz8zL8jyP4+NjSVaJRAS/3w+e5yEbHByE
+w+FAR0fHe4qUUNby+/3weDyYmJgABEEgm80m2QfPJiYmSBAE+gMUP6dJfANZUAAAAABJRU5ErkJg
+gg==
+"
+       id="image368"
+       x="285.76782"
+       y="124.6864" />
   </g>
 </svg>

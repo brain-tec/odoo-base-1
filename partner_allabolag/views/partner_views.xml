@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_partner_form" model="ir.ui.view">
+      <field name="name">res.partner.form.allabolag</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml">
+        <notebook position="inside">
+          <page name="financial_information" string="Financial Information">
+            <group name="container_row_2">
+              <group string="Summary" name="summary" priority="1">
+                <field name="summary_revenue" widget="integer" class="oe_right" />
+                <field name="summary_profit_ebit" widget="integer" class="oe_right" />
+                <field name="summary_state" />
+                <field name="summary_registry_year" />
+                <field name="summary_parent_company" />
+              </group>
+              <group name="kpi" string="KPI" priority="2">
+                <field name="summary_net_sales_change" widget="percentage" class="oe_right" />
+                <field name="summary_profit_margin" widget="percentage" class="oe_right" />
+                <field name="summary_solvency" widget="percentage" class="oe_right" />
+                <field name="summary_cash_flow" widget="percentage" class="oe_right" />
+                <field name="kpi_no_employees" class="oe_right" />
+                <field name="kpi_revenue_employees" widget="integer" class="oe_right" />
+              </group>
+            </group>
+            <group string="Business and Purpose" name="business_summary" priority="3">
+              <field name="summary_purpose" nolabel="1" />
+            </group>
+            <group string="Remarks" name="remarks" priority="4">
+              <group>
+                <field name="remarkCode" />
+              </group>
+              <group>
+                <field name="remarkDescription" />
+              </group>
+              <group>
+                <field name="remarkDate" />
+              </group>
+            </group>
+          </page>
+        </notebook>
+      </field>
+    </record>
+  </data>
+</odoo>
