@@ -18,7 +18,7 @@ COMPANY_NO_IAP=True
 
 class ResPartnerMixin(models.AbstractModel):
     _name = "res.partner.allabolag.mixin"
-    
+
     kpi_no_employees = fields.Integer(string='Number of employees')
     kpi_revenue_employees = fields.Float(string='Revenue per Employee')
     linkTo = fields.Char(string='Link', size=64, trim=True, help="Link to Allabolag")
@@ -35,7 +35,7 @@ class ResPartnerMixin(models.AbstractModel):
     summary_revenue = fields.Float(string='Revenue KSEK')
     summary_solvency = fields.Float(string='Solvency')
     summary_state = fields.Char(string='Business status')
-    
+
     @api.model
     def name2orgno(self,name):
         name = quote(name)
@@ -47,18 +47,18 @@ class ResPartnerMixin(models.AbstractModel):
             print(item.keys())
             i += 1
             if i > 1:
-                break 
+                break
         if i == 1:
             return None,None
         _logger.warning(f'{item=}')
-        
+
         return item['orgnr'],item
-        
+
     def partner_enrich_allabolag(self,company_registry):
 
         partner = Company(company_registry)
         _logger.warning(f'{partner.data=}')
-        
+
         allabolag = {
         # ~ "Översikt - Besöksadress" :
         # ~ "Översikt - Ort" :
@@ -97,7 +97,7 @@ class ResPartnerMixin(models.AbstractModel):
                     record[k]=int(record[k][0][1] or 0)
                 else:
                     record[k]=int(record[k] or 0)
-                    
+
             if f[k]['type'] in ['float', 'monetary']:
                 if type(record[k]) == list:
                     record[k]=record[k][0][1]
@@ -105,10 +105,10 @@ class ResPartnerMixin(models.AbstractModel):
                     record[k]=record[k]
             if f[k]['type'] in ['char', 'text', 'html']:
                 if type(record[k]) == list:
-                    record[k]= ', '.join(record[k]) 
+                    record[k]= ', '.join(record[k])
                 else:
                     record[k]=record[k]
-        
+
         record['vat'] = self.orgnr2vat(company_registry)
         record['zip'] = zipcode
         if "\n" in record.get('street',''):
@@ -120,12 +120,12 @@ class ResPartnerMixin(models.AbstractModel):
             self.write(partner.data['remarks'])
             partner.message_post(body=_(f'{partner.data["remarks"]["remarkCode"]=} {partner.data["remarks"]["remarkDescription"]=} {partner.data["remarks"]["remarkDate"]=}'), message_type='notification')
             _logger.warning(f"write record[k]=")
-        
+
         return record
-                    
+
         # ~ _logger.warning(f'{record=}')
 
-        
+
         # ~ self.env['res.partner'].write({'summary_revenue': 1000000663, 'summary_profit_ebit': 999999999, 'summary_purpose': 'Bolaget har till föremål för sin verksamhet att bedriva finansieringsrörelse och därmed sammanhängande verksamhet huvudsakligen genom att lämna och förmedla kredit avseende fastigheter och bostads- rätter, att lämna kredit till samfällighetsföreningar, att lämna kredit till stat, landsting, kommuner, kommunalförbund eller andra kommunala samfälligheter, samt - mot borgen av sådan samfällighet - till andra juridiska personer, att genom lämnande av betalningsgaranti underlätta kreditgivning av det slag bolaget får bedriva, samt att för annans räkning förvalta sådana lån jämte säkerheter som avses i denna paragraf samt ombesörja inteckningsåtgärder, Med "fastighet" avses i denna bolagsordning också tomträtt och byggnad på mark upplåten med nyttjanderätt samt ägarlägenheter. Med "bostadsrätt" avses även andel i bostadsförening eller aktie i bostadsaktiebolag, där en utan begränsning i tiden upplåten nyttjanderätt till en lägenhet är oskiljaktigt förenad med andelen eller aktien. Med "kredit" avses också byggnadskreditiv. Ord och uttryck som används i denna bolagsordning för att beteckna visst slag av egendom eller rättigheter innefattar egendom eller rättighet i samtliga länder där bolaget bedriver verksamhet, om kreditsäkerhetsegenskaperna för egendomen eller säkerheten i fråga väsentligen motsvarar vad som avses med den svenska benämningen. Med stat, kommun, landsting och samfällighetsföreningar avses förutom sådana organ i Sverige, motsvarande organ i samtliga länder där Stadshypotek bedriver verksamhet. För anskaffande av medel för sin rörelse får bolaget bl.a. 1. ge ut säkerställda obligationer 2. ge ut andra obligationer och certifikat och ta upp reverslån, 3. ge ut förlagsbevis eller andra förskrivningar som medför rätt till betalning efter bolagets övriga förbindelser, samt 4. utnyttja kredit i räkning.', 'kpi_no_employees': 49, 'summary_net_sales_change': 34, 'summary_profit_margin': 1, 'summary_solvency': 1, 'summary_cash_flow': 1})
 
     def autocomplete_override(self, query):
@@ -149,7 +149,7 @@ class ResPartnerMixin(models.AbstractModel):
         # ~ return super(ResPartner, self).read_by_vat(vat)
         return []
 
-    
+
     @api.model
     def enrich_company(self, company_domain, partner_gid, vat):
         _logger.warning(f"allabolag enrich_company {company_domain=} {partner_gid=} {vat=} {self=}")
@@ -168,8 +168,8 @@ class ResPartnerMixin(models.AbstractModel):
             # ~ _logger.warning(f'{record=}')
             # ~ partner.write(record)
         return self._format_data_company(record)
-        
-        
+
+
         res = {}
         if COMPANY_NO_IAP == True:
             res = super(ResPartner, self).enrich_company(company_domain,partner_gid,vat)
@@ -180,10 +180,10 @@ class ResPartnerMixin(models.AbstractModel):
 class ResPartner(models.Model):
     _name = 'res.partner'
     _inherit = ["res.partner",'res.partner.allabolag.mixin']
-    
+
     def partner_enrich(self):
         _logger.warning(f"allabolag partner_enrich {self=}")
-         
+
         for partner in self:
             if not partner.website:
                 partner.website = name2url(partner.name)
@@ -206,7 +206,7 @@ class ResPartner(models.Model):
                 _logger.warning(f'{record=}')
                 partner.write(record)
                 return self._format_data_company(record)
-        
+
     def enrich_allabolag(self):
         if not self.company_type == "company":
             raise UserError(_('This functio has to be on company.'))
@@ -222,9 +222,9 @@ class ResPartner(models.Model):
     def check_bankruptcy(self):
         until = datetime.strptime('2024-07-01','%Y-%m-%d') #TODO fetch this date from system parameter
         orgnummer=[]
-        
+
         def _parse_liquidated_company_item(item_dict):
-            
+
             item = deepcopy(item_dict)
 
             # store for backward compability
@@ -241,7 +241,7 @@ class ResPartner(models.Model):
                 # 'remarkDate': None,
 
             return item
-        
+
         i = 1
         for item in iter_list(
                 "/lista/konkurs-inledd/6",
@@ -251,12 +251,12 @@ class ResPartner(models.Model):
             orgnummer.append(item['orgnr'])
             i += 1
             if i > 1000:
-                break 
+                break
         _logger.warning(f'{orgnummer}')
-        
+
         for partner in self.env['res.partner'].search([('company_registry', 'in', orgnummer )]):
             partner.message_post(body=_(f'Company filed for bankrupcy'), message_type='notification')
-        
-        
+
+
         #TODO save todays date to system parameter
 

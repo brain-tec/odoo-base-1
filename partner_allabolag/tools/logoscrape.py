@@ -17,7 +17,7 @@ def name2url(name):
     except Exception as e:
         _logger.warning(f"name2url search {name=} error {e}")
         return None
-        
+
 def LogoScrape(url):
     if not url:
         return None
@@ -28,7 +28,7 @@ def LogoScrape(url):
     except Exception as e:
         _logger.warning(f"request.get({url}) error {e}")
         return None
-    
+
     # Parse the HTML using Beautiful Soup
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -44,11 +44,11 @@ def LogoScrape(url):
         if img_tag.get('id') == 'logo':
             logo_url = img_tag['src']
             break
-            
+
         if 'logo' in img_tag.get('class', []):
             logo_url = img_tag['src']+'class'
             break
-            
+
         if "logo" in img_tag.get('src',''):
             # ~ print(img_tag)
             logo_url = img_tag['src']+'src'
@@ -65,12 +65,12 @@ def LogoScrape(url):
 
     return fetch_image_as_base64(logo_url)
     return base64.b64encode(Image.open(requests.get(logo_url, stream=True).raw))
-    
+
 
 def fetch_image_as_base64(url):
     # Fetch the image from the URL
     response = requests.get(url)
-    
+
     # Ensure the request was successful
     if response.status_code == 200:
         # Encode the image content in base64

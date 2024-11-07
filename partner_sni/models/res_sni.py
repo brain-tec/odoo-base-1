@@ -32,5 +32,3 @@ class Sni(models.Model):
     code = fields.Char(string='Official Code', help="Official code, group, sub-group or detail group.")
     description = fields.Char(string='Description')
     parent_id = fields.Many2one(comodel_name='res.sni', string='Parent')
-
-
