@@ -9,7 +9,7 @@
                        
                 <!-- Label aligned inline with the checkbox -->
                 <label for="allow_email_marketing" class="mb-0">
-                    Tillåt e-postmarknadsförning
+                    Tillåt e-postmarknadsföring
                 </label>
             </div>
         </xpath>

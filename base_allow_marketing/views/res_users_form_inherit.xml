@@ -8,7 +8,7 @@
                 <page name="email_rights" string="Email Rights">
                     <div class="form-group">
                         <label for="allow_email_marketing" class="col-form-label">
-                            Tillåt e-postmarknadsförning
+                            Tillåt e-postmarknadsföring
                         </label>
                         <field name="allow_email_marketing"/>
                     </div>
