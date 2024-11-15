@@ -3,14 +3,29 @@
     <template id="custom_signup_fields" inherit_id="auth_signup.fields" name="Custom Signup Fields">
         <xpath expr="//div[hasclass('field-confirm_password')]" position="after">
             <div class="form-group field-allow_email_marketing d-flex align-items-center">
-                <!-- Checkbox input with a small margin-right to align with label -->
-                <input type="checkbox" name="allow_email_marketing" t-att-value="allow_email_marketing" 
-                       id="allow_email_marketing" class="mr-2"/>
-                       
-                <!-- Label aligned inline with the checkbox -->
-                <label for="allow_email_marketing" class="mb-0">
-                    Tillåt e-postmarknadsföring
-                </label>
+                <div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label for="allow_email_marketing" class="mb-0 d-block">
+                                Tillåt e-postmarknadsföring
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex">
+                            <div class="form-check-inline me-4">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="allow_email_marketing" value="ja"/> Ja
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" required="1" class="form-check-input" name="allow_email_marketing" value="nej"/> Nej
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </xpath>
     </template>
