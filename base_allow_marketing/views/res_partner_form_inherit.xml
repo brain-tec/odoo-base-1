@@ -6,12 +6,11 @@
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page name="email_rights" string="Email Rights">
-                    <div class="form-group">
-                        <label for="allow_email_marketing" class="col-form-label">
-                            Tillåt e-postmarknadsföring
-                        </label>
-                        <field name="allow_email_marketing"/>
-                    </div>
+                    <group>
+                        <group>
+                            <field name="allow_email_marketing" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                    </group>
                 </page>
             </notebook>
         </field>
