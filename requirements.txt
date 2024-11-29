@@ -9,3 +9,5 @@ python-whois
 requests[socks]
 PySocks
 stem
+openpyxl
+xlrd
