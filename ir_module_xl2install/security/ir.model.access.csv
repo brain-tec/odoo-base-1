@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_module2install1,ir.module.install_wizard,ir_module_xl2install.model_ir_module_install_wizard,base.group_user,1,1,1,1
+access_module2install2,ir_module_xl2install.model_ir_module_install_wizard_missing_module,ir_module_xl2install.model_ir_module_install_wizard_missing_module,base.group_user,1,1,1,1
+access_module2install3,ir_module_xl2install.model_ir_module_install_wizard_to_be_installed,ir_module_xl2install.model_ir_module_install_wizard_to_be_installed,base.group_user,1,1,1,1

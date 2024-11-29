@@ -42,6 +42,7 @@ Install modules from a excel document
     'depends': ['base',],
     'data': [
         'views/ir_module_view.xml',
+        'security/ir.model.access.csv'
     ],
     'application': False,
     'installable': True,

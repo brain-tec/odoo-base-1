@@ -19,10 +19,26 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+class module2installMissingModule(models.TransientModel):
+    _name = 'ir.module.install_wizard.missing_module'
+    name = fields.Char()
+    wizard_id = fields.Many2one('ir.module.install_wizard')  
+      
+    
+class module2installToBeInstalled(models.TransientModel):
+    _name = 'ir.module.install_wizard.to_be_installed'
+    name = fields.Char()
+    module_id = fields.Many2one('ir.module.module')  
+    wizard_id = fields.Many2one('ir.module.install_wizard')
+    state = fields.Selection(related='module_id.state', readonly=True)
+    
 
 class module2install(models.TransientModel):
     _name = 'ir.module.install_wizard'
     _description = 'Modules to install'
+    
+    to_be_installed_modules_ids = fields.One2many(comodel_name='ir.module.install_wizard.to_be_installed', inverse_name='wizard_id', string='To Be Installed', readonly=True)
+    missing_modules_ids = fields.One2many(comodel_name='ir.module.install_wizard.missing_module', inverse_name='wizard_id', string='To Be Installed', readonly=True)
     
     data = fields.Binary('File')
     filename = fields.Char(string='Filename')
@@ -43,7 +59,18 @@ class module2install(models.TransientModel):
             'target': 'self',
             'url': '/web',
         }
-
+    def install_modules(self):
+         self.to_be_installed_modules_ids.module_id.button_immediate_install()
+         #self.to_be_installed_modules_ids.module_id.button_immediate_upgrade()
+         return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'ir.module.install_wizard',
+                'view_mode': 'form',
+                'res_id': self.id,
+                'target': 'new',
+                'flags': {'mode': 'edit'},
+          }
+     
     
     def send_form(self):
         self.ensure_one()
@@ -56,35 +83,53 @@ class module2install(models.TransientModel):
             except XLRDError as e:
                 _logger.error(u'Could not read file (SEB Kontohändelser.xlsx)')
                 raise ValueError(e)
-            # ~ xldata.nrows
-            # ~ xldata.ncols
-            
-            # ~ header = [c.value.lower() for c in xldata.row(0)]
-            # ~ header = [c.value.lower() for c in xldata.row(0) if c.value.lower() in ["tekniskt namn","technical name"]]
             pos = [i for i,c in enumerate(xldata.row(0)) if c.value.lower() in ["tekniskt namn","technical name"]]
             if len(pos) == 1:
                 pos = pos[0]
             else:
                 raise UserWarning(_('You should have a colume for Technical Name'))
-            wanted_modules = [xldata.cell(pos,r).value.lower() for r in range(xldata.nrows)]
-            found_modules_obj = self.env['module.module'].search([('technical_name','in',wanted_modules)])
-            found_modules = [m.technical_name for m in found_modules_obj]
+            wanted_modules = [xldata.cell(r+1,pos).value.lower() for r in range(xldata.nrows-1)]
+            found_modules_obj = self.env['ir.module.module'].search([('name','in',wanted_modules),('state','!=','uninstallable')])
+            found_modules = [m.name for m in found_modules_obj]
             missing_modules = [set(wanted_modules) - set(found_modules)]
-            for m in found_modules_obj:
-                m.button_install()
+            
+            self.to_be_installed_modules_ids = False
+            self.missing_modules_ids = False
+           
+                
+            for found_module_id in found_modules_obj:
+                self.env['ir.module.install_wizard.to_be_installed'].create({'name':found_module_id.name, 'wizard_id':self.id, 'module_id': found_module_id.id})
                 
 
+            # ~ for m in found_modules_obj:
+                # ~ m.button_install()
+                
+            if missing_modules:
+               for missing_module in missing_modules[0]:
+                    self.env['ir.module.install_wizard.missing_module'].create({'name':missing_module, 'wizard_id':self.id})
+               self.import_message = f"""
+Missing Modules.
+            """
+            
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'ir.module.install_wizard',
+                'view_mode': 'form',
+                'res_id': self.id,
+                'target': 'new',
+                'flags': {'mode': 'edit'},
+            }
 
 
-                return {
-                    'type': 'ir.actions.client',
-                    'tag': 'display_notification',
-                    'params': {
-                        'title': "Missing Accounts",
-                        'message': "Some accounts are missing",
-                        'sticky': False,
-                    }
-                }
+            # ~ return {
+                    # ~ 'type': 'ir.actions.client',
+                    # ~ 'tag': 'display_notification',
+                    # ~ 'params': {
+                        # ~ 'title': "Missing Accounts",
+                        # ~ 'message': self.import_message ,
+                        # ~ 'sticky': False,
+                    # ~ }
+             # ~ }
             
         
   
