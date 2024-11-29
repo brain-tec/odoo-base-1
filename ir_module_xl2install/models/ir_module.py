@@ -31,6 +31,13 @@ class module2installToBeInstalled(models.TransientModel):
     module_id = fields.Many2one('ir.module.module')  
     wizard_id = fields.Many2one('ir.module.install_wizard')
     state = fields.Selection(related='module_id.state', readonly=True)
+
+class module2installMissingModuleEnterprise(models.TransientModel):
+    _name = 'ir.module.install_wizard.enterprise'
+    name = fields.Char()
+    module_id = fields.Many2one('ir.module.module')  
+    wizard_id = fields.Many2one('ir.module.install_wizard')
+    state = fields.Selection(related='module_id.state', readonly=True)
     
 
 class module2install(models.TransientModel):
@@ -39,6 +46,7 @@ class module2install(models.TransientModel):
     
     to_be_installed_modules_ids = fields.One2many(comodel_name='ir.module.install_wizard.to_be_installed', inverse_name='wizard_id', string='To Be Installed', readonly=True)
     missing_modules_ids = fields.One2many(comodel_name='ir.module.install_wizard.missing_module', inverse_name='wizard_id', string='To Be Installed', readonly=True)
+    missing_modules_enterprise_ids = fields.One2many(comodel_name='ir.module.install_wizard.enterprise', inverse_name='wizard_id', string='Missing Enterprise Modules', readonly=True)
     
     data = fields.Binary('File')
     filename = fields.Char(string='Filename')
@@ -89,7 +97,7 @@ class module2install(models.TransientModel):
             else:
                 raise UserWarning(_('You should have a colume for Technical Name'))
             wanted_modules = [xldata.cell(r+1,pos).value.lower() for r in range(xldata.nrows-1)]
-            found_modules_obj = self.env['ir.module.module'].search([('name','in',wanted_modules),('state','!=','uninstallable')])
+            found_modules_obj = self.env['ir.module.module'].search([('name','in',wanted_modules)])
             found_modules = [m.name for m in found_modules_obj]
             missing_modules = [set(wanted_modules) - set(found_modules)]
             
@@ -98,11 +106,10 @@ class module2install(models.TransientModel):
            
                 
             for found_module_id in found_modules_obj:
-                self.env['ir.module.install_wizard.to_be_installed'].create({'name':found_module_id.name, 'wizard_id':self.id, 'module_id': found_module_id.id})
-                
-
-            # ~ for m in found_modules_obj:
-                # ~ m.button_install()
+                if found_module_id.state != "uninstallable":
+                   self.env['ir.module.install_wizard.to_be_installed'].create({'name':found_module_id.name, 'wizard_id':self.id, 'module_id': found_module_id.id})
+                else:
+                    self.env['ir.module.install_wizard.enterprise'].create({'name':found_module_id.name, 'wizard_id':self.id, 'module_id': found_module_id.id})
                 
             if missing_modules:
                for missing_module in missing_modules[0]:
