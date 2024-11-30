@@ -99,20 +99,27 @@ class module2install(models.TransientModel):
             else:
                 raise UserWarning(_('You should have a colume for Technical Name'))
             wanted_modules = [xldata.cell(r+1,pos).value.lower() for r in range(xldata.nrows-1)]
-            found_modules_obj = self.env['ir.module.module'].search([('name','in',wanted_modules)])
+
+            wanted_ee = list(set(wanted_modules) & set(modules_ee))
+            wanted_ce = list(set(wanted_modules) - set(modules_ee))
+
+            
+
+            
+            
+            found_modules_obj = self.env['ir.module.module'].search([('name','in',wanted_ce)])
             found_modules = [m.name for m in found_modules_obj]
             missing_modules = [set(wanted_modules) - set(found_modules)]
             
             self.to_be_installed_modules_ids = False
             self.missing_modules_ids = False
-           
-                
+                        
             for found_module_id in found_modules_obj:
                 if found_module_id.state != "uninstallable":
                    self.env['ir.module.install_wizard.to_be_installed'].create({'name':found_module_id.name, 'wizard_id':self.id, 'module_id': found_module_id.id})
-                else:
-                    self.env['ir.module.install_wizard.enterprise'].create({'name':found_module_id.name, 'wizard_id':self.id, 'module_id': found_module_id.id})
-                
+            if wanted_ee:
+                for ee in wanted_ee:
+                    self.env['ir.module.install_wizard.enterprise'].create({'name':ee, 'wizard_id':self.id,})
             if missing_modules:
                for missing_module in missing_modules[0]:
                     self.env['ir.module.install_wizard.missing_module'].create({'name':missing_module, 'wizard_id':self.id})
