@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <data>
+	  
+	<record id="view_module2install_missing_module_tree" model="ir.ui.view">
+		<field name="name">module2install.missing.module.tree</field>
+		<field name="model">ir.module.install_wizard.missing_module</field>
+		<field name="arch" type="xml">
+			<tree string="Missing Modules">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_module2install_to_be_installed_tree" model="ir.ui.view">
+		<field name="name">module2install.to.be.installed.tree</field>
+		<field name="model">ir.module.install_wizard.to_be_installed</field>
+		<field name="arch" type="xml">
+			<tree string="Modules to be Installed">
+				<field name="name"/>
+				<field name="module_id"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+	  
     <record id="wizard_module" model="ir.ui.view">
       <field name="name">Import Modules to Install</field>
       <field name="model">ir.module.install_wizard</field>
@@ -10,77 +33,83 @@
           <group rowspan="4" string="File to upload">
             <field name="data" filename="filename" />
             <field name="filename" readonly="1" invisible="1" />
+            
           </group>
-          <div>
-            <h2>Import complete</h2>
-            <p>
-              Here is the exported sie-file:
-              <field name="result" readonly="1"  />
-            </p>
-          </div>
-                              <group invisible="state != 'done'">
-                        <field name="import_message" nolabel="1" readonly="1"/>
-                    </group>
+		 <group>
+			<field name="import_message" nolabel="1" readonly="1"/>
+		</group>
+		
+		
+		   
+             <field name="missing_modules_ids" invisible="1"/>
+			<field name="to_be_installed_modules_ids" invisible="1"/>
+		<notebook>
+		  <page string="Modules to be Installed" invisible="not to_be_installed_modules_ids">
+			<field name="to_be_installed_modules_ids">
+			  <tree editable="bottom">
+				<field name="name"/>
+				<field name="module_id"/>
+				<field name="state"/>
+			  </tree>
+			</field>
+		  </page>
+		  <page string="Missing Modules" invisible="not missing_modules_ids">
+			<field name="missing_modules_ids">
+			  <tree editable="bottom">
+				<field name="name"/>
+			  </tree>
+			</field>
+		  </page>
+		  <page string="Missing Modules Enterprise" invisible="not missing_modules_enterprise_ids">
+			<field name="missing_modules_enterprise_ids">
+			  <tree editable="bottom">
+				<field name="name"/>
+			  </tree>
+			</field>
+		  </page>
+		 
+		</notebook>
           
           <footer >
-            <button string="Send" name="send_form" type="object" class="oe_highlight" />
-            or
+			<button string="Read File" invisible="not data or to_be_installed_modules_ids or missing_modules_ids" name="send_form" type="object" class="oe_highlight" />
+            <button string="Install Modules" invisible="not to_be_installed_modules_ids" name="install_modules" type="object" class="oe_highlight" />
             <button string="Cancel" special="cancel" class="oe_link" />
           </footer>
         </form>
       </field>
     </record>
+    
     <record id="action_module_xl2install" model="ir.actions.act_window">
       <field name="name">Xl2install</field>
       <field name="res_model">ir.module.install_wizard</field>
       <field name="view_mode">form</field>
       <field name="target">new</field>
     </record>
-    
-    
-    
-    
-    
-    
-    
-    
-                <record id="view_base_module_import" model="ir.ui.view">
-            <field name="name">base.import.module.form</field>
-            <field name="model">ir.module.install_wizard</field>
-            <field name="arch" type="xml">
-                <form string="Install the application">
-                    <field name="state" invisible="1"/>
-<!--
-                    <p class="alert alert-danger" role="alert" invisible="not with_demo or state == 'done'">
--->
-                     <p>   Demo data should only be used on test databases. Once they are loaded, they cannot be entirely removed!
-                    </p>
-                    <p class="alert alert-warning" role="alert" invisible="state == 'done' or context.get('data_module')">Note: you can only import data modules (.xml files and static assets)</p>
-                   
-                    <group invisible="state != 'init'">
-<!--
-                        <field name="module_file" string="Module file (.zip)" options="{'accepted_file_extensions': '.zip'}" invisible="context.get('data_module')"/>
--->
-<!--
-                        <field name="force" groups="base.group_no_one"/>
-                        <field name="with_demo" string="Import demo data"/>
--->
-                    </group>
-                    <group invisible="state != 'done'">
-                        <field name="import_message" nolabel="1" readonly="1"/>
-                    </group>
-                    <footer>
-                        <div invisible="state != 'init'">
-                            <button name="import_module" string="Install" type="object" class="btn-primary" data-hotkey="q"/>
-                            <button special="cancel" data-hotkey="x" string="Cancel" class="btn-secondary"/>
-                        </div>
-                        <div invisible="state != 'done'">
-                            <button special="cancel" data-hotkey="x" string="Close" class="btn-secondary"/>
-                        </div>
-                    </footer>
-                </form>
-            </field>
-        </record>
+
+    <record id="view_base_module_import" model="ir.ui.view">
+      <field name="name">Import Modules to Install</field>
+      <field name="model">ir.module.install_wizard</field>
+      <field name="arch" type="xml">
+        <form string="Import Modules to Install">
+          <field name="state" invisible="1" />
+          <group rowspan="4" string="File to upload">
+            <field name="data" filename="filename" />
+            <field name="filename" readonly="1" invisible="1" />
+          </group>
+		 <group>
+			<field name="import_message" nolabel="1" readonly="1"/>
+            <field name="missing_modules_ids" invisible="not missing_modules_ids"/>
+			<field name="to_be_installed_modules_ids" invisible="not to_be_installed_modules_ids"/>
+		</group>
+          
+          <footer >
+            <button string="Scan" name="send_form" type="object" class="oe_highlight" />
+            or
+            <button string="Cancel" special="cancel" class="oe_link" />
+          </footer>
+        </form>
+      </field>
+    </record>
     
     
     
