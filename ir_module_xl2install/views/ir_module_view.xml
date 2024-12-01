@@ -60,7 +60,7 @@
 			  </tree>
 			</field>
 		  </page>
-		  <page string="Missing Modules Enterprise" invisible="not missing_modules_enterprise_ids">
+		  <page string="Enterprise Modules" invisible="not missing_modules_enterprise_ids">
 			<field name="missing_modules_enterprise_ids">
 			  <tree editable="bottom">
 				<field name="name"/>
