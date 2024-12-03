@@ -13,7 +13,6 @@ class SignupExtended(AuthSignupHome):
 
     def do_signup(self, qcontext):
         # Capture allow_email_marketing field value
-        print("===============", qcontext)
 
         # Call the original do_signup method to handle standard fields
         super(SignupExtended, self).do_signup(qcontext)
