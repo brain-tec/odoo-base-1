@@ -25,22 +25,17 @@
     'name': 'Base Allow Marketing',
     'version': '1.0',
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.odoo.com""",
-    'category': '', # Technical Settings|Localization|Payroll Localization|Account Charts|User types|Invoicing|Sales|Human Resources|Operations|Marketing|Manufacturing|Website|Theme|Administration|Appraisals|Sign|Helpdesk|Administration|Extra Rights|Other Extra Rights|
-    'description': """
-        Long description of module's purpose
+        Opt-in for marketing email
     """,
-    #'sequence': 1,
+    'category': 'Administration',
+    'description': """
+        Opt-in for marketing email
+    """,
     'author': 'Vertel AB',
     'website': 'https://vertel.se/apps/odoo-',
-    'images': ['static/description/banner.png'], # 560x280
+    'images': ['static/description/banner.png'],  # 560x280
     'license': 'AGPL-3',
-    'depends': [],
-     #"external_dependencies": {
-     #   "bin": ["openssl",], 
-     #   "python": ["acme_tiny", "IPy",],
-     #},
+    'depends': ["auth_signup"],
     'data': [
         'views/signup_form_inherit.xml',
         'views/res_partner_form_inherit.xml',
@@ -48,7 +43,6 @@
     ],
     'demo': [],
     'application': False,
-    'installable': True,    
+    'installable': True,
     'auto_install': False,
-    #"post_init_hook": "post_init_hook",
 }
