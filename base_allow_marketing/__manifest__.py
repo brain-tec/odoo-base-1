@@ -35,11 +35,12 @@
     'website': 'https://vertel.se/apps/odoo-',
     'images': ['static/description/banner.png'],  # 560x280
     'license': 'AGPL-3',
-    'depends': ["auth_signup"],
+    'depends': ["auth_signup", "portal"],
     'data': [
         'views/signup_form_inherit.xml',
         'views/res_partner_form_inherit.xml',
-        'views/res_users_form_inherit.xml'
+        'views/res_users_form_inherit.xml',
+        'views/portal_templates.xml',
     ],
     'demo': [],
     'application': False,
