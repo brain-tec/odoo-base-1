@@ -28,14 +28,11 @@
     'description': """
 Add an extra repo
 =================
-
-
-
 """,
     #'sequence': '1',
     'author': 'Vertel AB',
     'website': 'https://vertel.se/apps/odoo-base/ir_module_extra_repo',
-    'images': ['static/description/banner.png'], # 560x280 px.
+    'images': ['static/description/banner.png'],  # 560x280 px.
     'license': 'AGPL-3',
     'contributor': '',
     'maintainer': 'Vertel AB',
@@ -44,5 +41,6 @@ Add an extra repo
     ],
     'application': False,
     'installable': True,
+    'auto_install': True,
 }
 # vim:expandtab:smartindent:tabstop=4s:softtabstop=4:shiftwidth=4:
