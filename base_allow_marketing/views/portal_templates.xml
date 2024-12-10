@@ -6,12 +6,12 @@
                 <div class="col-12 d-flex row">
                     <div class="form-check-inline me-4">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="allow_email_marketing"  value="ja" t-att-checked="partner.allow_email_marketing == 'ja'"/> Ja
+                            <input type="radio" class="form-check-input" name="allow_email_marketing"  value="yes" t-att-checked="partner.allow_email_marketing == 'yes'"/> Yes
                         </label>
                     </div>
                     <div class="form-check-inline">
                         <label class="form-check-label">
-                            <input type="radio" required="1" class="form-check-input" name="allow_email_marketing" value="nej" t-att-checked="partner.allow_email_marketing == 'nej'"/> Nej
+                            <input type="radio" required="1" class="form-check-input" name="allow_email_marketing" value="no" t-att-checked="partner.allow_email_marketing == 'no'"/> No
                         </label>
                     </div>
                 </div>
