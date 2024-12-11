@@ -6,5 +6,5 @@ class ResUsers(models.Model):
 
     allow_email_marketing = fields.Selection(
         related="partner_id.allow_email_marketing",
-        string="Tillåt e-postmarknadsföring", readonly=False
+        string="Allow Marketing", readonly=False
     )

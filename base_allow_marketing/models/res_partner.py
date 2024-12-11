@@ -5,7 +5,7 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     allow_email_marketing = fields.Selection([
-        ('ja', 'Ja'), ('nej', 'Nej')], string="Tillåt e-postmarknadsföring",
+        ('yes', 'Yes'), ('no', 'No')], string="Allow Marketing",
         readonly=False
     )
 
