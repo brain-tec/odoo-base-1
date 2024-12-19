@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Module Extra Repos',
+    'name': 'Base: Module Extra Repos',
     'version': '0.2',
     # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
     'summary': 'Add an extra repos',
