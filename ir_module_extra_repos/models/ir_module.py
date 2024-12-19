@@ -5,7 +5,7 @@ import odoo
 import os
 from odoo.tools.parse_version import parse_version
 from odoo.addons.base.models.ir_module import assert_log_admin_access
-# from odoo.odoo.modules.module import _DEFAULT_MANIFEST
+from odoo.modules.module import _DEFAULT_MANIFEST
 
 import odoo.tools as tools
 
@@ -16,45 +16,6 @@ import ast
 import logging
 
 _logger = logging.getLogger(__name__)
-
-
-_DEFAULT_MANIFEST = {
-    #addons_path: f'/path/to/the/addons/path/of/{module}',  # automatic
-    'application': False,
-    'bootstrap': False,  # web
-    'assets': {},
-    'author': 'Odoo S.A.',
-    'auto_install': False,
-    'category': 'Uncategorized',
-    'configurator_snippets': {},  # website themes
-    'countries': [],
-    'data': [],
-    'demo': [],
-    'demo_xml': [],
-    'depends': [],
-    'description': '',
-    'external_dependencies': {},
-    #icon: f'/{module}/static/description/icon.png',  # automatic
-    'init_xml': [],
-    'installable': True,
-    'images': [],  # website
-    'images_preview_theme': {},  # website themes
-    #license, mandatory
-    'live_test_url': '',  # website themes
-    'new_page_templates': {},  # website themes
-    #name, mandatory
-    'post_init_hook': '',
-    'post_load': '',
-    'pre_init_hook': '',
-    'sequence': 100,
-    'summary': '',
-    'test': [],
-    'update_xml': [],
-    'uninstall_hook': '',
-    'version': '1.0',
-    'web': False,
-    'website': '',
-}
 
 
 class Module(models.Model):
