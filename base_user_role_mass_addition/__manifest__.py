@@ -21,7 +21,7 @@
 
 {
     'name': 'Base: User Roles Mass addition',
-    'version': '1.0',
++    'version': '1.0',
     'summary': 'Extends the User Roles to enable assiging several users to a role, at the same time.',
     'category': 'Tools',
     'description': """
