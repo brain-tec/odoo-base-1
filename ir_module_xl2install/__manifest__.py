@@ -21,7 +21,7 @@
 
 {
     'name': 'Module XL2Install',
-    'version': '17.0.0.0.2',
+    'version': '1.0',
     # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
     'summary': 'Install modules from a excel document',
     'category': 'Technical',
