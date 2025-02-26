@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+
+        <record id="action_active_paying_users" model="ir.actions.act_window">
+            <field name="name">action.active.paying.users</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('login', '!=', 'admin')]</field>
+            <field name="view_id" ref="base.view_users_tree"/>
+        </record>
+
+    </data>
+</odoo>
