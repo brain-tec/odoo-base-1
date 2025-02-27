@@ -10,10 +10,10 @@
           <setting id="active_paid_users_setting">
             <span class="fa fa-lg fa-users" aria-label="Number of Active Paid Users." />
             <field name="active_paying_users" class="w-auto ps-3 fw-bold" />
-            <span class="o_form_label" invisible="active_paying_users &gt; 1"> Paid User</span>
-            <span class="o_form_label" invisible="active_paying_users &lt;= 1"> Paid Users</span>
+            <span class="o_form_label" invisible="active_paying_users &gt; 1"> Paid For User</span>
+            <span class="o_form_label" invisible="active_paying_users &lt;= 1"> Paid For Users</span>
             <br/>
-            <button name="action_active_paying_users" icon="oi-arrow-right" type="action" string="Manage Active Paid Users" class="btn-link o_web_settings_access_rights"/>
+            <button name="action_active_paying_users" icon="oi-arrow-right" type="object" string="Manage Active Paid Users" class="btn-link o_web_settings_access_rights"/>
           </setting>
         </setting>
       </field>
