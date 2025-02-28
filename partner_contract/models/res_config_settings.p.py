@@ -22,7 +22,11 @@ class ConfigSettings(models.TransientModel):
             'name': 'Active Paying Users',
             'type': 'ir.actions.act_window',
             'res_model': 'res.users',
+            # #if VERSION >= "18.0"
             'view_mode': 'list,kanban,form',
+            # #elif VERSION <= "17.0"
+            'view_mode': 'tree,kanban,form',
+            # #endif
             'target': 'current',
             'domain': [("id", 'in', res_users_ids.ids)]
         }
