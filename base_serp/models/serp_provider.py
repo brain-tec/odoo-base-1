@@ -75,11 +75,9 @@ class SerpProvider(models.Model):
         return domain
 
     def _get_max_position(self):
-        """Get maximum position from system parameters"""
         return int(self.env['ir.config_parameter'].sudo().get_param('base_serp.max_position', 50))
 
     def execute_search(self, keyword, domain=None, country='SE', language='sv'):
-        """Execute search based on provider_type"""
         self.ensure_one()
 
         if not self.provider_type:
@@ -110,10 +108,11 @@ class SerpProvider(models.Model):
             raise UserError(_('Search failed: %s') % str(e))
 
     def _search_beautifulsoup(self, keyword, domain=None, country='SE', language='sv'):
-        """BeautifulSoup web scraping implementation"""
         self.ensure_one()
 
-        _logger.info(f"Searching for '{keyword}' with BeautifulSoup (domain: {domain}, country: {country})")
+        _logger.info(
+            f"Searching for '{keyword}' with BeautifulSoup (domain: {domain}, country: {country}), language: {language}"
+        )
 
         html = self._get_google_results(keyword, country, language)
 
@@ -140,7 +139,6 @@ class SerpProvider(models.Model):
         }]
 
     def _get_google_results(self, keyword, country, language):
-        """Fetch Google search results HTML"""
         self.ensure_one()
 
         google_url = "https://www.google.com/search"
@@ -225,61 +223,3 @@ class SerpProvider(models.Model):
             _logger.info(f"Domain '{domain}' not found in top {len(results)} results for '{keyword}'")
 
         return matches
-
-    def test_search(self):
-        """Test the provider with a sample search"""
-        self.ensure_one()
-
-        test_keyword = "odoo erp"
-        test_domain = "odoo.com"
-
-        try:
-            results = self.execute_search(
-                keyword=test_keyword,
-                domain=test_domain,
-                country='SE',
-                language='sv'
-            )
-
-            # Get first result
-            result = results[0] if results else {}
-
-            if result.get('success') and result.get('position'):
-                message = _(
-                    'Test successful!\n\n'
-                    'Domain: %s\n'
-                    'Keyword: %s\n'
-                    'Position: %s\n'
-                    'URL: %s'
-                ) % (test_domain, test_keyword, result['position'], result['url'])
-                msg_type = 'success'
-            else:
-                message = _(
-                    'Test completed, but domain not found in top results.\n\n'
-                    'Domain: %s\n'
-                    'Keyword: %s'
-                ) % (test_domain, test_keyword)
-                msg_type = 'warning'
-
-            return {
-                'type': 'ir.actions.client',
-                'tag': 'display_notification',
-                'params': {
-                    'title': _('Provider Test'),
-                    'message': message,
-                    'type': msg_type,
-                    'sticky': True,
-                }
-            }
-
-        except Exception as e:
-            return {
-                'type': 'ir.actions.client',
-                'tag': 'display_notification',
-                'params': {
-                    'title': _('Provider Test Failed'),
-                    'message': str(e),
-                    'type': 'danger',
-                    'sticky': True,
-                }
-            }

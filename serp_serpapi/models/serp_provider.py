@@ -19,10 +19,11 @@ class SerpProvider(models.Model):
     )
 
     def _search_serpapi(self, keyword, domain=None, country='SE', language='sv'):
-        """SerpAPI implementation"""
         self.ensure_one()
 
-        _logger.info(f"Searching for '{keyword}' with SerpAPI (domain: {domain}, country: {country})")
+        _logger.info(
+            f"Searching for '{keyword}' with SerpAPI (domain: {domain}, country: {country}), language: {language}"
+        )
 
         # Check if API key is configured
         if not self.api_key:
@@ -70,7 +71,6 @@ class SerpProvider(models.Model):
             }]
 
     def _parse_serp_serpapi(self, results, keyword, domain=None):
-        """Parse SerpAPI results and find domain position"""
         self.ensure_one()
 
         # Check if we got organic results
