@@ -21,7 +21,7 @@
 
 {
     'name': 'Base: Module Extra Repos',
-    'version': '0.2',
+    'version': '0.3',
     # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
     'summary': 'Add an extra repos',
     'category': 'Technical',
@@ -30,7 +30,7 @@ Add an extra repo
 =================
 """,
     #'sequence': '1',
-    'author': 'Vertel AB',
+    'author': 'Vertel Sverige AB',
     'website': 'https://vertel.se/apps/odoo-base/ir_module_extra_repo',
     'images': ['static/description/banner.png'],  # 560x280 px.
     'license': 'AGPL-3',
