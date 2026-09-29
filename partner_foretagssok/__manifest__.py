@@ -24,17 +24,23 @@
     'version': '18.0.1.0.0',
     'summary': 'Enrich partner with data from FöretagsAPI.se',
     'category': 'Website',
-    'description': """
-    Enrich partner records with data from FöretagsAPI.se.
+    'description': '''
+Enrich partner information from FöretagsAPI
+===========================================
 
     The module uses the official REST API at https://data.foretagsapi.se to
-    fetch company information such as name, organisation number, address,
-    SNI codes, business description, registration status and financial key
-    figures. It also makes it possible to find other companies within the
-    same SNI branch.
-    """,
+        fetch company information such as name, organisation number, address,
+        SNI codes, business description, registration status and financial key
+        figures. It also makes it possible to find other companies within the
+        same SNI branch.
+
+    Features:
+
+        - UI Integration: Extends 2 view(s) in the Odoo interface.
+        - Extends Odoo: Builds on foretagsapi.mapping.mixin, foretagssok.similar.wizard, foretagssok.similar.wizard.line.
+    ''',
     'author': 'ARC Gruppen AB | Chrille Hedberg | https://arcgruppen.se | info@arcgruppen.se',
-    'website': 'https://arcgruppen.se',
+    'website': 'https://vertel.se/apps/odoo-base/partner_foretagssok',
     'license': 'AGPL-3',
     'contributor': '',
     'maintainer': 'Vertel AB',
@@ -55,4 +61,3 @@
     'application': False,
     'installable': True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
