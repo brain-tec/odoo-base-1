@@ -74,6 +74,11 @@ INTERVAL_SECONDS = {
 # elapsed. 5 minutes matches ir.cron's granularity.
 INTERVAL_TICK_CADENCE = 'min'
 
+# Granularity of the tick crons, in minutes. Every tick polls at this
+# interval, and the spread offset is quantised to it — see
+# `_spread_offset_minutes`.
+TICK_GRANULARITY_MINUTES = 5
+
 
 class CronTask(models.Model):
     _name = 'cron.task'
@@ -357,6 +362,14 @@ class CronTask(models.Model):
 
         The same technical name yields the same offset every time — a
         `daily` task therefore runs at the same time every day, not randomly.
+
+        The offset is QUANTISED to the tick granularity (5 minutes). The
+        tick polls every 5 minutes, so an offset of 3 is only reachable at
+        :05 and an offset of 57 only at :55 — an unquantised offset would
+        either never match or match at the wrong minute. Quantising also
+        collapses the window to 12 distinct slots per hour, which is what
+        the spread is actually for: not 60 different minutes, but enough
+        slots that 19 daily tasks do not all fire in the same tick.
         """
         self.ensure_one()
         window = SPREAD_MINUTES.get(self.cadence, 0)
@@ -364,7 +377,9 @@ class CronTask(models.Model):
             return 0
         digest = hashlib.sha256(
             (self.technical_name or '').encode('utf-8')).hexdigest()
-        return int(digest, 16) % window
+        offset = int(digest, 16) % window
+        # Snap down to the tick granularity, never above the window.
+        return (offset // TICK_GRANULARITY_MINUTES) * TICK_GRANULARITY_MINUTES
 
     def _interval_seconds(self):
         """The task's interval in seconds (0 when it uses a cadence)."""
@@ -414,26 +429,27 @@ class CronTask(models.Model):
         # daily / week / month — spread over a window.
         offset = self._spread_offset_minutes()
         if self.cadence == 'daily':
-            # The window is one hour: run when minute >= offset and not run today.
-            if not self.last_run:
-                return now.minute >= offset
-            return self.last_run.date() < now.date() and now.minute >= offset
+            # The window is one hour: run when minute >= offset and not run
+            # today. `last_run` is the guard, not the offset: once the task
+            # has run today it is done, whatever the minute is. The offset
+            # only decides WHEN in the hour the window opens.
+            if self.last_run and self.last_run.date() >= now.date():
+                return False
+            return now.minute >= offset
 
         if self.cadence == 'week':
             # The window is one day (1440 min): offset in minutes since midnight.
-            window_open = now.hour * 60 + now.minute >= offset
-            if not self.last_run:
-                return window_open
-            return (now - self.last_run).days >= 7 and window_open
+            if self.last_run and (now - self.last_run).days < 7:
+                return False
+            return now.hour * 60 + now.minute >= offset
 
         if self.cadence == 'month':
             # The window is one week (10080 min): offset in minutes since
             # the start of the week (Monday 00:00).
+            if self.last_run and (now - self.last_run).days < 28:
+                return False
             minutes_into_week = now.weekday() * 1440 + now.hour * 60 + now.minute
-            window_open = minutes_into_week >= offset
-            if not self.last_run:
-                return window_open
-            return (now - self.last_run).days >= 28 and window_open
+            return minutes_into_week >= offset
 
         return False
 
@@ -557,9 +573,17 @@ class CronTask(models.Model):
                     done.technical_name, duration_ms, done.timeout_seconds)
             return {'status': 'ok', 'duration_ms': duration_ms, 'error': None}
         finally:
-            # Release the advisory lock EVEN on error — otherwise it is held
-            # until the connection closes and the task can never run again.
-            self.browse(task_id)._release_lock()
+            # Clear the informational lock columns EVEN on error. The advisory
+            # lock itself is transaction-bound and released by PostgreSQL, but
+            # `locked_by` is a plain column: if the run raised, the savepoint
+            # rollback also reverted the UPDATE that set it, so it must be
+            # cleared here — and this must never raise, or it masks the real
+            # error and leaves the task looking permanently locked in the UI.
+            try:
+                self.browse(task_id)._release_lock()
+            except Exception:  # noqa: BLE001 — cleanup must not mask the run
+                _logger.exception(
+                    'cron.task id=%s: could not clear locked_by', task_id)
 
     def _log_run_record(self, status, trigger, trigger_detail=None,
                         duration_ms=0, text=None, user_id=None):
@@ -586,17 +610,29 @@ class CronTask(models.Model):
         empty in their snapshot and both get `rowcount == 1`. Verified in
         production — two concurrent workers ran the same task.
 
-        We use a session-bound advisory lock per task
-        (`pg_try_advisory_lock`), which is atomic regardless of isolation
-        level. `locked_by`/`locked_at` are written as INFORMATION (who is
-        running), not as the lock itself — the latter is owned by PostgreSQL.
+        We use an advisory lock per task, which is atomic regardless of
+        isolation level. `locked_by`/`locked_at` are written as INFORMATION
+        (who is running), not as the lock itself — the latter is owned by
+        PostgreSQL.
 
-        The lock is released by `_release_lock()` or automatically when the
-        session (connection) closes.
+        TRANSACTION-BOUND, NOT SESSION-BOUND (pg_try_advisory_xact_lock).
+        A session-bound lock (`pg_try_advisory_lock`) is released only when
+        the CONNECTION closes — and Odoo pools connections. When a worker
+        died mid-run, its connection went back to the pool WITH the lock
+        still held, and the next worker that borrowed that connection could
+        never acquire it. Production symptom: `ai_okf_index_dirty` sat with
+        `locked_by='tick:min'` and blocked the whole min tick, while
+        `pg_locks` showed the lock owned by a live-but-idle backend.
+
+        The xact variant is released automatically at COMMIT/ROLLBACK, so a
+        dead worker cannot leak it. `_release_lock` is kept for symmetry and
+        to clear the informational columns, but correctness no longer
+        depends on it being called.
         """
         self.ensure_one()
         lock_id = self._task_lock_id()
-        self.env.cr.execute('SELECT pg_try_advisory_lock(%s)', (lock_id,))
+        self.env.cr.execute(
+            'SELECT pg_try_advisory_xact_lock(%s)', (lock_id,))
         row = self.env.cr.fetchone()
         if not row or not row[0]:
             return False
@@ -610,10 +646,13 @@ class CronTask(models.Model):
         return True
 
     def _release_lock(self):
-        """Release the lock after the run."""
+        """Clear the informational lock columns.
+
+        The advisory lock itself is transaction-bound (see `_acquire_lock`)
+        and is released by PostgreSQL at COMMIT/ROLLBACK. Only the
+        `locked_by`/`locked_at` columns are cleared here.
+        """
         self.ensure_one()
-        lock_id = self._task_lock_id()
-        self.env.cr.execute('SELECT pg_advisory_unlock(%s)', (lock_id,))
         self.env.cr.execute("""
             UPDATE cron_task
                SET locked_by = NULL, locked_at = NULL
@@ -726,9 +765,14 @@ class CronTask(models.Model):
 
         Protected by a global advisory lock per cadence (D11) so that two
         Odoo workers do not run the same cadence simultaneously.
+
+        TRANSACTION-BOUND (pg_try_advisory_xact_lock), for the same reason
+        as the per-task lock: a session-bound lock survives the worker and
+        leaks back into the connection pool when the worker dies mid-run.
         """
         lock_id = self._advisory_lock_id(cadence)
-        self.env.cr.execute('SELECT pg_try_advisory_lock(%s)', (lock_id,))
+        self.env.cr.execute(
+            'SELECT pg_try_advisory_xact_lock(%s)', (lock_id,))
         got_lock = self.env.cr.fetchone()
         if not got_lock or not got_lock[0]:
             _logger.info(
@@ -785,8 +829,10 @@ class CronTask(models.Model):
                 'locked': locked,
             }
         finally:
-            self.env.cr.execute(
-                'SELECT pg_advisory_unlock(%s)', (lock_id,))
+            # The advisory lock is transaction-bound and is released by
+            # PostgreSQL at COMMIT/ROLLBACK — no explicit unlock needed (and
+            # no leak if this worker dies first).
+            pass
 
     @api.model
     def _advisory_lock_id(self, cadence):
