@@ -688,15 +688,94 @@ class CronTask(models.Model):
             'locked_at': False,
         })
 
+    def _ensure_usable_transaction(self):
+        """Get the transaction out of `InFailedSqlTransaction`, or explain why.
+
+        A failed task can leave the connection in an aborted transaction.
+        Recovery has to happen BEFORE any ORM call, because the ORM reads
+        fields (cache miss) and PostgreSQL then answers `current transaction
+        is aborted` to every statement.
+
+        Only `cr.rollback()` clears that state — `ROLLBACK TO SAVEPOINT`
+        cannot, because `cursor.savepoint()` never got as far as issuing
+        `SAVEPOINT` (see `_record_failure`).
+
+        After the rollback the ORM cache points at rows the database no
+        longer has, so it must be invalidated and the caller must re-browse.
+        """
+        cr = self.env.cr
+        try:
+            cr.execute('SELECT 1')
+            return
+        except Exception:  # noqa: BLE001,S110 — any failure means "not usable"
+            # The handling below IS the response — the probe failing is
+            # exactly the condition we are here to fix.
+            pass
+        _logger.warning(
+            'cron.task: transaction was aborted, rolling back before '
+            'recording — everything written in this transaction is lost')
+        try:
+            cr.rollback()
+            self.env.invalidate_all()
+        except Exception:  # noqa: BLE001
+            # The CONNECTION can be gone, not just the transaction:
+            # `psycopg2.InterfaceError: connection already closed` (measured
+            # 2026-11-11 on the `ai_cost_aggregate` out-of-memory kill).
+            # Rolling back a dead connection cannot work, and raising here
+            # would reintroduce the very cascade this method exists to stop —
+            # the caller (`_record_failure`) must still be able to try, and
+            # `_cron_tick` must still be able to move on to the next task.
+            # The record is lost; that is the honest outcome for a dead
+            # connection, and it is logged rather than silently swallowed.
+            _logger.error(
+                'cron.task: could not roll back — the connection is gone. '
+                'The failure record is lost; the scheduler continues.')
+
     def _record_failure(self, exc, duration_ms=0):
         """Record a failed run. Deactivates after `max_failures`.
 
         WARNING: called AFTER the savepoint has been rolled back — the caller
         must have run `invalidate_all()` and re-fetched the record, otherwise
         we write to a record whose transaction is gone.
+
+        SURVIVES A POISONED TRANSACTION (2026-11-11). The savepoint above is
+        not a guarantee: `cursor.savepoint()` builds a `_FlushingSavepoint`,
+        whose `__init__` calls `cr.flush()` BEFORE issuing `SAVEPOINT`. When
+        the failure is a database error (`lock timeout`, `deadlock detected`,
+        `serialization failure`), PostgreSQL has already aborted the
+        transaction, so `flush()` raises in `__enter__` — the savepoint is
+        never created and nothing is rolled back. The transaction stays in
+        `InFailedSqlTransaction`, and every statement here (starting with
+        `self.failure_count`) raises `current transaction is aborted`.
+
+        The result was not a missing error message: `_record_failure` raised
+        inside the `except` block, so the exception escaped `_cron_tick` and
+        the whole tick transaction — including the `nextcall` updates of every
+        task already run in that tick — was rolled back. One poisoned task
+        stopped the entire scheduler (measured 2026-11-11: tick 991 at
+        failure_count 471, 18 of 80 active crons stuck with a `nextcall` in
+        the past, for over an hour).
+
+        `cr.rollback()` is the only escape from `InFailedSqlTransaction` —
+        `ROLLBACK TO SAVEPOINT` cannot be used because no savepoint exists
+        (verified against the live database). The cost is that anything else
+        written in the same transaction is discarded too; the alternative is
+        a scheduler that stops.
         """
+        self._ensure_usable_transaction()
         self.ensure_one()
-        previous_count = self.failure_count
+        # The connection can be dead, not just the transaction (see
+        # `_ensure_usable_transaction`). Reading `failure_count` or writing
+        # then raises `InterfaceError`, and that must not escape to
+        # `_cron_tick` — a lost failure record is bad, a stopped scheduler is
+        # worse. The counter simply does not advance in that case.
+        try:
+            previous_count = self.failure_count
+        except Exception:  # noqa: BLE001 — dead connection, nothing to record
+            _logger.error(
+                'cron.task %s: could not read failure_count — the failure '
+                'record is lost', self.technical_name)
+            return
         count = previous_count + 1
         deactivated = count >= self.max_failures
         vals = {
@@ -712,7 +791,14 @@ class CronTask(models.Model):
             _logger.error(
                 'cron.task %s deactivated after %s consecutive failures',
                 self.technical_name, count)
-        self.write(vals)
+        try:
+            self.write(vals)
+        except Exception:  # noqa: BLE001 — dead connection, nothing to record
+            _logger.error(
+                'cron.task %s: could not write the failure record — the '
+                'failure is lost; the scheduler continues',
+                self.technical_name)
+            return
 
         # Chatter: only the events a human needs to see. Repeating failures in
         # the same streak produce a run log record but no new message — see
@@ -726,7 +812,7 @@ class CronTask(models.Model):
             elif previous_count == 0:
                 self.message_post(body=_(
                     'First failure in a new streak: %s', str(exc)[:500]))
-        except Exception:  # noqa: BLE001 — chatter must not break the run
+        except Exception:  # chatter must not break the run
             _logger.exception(
                 'cron.task %s: could not post the failure to chatter',
                 self.technical_name)
@@ -804,9 +890,25 @@ class CronTask(models.Model):
                 # One run path for tick, webhook and manual — see
                 # `_run_locked_task`. It acquires and releases the task lock,
                 # records the run history and writes the run log.
-                result = self._run_locked_task(
-                    task.id, owner='tick:%s' % cadence, trigger='tick',
-                    trigger_detail=cadence)
+                #
+                # BELT AND BRACES (2026-11-11). `_run_locked_task` is written
+                # not to raise, but it runs inside this loop: an exception
+                # escaping it aborts the WHOLE tick, rolling back the
+                # `nextcall` of every task already run. That is exactly what
+                # happened when `_record_failure` hit a poisoned transaction —
+                # one broken task stopped the scheduler for over an hour. A
+                # per-task guard makes the blast radius one task.
+                try:
+                    result = self._run_locked_task(
+                        task.id, owner='tick:%s' % cadence, trigger='tick',
+                        trigger_detail=cadence)
+                except Exception:  # never abort the tick
+                    _logger.exception(
+                        'cron.task %s: the run path itself raised in tick %s '
+                        '— continuing with the next task',
+                        task.technical_name, cadence)
+                    failed += 1
+                    continue
                 if result['status'] == 'locked':
                     locked += 1
                 elif result['status'] == 'error':
