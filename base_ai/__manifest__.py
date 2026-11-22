@@ -4,7 +4,7 @@
     'version': '1.0.0',
     'summary': 'OKF-indexering av res.partner, res.company och res.users',
     'category': 'Hidden',
-    'author': 'Vertel AB',
+    'author': 'Vertel Sverige AB',
     'website': 'https://vertel.se',
     'license': 'AGPL-3',
     'description': """
@@ -32,5 +32,5 @@
     'demo': [],
     'application': False,
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
 }

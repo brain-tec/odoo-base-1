@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Odoo SA, Open Source Management Solution, third party addon
-#    Copyright (C) 2024- Vertel AB (<https://vertel.se>).
+#    Copyright (C) 2024- Vertel Sverige AB (<https://vertel.se>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,7 +21,11 @@
 
 {
     'name': 'Base: Enrich partner information from FöretagsAPI',
+<<<<<<< HEAD
+    'version': '18.0.2.0.0',
+=======
     'version': '1.0.0',
+>>>>>>> origin/20.0
     'summary': 'Enrich partner with data from FöretagsAPI.se',
     'category': 'Website',
     'description': '''
@@ -43,7 +47,7 @@ Enrich partner information from FöretagsAPI
     'website': 'https://vertel.se/apps/odoo-base/partner_foretagssok',
     'license': 'AGPL-3',
     'contributor': '',
-    'maintainer': 'Vertel AB',
+    'maintainer': 'Vertel Sverige AB',
     'repository': 'https://github.com/vertelab/odoo-base',
     'depends': [
         'partner_enrich_base',

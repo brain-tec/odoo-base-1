@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Odoo SA, Open Source Management Solution, third party addon
-#    Copyright (C) 2024- Vertel AB (<https://vertel.se>).
+#    Copyright (C) 2024- Vertel Sverige AB (<https://vertel.se>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,7 +22,11 @@
 {
     'name': 'Base: Partner Enrich Base',
     'summary': "Base module for partner data enrichment.",
+<<<<<<< HEAD
+    'version': '18.0.2.0.0',
+=======
     'version': '1.1.0',
+>>>>>>> origin/20.0
     'description': '''
 Partner Enrich Base
 ===================
@@ -42,11 +46,14 @@ Partner Enrich Base
     'images': ['static/description/banner.png'], # 560x280 px.
     'license': 'AGPL-3',
     'contributor': '',
-    'maintainer': 'Vertel AB',
+    'maintainer': 'Vertel Sverige AB',
     'repository': 'https://github.com/vertelab/odoo-base',
-    'depends': ['partner_autocomplete','contacts'],
+    'depends': ['partner_autocomplete', 'contacts'],
     'data': [
+        'security/ir.model.access.csv',
         'data/ir_action.xml',
+        'data/ir_cron.xml',
+        'views/res_partner_view.xml',
     ],
     'application': False,
     'installable': True,
