@@ -22,11 +22,7 @@
 {
     'name': 'Base: Partner Enrich Base',
     'summary': "Base module for partner data enrichment.",
-<<<<<<< HEAD
-    'version': '18.0.2.0.0',
-=======
     'version': '1.1.0',
->>>>>>> origin/20.0
     'description': '''
 Partner Enrich Base
 ===================
@@ -50,7 +46,7 @@ Partner Enrich Base
     'repository': 'https://github.com/vertelab/odoo-base',
     'depends': ['partner_autocomplete', 'contacts'],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.access.csv',
         'data/ir_action.xml',
         'data/ir_cron.xml',
         'views/res_partner_view.xml',
